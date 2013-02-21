@@ -5,9 +5,12 @@ from os import path
 
 from django.template.loader import BaseLoader
 from django.template import Context, TemplateSyntaxError
+from django.db import transaction
 from markdown import Markdown
 
 from vlevitorg import settings
+from vlblog import models
+
 
 logger = logging.getLogger(__name__)
 markdown = Markdown(extensions=['footnotes', 'toc', 'codehilite'])
@@ -38,7 +41,7 @@ class ConfigError(Exception): pass
 
 def parse_config(config_path):
     """Parse articles' config. Raise ConfigError."""
-    possible = ['blog', 'lang']
+    possible = ['blog', 'language', 'description']
     config = {}
     if os.path.exists(config_path):
         with open(config_path) as config_file:
@@ -62,6 +65,33 @@ def parse_config(config_path):
     return config
 
 
+@transaction.commit_on_success
+def _add_new_post(post):
+    try:
+        blog = models.Blog.objects.get(name=post['blog'])
+    except models.Blog.DoesNotExist:
+        blog = models.Blog(name=post['blog'],
+                           description=post['description'])
+        blog.save()
+    tags = []
+    for tag in post['tags']:
+        try:
+            tag_model = models.Tag.objects.get(name=tag, blog=blog,
+                                               language=post['language'])
+        except models.Tag.DoesNotExist:
+            tag_model = models.Tag(name=tag, blog=blog,
+                                   language=post['language'])
+        tag_model.n_posts += 1
+        tag_model.save()
+        tags.append(tag_model)
+    post = models.Post(blog=blog, language=post['language'],
+                       post_id=post['post_id'], created=post['created'],
+                       title=post['title'], body=post['body'],
+                       excerpt=post['excerpt'])
+    post.save()
+    post.tags.add(*tags)
+
+
 def scan(content_dir=settings.CONTENT_DIR, force=False):
     """
     Walk through content_dir and populate database with articles.
@@ -73,6 +103,19 @@ def scan(content_dir=settings.CONTENT_DIR, force=False):
         logger.log(level, msg)
         report.append("{}: {}".format(logging.getLevelName(level), msg))
 
+    def add_missing_keys(post):
+        optional = ('title', 'excerpt', 'post_id')
+        for key in optional:
+            if key not in post:
+                post[key] = ''
+        if 'tags' not in post:
+            post['tags'] = []
+        return True
+
+    def missing_required_keys(post):
+        required = ('created',)
+        return [key for key in required if key not in post]
+
     loader = ArticleLoader()
     for root, dirs, files in os.walk(content_dir):
         try:
@@ -82,6 +125,7 @@ def scan(content_dir=settings.CONTENT_DIR, force=False):
             log("directory {} skipped".format(root))
             continue
         for filename in filter(lambda s: s.endswith('.markdown'), files):
+            abspath = path.join(root, filename)
             try:
                 template, _ = loader.load_template(filename, [root])
             except TemplateSyntaxError, e:
@@ -90,10 +134,22 @@ def scan(content_dir=settings.CONTENT_DIR, force=False):
                 continue
             context = Context()
             body = template.render(context)
-            args = dict(context['vars'])
-            args['body'] = body
-            args.update(config)
-            log('{} processed'.format(path.join(root, filename)))
+            post = dict(context['vars'])
+            post['body'] = body
+            post.update(config)
+            add_missing_keys(post)
+            missing = missing_required_keys(post)
+            if missing:
+                log("{} skipped: the following fields are missing: {}".format(
+                    abspath, ', '.join(missing)))
+                continue
+            try:
+                _add_new_post(post)
+            except Exception, e:
+                log('{} skipped: {}'.format(abspath, unicode(e)),
+                    level=logging.ERROR)
+            else:
+                log('{} processed'.format(abspath))
     return u'\n'.join(report)
 
 

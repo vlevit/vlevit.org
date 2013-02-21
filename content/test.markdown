@@ -1,6 +1,7 @@
 /title: Тестовая заметка
-/date: 2013-02-17 12:00
+/created: 2013-02-17 12:00
 /tags: пучок, анекдот, лебёдка
+/post_id: test
 
 /excerpt
 Non eram nescius, Brute, cum, quae summis ingeniis exquisitaque doctrina

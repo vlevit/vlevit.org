@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 register = template.Library()
 
 
-@register.simple_tag(takes_context=True, name='title')
+@register.simple_tag(takes_context=True)
 def title(context, value):
     if 'vars' not in context.dicts[0]:
         context.dicts[0]['vars'] = {}
@@ -18,7 +18,7 @@ def title(context, value):
 
 
 @register.simple_tag(takes_context=True)
-def date(context, value):
+def created(context, value):
     try:
         dt = parse_datetime(value)
     except ValueError:
@@ -28,7 +28,7 @@ def date(context, value):
         return u''
     if 'vars' not in context.dicts[0]:
         context.dicts[0]['vars'] = {}
-    context.dicts[0]['vars']['date'] = dt
+    context.dicts[0]['vars']['created'] = dt
     return u''
 
 
@@ -38,6 +38,14 @@ def tags(context, value):
         context.dicts[0]['vars'] = {}
     context.dicts[0]['vars']['tags'] = map(
         lambda s: s.strip(), value.split(','))
+    return u''
+
+
+@register.simple_tag(takes_context=True)
+def post_id(context, value):
+    if 'vars' not in context.dicts[0]:
+        context.dicts[0]['vars'] = {}
+    context.dicts[0]['vars']['post_id'] = value
     return u''
 
 
