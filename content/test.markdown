@@ -10,3 +10,4 @@ philosophi Graeco sermone tractavissent, ea Latinis litterignitatis esse negent.
 
 [2] Contra quos omnis dicendum breviter existimo. Quamquam philosophiae quidem
 vituperatoribus satis responsum est eo libro, quo a nobis
+
