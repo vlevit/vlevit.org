@@ -177,16 +177,13 @@ def detect_changes(content_dir):
     return unmodified, modified, removed
 
 
-def scan_filesystem(content_dir,
-                    unmodified=set(),
-                    modified={},
-                    removed={}):
+def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
     """
     Walk through content_dir and populate database with articles.
 
     """
     renamed = set()             # files renamed among 'removed' files
-    n_new = 0                   # new posts number
+    n_new = n_skipped = 0       # new/skipped posts number
     for root, dirs, files in os.walk(content_dir):
         try:
             blog_info = read_blog_info(path.join(root, 'blog.conf'))
@@ -216,10 +213,12 @@ def scan_filesystem(content_dir,
             post_dict = load_post(content_dir, relpath, digest=digest)
             if not post_dict:
                 logger.info("%s skipped", abspath)
+                n_skipped += 1
                 continue
             try:
                 save_post(post_dict, blog_info, post_pk=post_pk)
             except Exception, e:
+                n_skipped += 1
                 logger.exception('%s skipped: %s', abspath, e)
             else:
                 logger.info('%s imported', abspath)
@@ -227,9 +226,10 @@ def scan_filesystem(content_dir,
         post_pk, old_file = removed[digest]
         delete_post(post_pk)
         logger.info('%s deleted', old_file)
-    logger.info("%d new posts imported, %d changed, %d unchanged, "
-                "%d removed, %d renamed", n_new, len(modified),
-                len(unmodified), len(removed) - len(renamed), len(renamed))
+    logger.info("%d new posts imported, %d changed, %d unchanged, %d removed, "
+                "%d renamed, skipped: %d", n_new, len(modified),
+                len(unmodified), len(removed) - len(renamed), len(renamed),
+                n_skipped)
 
 
 def scan(content_dir=settings.CONTENT_DIR):
