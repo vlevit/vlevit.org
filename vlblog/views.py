@@ -4,5 +4,5 @@ import scanner
 
 
 def scan(request):
-    report = scanner.scan()
-    return HttpResponse(report, content_type="text/plain")
+    scanner.scan()
+    return HttpResponse('See log', content_type="text/plain")
