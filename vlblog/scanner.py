@@ -147,7 +147,7 @@ def load_post(content_dir, relpath, digest=None):
         return
     context = Context()
     body = template.render(context)
-    post_dict = dict(context['vars'])
+    post_dict = dict(context.get('vars', {}))
     post_dict['body'] = body
     post_dict['file'] = relpath
     post_dict['file_digest'] = digest if digest else calc_digest(abspath)
