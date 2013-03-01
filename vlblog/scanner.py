@@ -226,10 +226,10 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
         post_pk, old_file = removed[digest]
         delete_post(post_pk)
         logger.info('%s deleted', old_file)
-    logger.info("%d new posts imported, %d changed, %d unchanged, %d removed, "
-                "%d renamed, skipped: %d", n_new, len(modified),
+    logger.info("%d new posts, %d changed, %d unchanged, %d removed, "
+                "%d renamed, %d skipped , %d imported", n_new, len(modified),
                 len(unmodified), len(removed) - len(renamed), len(renamed),
-                n_skipped)
+                n_skipped, len(modified) + n_new - n_skipped)
 
 
 def scan(content_dir=settings.CONTENT_DIR):
