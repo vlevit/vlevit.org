@@ -14,7 +14,6 @@ from vlblog import models
 
 
 logger = logging.getLogger(__name__)
-markdown = Markdown(extensions=['footnotes', 'toc', 'codehilite'])
 
 
 POST_TEMPLATE = (
@@ -267,5 +266,7 @@ def preprocess_source(source):
     Return a valid django template for markdown-formatted source.
 
     """
+    markdown = Markdown(extensions=['footnotes', 'toc',
+                                    'codehilite', 'headerid'])
     output = _replace_tags(source)
     return markdown.convert(output)
