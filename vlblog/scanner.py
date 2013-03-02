@@ -112,9 +112,11 @@ def save_post(post_dict, blog_info, post_pk=None):
     post.tags.add(*tags)
 
 
-def rename_post(post_pk, new_file):
+def rename_post(post_pk, new_file, new_name=None):
     post = models.Post.objects.get(pk=post_pk)
     post.file = new_file
+    if new_name:
+        post.name = new_name
     post.save()
 
 
@@ -126,6 +128,11 @@ def calc_digest(path):
     with open(path) as f:
         text = f.read()
         return hashlib.sha1(text).hexdigest()
+
+
+def name_from_file(relpath):
+    basename = path.basename(relpath)
+    return re.sub('[^\w-]', '-', basename[:basename.rfind('.')])
 
 
 def load_post(content_dir, relpath, blog_info, digest=None):
@@ -143,10 +150,6 @@ def load_post(content_dir, relpath, blog_info, digest=None):
         required = ('created', 'name')
         return [key for key in required if key not in post_dict]
 
-    def file_as_name(relpath):
-        basename = path.basename(relpath)
-        return basename[:basename.find('.')]
-
     abspath = path.join(content_dir, relpath)
     loader = PostLoader()
     try:
@@ -156,7 +159,7 @@ def load_post(content_dir, relpath, blog_info, digest=None):
         return
     post_dict = {}
     if blog_info['file_as_name']:
-        post_dict['name'] = file_as_name(relpath)
+        post_dict['name'] = name_from_file(relpath)
     context = Context()
     body = template.render(context)
     post_dict.update(context.get('vars', {}))
@@ -217,7 +220,10 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
                 digest = calc_digest(abspath)
                 if digest in removed:  # file renamed
                     post_pk, old_file = removed[digest]
-                    rename_post(post_pk, relpath)
+                    new_name = None
+                    if blog_info['file_as_name']:
+                        new_name = name_from_file(relpath)
+                    rename_post(post_pk, relpath, new_name)
                     renamed.add(digest)
                     logger.info("%s renamed to %s", old_file, relpath)
                     continue
