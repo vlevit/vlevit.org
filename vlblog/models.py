@@ -50,9 +50,10 @@ class Post(models.Model):
 
     class Meta:
         unique_together = (('blog', 'language', 'name'))
+        ordering = ['-created']
 
     def __unicode__(self):
-        return "{}:{}: {}".format(self.blog.name, self.language, self.name)
+        return "{}: {}: {}".format(self.blog.name, self.language, self.name)
 
     def clear_tags(self):
         for tag in self.tags.all():
