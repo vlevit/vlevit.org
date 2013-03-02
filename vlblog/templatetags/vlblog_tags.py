@@ -42,10 +42,10 @@ def tags(context, value):
 
 
 @register.simple_tag(takes_context=True)
-def post_id(context, value):
+def name(context, value):
     if 'vars' not in context.dicts[0]:
         context.dicts[0]['vars'] = {}
-    context.dicts[0]['vars']['post_id'] = value
+    context.dicts[0]['vars']['name'] = value
     return u''
 
 

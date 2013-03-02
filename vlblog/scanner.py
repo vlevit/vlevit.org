@@ -41,7 +41,8 @@ class BlogInfoError(Exception): pass
 
 def read_blog_info(config_path):
     """Parse blog config. Raise BlogInfoError."""
-    possible = ['blog', 'language', 'description']
+    required = ['blog', 'language', 'description']
+    optional = ['file_as_name']
     config = {}
     if os.path.exists(config_path):
         with open(config_path) as config_file:
@@ -54,14 +55,19 @@ def read_blog_info(config_path):
                 if len(entry) != 2:
                     raise BlogInfoError(u"Invalid blog config syntax '{}' "
                                         "in {}".format(line, config_path))
-                elif entry[0] not in possible:
+                elif entry[0] not in required and entry[0] not in optional:
                     raise BlogInfoError(u"Invalid blog config property '{}'"
                                         " in {}".format(entry[0], config_path))
                 config[entry[0]] = entry[1]
-    for p in possible:
+    for p in required:
         if p not in config:
             raise BlogInfoError(u"'{}' not present in blog config {}".
                                 format(p, config_path))
+    if ('file_as_name' in config and
+            config['file_as_name'].lower() in ('true', 'yes', '1')):
+        config['file_as_name'] = True
+    else:
+        config['file_as_name'] = False
     return config
 
 
@@ -95,7 +101,7 @@ def save_post(post_dict, blog_info, post_pk=None):
         file_digest=post_dict['file_digest'],
         blog=blog,
         language=blog_info['language'],
-        post_id=post_dict['post_id'],
+        name=post_dict['name'],
         created=post_dict['created'],
         title=post_dict['title'],
         body=post_dict['body'],
@@ -122,10 +128,10 @@ def calc_digest(path):
         return hashlib.sha1(text).hexdigest()
 
 
-def load_post(content_dir, relpath, digest=None):
+def load_post(content_dir, relpath, blog_info, digest=None):
 
     def add_missing_keys(post_dict):
-        optional = ('title', 'excerpt', 'post_id')
+        optional = ('title', 'excerpt')
         for key in optional:
             if key not in post_dict:
                 post_dict[key] = ''
@@ -134,8 +140,12 @@ def load_post(content_dir, relpath, digest=None):
         return True
 
     def missing_required_keys(post_dict):
-        required = ('created',)
+        required = ('created', 'name')
         return [key for key in required if key not in post_dict]
+
+    def file_as_name(relpath):
+        basename = path.basename(relpath)
+        return basename[:basename.find('.')]
 
     abspath = path.join(content_dir, relpath)
     loader = PostLoader()
@@ -144,9 +154,12 @@ def load_post(content_dir, relpath, digest=None):
     except TemplateSyntaxError, e:
         logger.error(e)
         return
+    post_dict = {}
+    if blog_info['file_as_name']:
+        post_dict['name'] = file_as_name(relpath)
     context = Context()
     body = template.render(context)
-    post_dict = dict(context.get('vars', {}))
+    post_dict.update(context.get('vars', {}))
     post_dict['body'] = body
     post_dict['file'] = relpath
     post_dict['file_digest'] = digest if digest else calc_digest(abspath)
@@ -209,7 +222,8 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
                     continue
                 else:
                     n_new += 1
-            post_dict = load_post(content_dir, relpath, digest=digest)
+            post_dict = load_post(content_dir, relpath,
+                                  blog_info, digest=digest)
             if not post_dict:
                 logger.info("%s skipped", abspath)
                 n_skipped += 1

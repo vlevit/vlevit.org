@@ -39,16 +39,20 @@ class Post(models.Model):
     file_digest = models.CharField(max_length=20)
     blog = models.ForeignKey(Blog)
     language = models.CharField(max_length=5)
-    # post_id is used to link posts of different languages
-    post_id = models.CharField(max_length=200, blank=True)
+    # unique name per blog per language, the part of url
+    # also used to link posts of different languages
+    name = models.SlugField(max_length=50)
     created = models.DateTimeField()
     tags = models.ManyToManyField(Tag, null=True)
     title = models.CharField(max_length=200, blank=True)
     body = models.TextField()
     excerpt = models.TextField(blank=True)
 
+    class Meta:
+        unique_together = (('blog', 'language', 'name'))
+
     def __unicode__(self):
-        return self.title
+        return "{}:{}: {}".format(self.blog.name, self.language, self.name)
 
     def clear_tags(self):
         for tag in self.tags.all():
