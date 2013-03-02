@@ -203,7 +203,8 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
             logger.error(unicode(e))
             logger.info("directory %s skipped", root)
             continue
-        for filename in filter(lambda s: s.endswith('.markdown'), files):
+        for filename in filter(lambda s: s.endswith('.markdown') or
+                               s.endswith('.md'), files):
             abspath = path.join(root, filename)
             relpath = abspath[len(content_dir) + 1:]
             digest = None
