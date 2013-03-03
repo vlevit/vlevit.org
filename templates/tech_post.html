@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block language %} {{ post.language }} {% endblock %}
+{% block keywords %} {{ post.tags.all|join:', ' }} {% endblock %}
+{% block description %} {{ post.blog.description }} {% endblock %}
+
+{% block content %}
+    <h1>{{ post.title|safe }}</h1>
+    {{ post.body|safe }}
+{% endblock %}
+
+{% block sidebar %}
+    {{ post.tags.all|join:', ' }}
+{% endblock %}
