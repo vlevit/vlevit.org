@@ -4,6 +4,7 @@ import os
 import os.path as path
 
 ugettext = lambda s: s
+proj_dir = path.dirname(path.dirname(__file__))
 
 DEBUG = bool(os.environ['DEBUG'])
 TEMPLATE_DEBUG = DEBUG
@@ -60,7 +61,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = path.join(proj_dir, 'staticfiles/')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -71,6 +72,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    path.join(proj_dir, 'static/'),
 )
 
 # List of finder classes that know how to find static files in
@@ -108,10 +110,10 @@ ROOT_URLCONF = 'vlevitorg.urls'
 WSGI_APPLICATION = 'vlevitorg.wsgi.application'
 
 TEMPLATE_DIRS = (
-    path.join(path.dirname(path.dirname(__file__)), 'templates')
+    path.join(proj_dir, 'templates')
 )
 
-CONTENT_DIR = path.join(path.dirname(path.dirname(__file__)), 'content')
+CONTENT_DIR = path.join(proj_dir, 'content')
 
 INSTALLED_APPS = (
     'django.contrib.auth',
