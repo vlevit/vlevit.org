@@ -44,21 +44,20 @@ def read_blog_info(config_path):
     required = ['blog', 'language', 'description']
     optional = ['file_as_name']
     config = {}
-    if os.path.exists(config_path):
-        with open(config_path) as config_file:
-            config_str = config_file.read().decode('UTF-8')
-            for line in config_str.splitlines():
-                line = line.strip()
-                if not line:
-                    continue
-                entry = map(unicode.strip, line.split(':'))
-                if len(entry) != 2:
-                    raise BlogInfoError(u"Invalid blog config syntax '{}' "
-                                        "in {}".format(line, config_path))
-                elif entry[0] not in required and entry[0] not in optional:
-                    raise BlogInfoError(u"Invalid blog config property '{}'"
-                                        " in {}".format(entry[0], config_path))
-                config[entry[0]] = entry[1]
+    with open(config_path) as config_file:
+        config_str = config_file.read().decode('UTF-8')
+        for line in config_str.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            entry = map(unicode.strip, line.split(':'))
+            if len(entry) != 2:
+                raise BlogInfoError(u"Invalid blog config syntax '{}' "
+                                    "in {}".format(line, config_path))
+            elif entry[0] not in required and entry[0] not in optional:
+                raise BlogInfoError(u"Invalid blog config property '{}'"
+                                    " in {}".format(entry[0], config_path))
+            config[entry[0]] = entry[1]
     for p in required:
         if p not in config:
             raise BlogInfoError(u"'{}' not present in blog config {}".
@@ -200,8 +199,12 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
     renamed = set()             # files renamed among 'removed' files
     n_new = n_skipped = 0       # new/skipped posts number
     for root, dirs, files in os.walk(content_dir):
+        blog_conf = path.join(root, 'blog.conf')
+        if not path.exists(blog_conf):
+            logger.info("no blog.conf in %s, directory skipped", root)
+            continue
         try:
-            blog_info = read_blog_info(path.join(root, 'blog.conf'))
+            blog_info = read_blog_info(blog_conf)
         except BlogInfoError, e:
             logger.error(unicode(e))
             logger.info("directory %s skipped", root)
