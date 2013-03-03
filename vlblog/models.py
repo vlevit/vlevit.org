@@ -36,7 +36,7 @@ class Post(models.Model):
 
     # relative path to the source starting from CONTENT_DIR
     file = models.CharField(max_length=256)
-    file_digest = models.CharField(max_length=20)
+    file_digest = models.CharField(max_length=40)
     blog = models.ForeignKey(Blog)
     language = models.CharField(max_length=5)
     # unique name per blog per language, the part of url
