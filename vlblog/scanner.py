@@ -221,6 +221,7 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
                 post_pk, digest = modified[abspath]
             else:
                 digest = calc_digest(abspath)
+                logger.debug("%s digest: %s", relpath, digest)
                 if digest in removed:  # file renamed
                     post_pk, old_file = removed[digest]
                     new_name = None
