@@ -282,12 +282,29 @@ def _replace_tags(source):
     return u'\n'.join(lines)
 
 
+def attr_list_strict():
+    """
+    Attribute Lists Markdown Extension Hack
+
+    Syntax for attribute list is {: ... }, but the colon is optional. This
+    syntax clashes with django templates (the extension interprets django tags
+    as attribute lists). This hack makes the colon mandatory.
+
+    """
+    import markdown.extensions.attr_list as al
+    BASE_RE = r'\{\:([^\}]*)\}'
+    al.AttrListTreeprocessor.HEADER_RE = re.compile(r'[ ]*%s[ ]*$' % BASE_RE)
+    al.AttrListTreeprocessor.BLOCK_RE = re.compile(r'\n[ ]*%s[ ]*$' % BASE_RE)
+    al.AttrListTreeprocessor.INLINE_RE = re.compile(r'^%s' % BASE_RE)
+    return al.AttrListExtension()
+
+
 def preprocess_source(source):
     """
     Return a valid django template for markdown-formatted source.
 
     """
     markdown = Markdown(extensions=['footnotes', 'toc',
-                                    'codehilite', 'headerid'])
+                                    'codehilite', attr_list_strict()])
     output = _replace_tags(source)
     return markdown.convert(output)
