@@ -2,6 +2,7 @@
 
 import os
 import os.path as path
+import sys
 
 ugettext = lambda s: s
 proj_dir = path.dirname(path.dirname(__file__))
@@ -124,6 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'django.contrib.comments',
     'vlblog',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
@@ -148,7 +150,8 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
+            'formatter': 'verbose',
+            'stream': sys.stdout,
         },
     },
     'loggers': {
