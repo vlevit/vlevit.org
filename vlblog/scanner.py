@@ -29,7 +29,7 @@ class PostLoader(BaseLoader):
         tl_path = path.join(template_dirs[0], template_name)
         with open(tl_path) as f:
             text = f.read().decode('UTF-8')
-        output = preprocess_source(text)
+        output = expand_template_tags(text)
         output = POST_TEMPLATE.format(content=output)
         return output, tl_path
 
@@ -163,7 +163,7 @@ def load_post(content_dir, relpath, blog_info, digest=None):
     context = Context()
     body = template.render(context)
     post_dict.update(context.get('vars', {}))
-    post_dict['body'] = body
+    post_dict['body'] = markdown_convert(body)
     post_dict['file'] = relpath
     post_dict['file_digest'] = digest if digest else calc_digest(abspath)
     add_missing_keys(post_dict)
@@ -260,7 +260,7 @@ def scan(content_dir=settings.CONTENT_DIR):
 TAG_RE = re.compile(r'/(?P<tag>\w+)(:\s*(?P<value>.*))?\s*$', re.UNICODE)
 
 
-def _replace_tags(source):
+def expand_template_tags(source):
     """
     Replace short tags with django templates tags
 
@@ -299,12 +299,11 @@ def attr_list_strict():
     return al.AttrListExtension()
 
 
-def preprocess_source(source):
+def markdown_convert(source):
     """
     Return a valid django template for markdown-formatted source.
 
     """
     markdown = Markdown(extensions=['footnotes', 'toc',
                                     'codehilite', attr_list_strict()])
-    output = _replace_tags(source)
-    return markdown.convert(output)
+    return markdown.convert(source)
