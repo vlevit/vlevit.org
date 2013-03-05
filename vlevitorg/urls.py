@@ -16,5 +16,5 @@ urlpatterns = patterns('',
 
 
 urlpatterns += i18n_patterns('',
-    url(r'^(?P<blog>[\w-]+)/(?P<post>[\w-]+)', 'vlblog.views.post'),
+    url('', include('vlblog.urls')),
 )
