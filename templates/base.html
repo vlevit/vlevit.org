@@ -2,18 +2,17 @@
 <html lang="{% block language %}en{% endblock %}">
     <head>
         <meta charset="UTF-8">
-        <meta name="keywords" content="{% block keywords %} Linux, Music, Noise, Life, Death {% endblock %}">
+        <meta name="keywords" content="{% block keywords %}Linux, Music, Noise, Life, Death{% endblock %}">
         <meta name="author" content="Vyacheslav Levit">
-        <meta name="description" content="{% block description %} Personal website about everything and nothing {% endblock %}">
+        <meta name="description" content="{% block description %}Personal website about everything and nothing{% endblock %}">
         <title>{{post.title}}</title>
+        <link rel="stylesheet" href="/static/css/base.css" type="text/css">
+        <link rel="stylesheet" href="/static/css/pygments.css" type="text/css">
     </head>
     <body>
-        <div id="content">
-            {% block content %}{% endblock %}
-        </div>
-        <hr>
-        <div id="sidebar">
-          {% block sidebar %}{% endblock %}
+        <div id="container">
+            <div id="sidebar">{% block sidebar %}{% endblock %}</div>
+            <div id="content">{% block content %}{% endblock %}</div>
         </div>
     </body>
 </html>

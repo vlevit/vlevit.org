@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block language %} {{ post.language }} {% endblock %}
-{% block keywords %} {{ post.tags.all|join:', ' }} {% endblock %}
-{% block description %} {{ post.blog.description }} {% endblock %}
+{% block language %}{{ post.language }}{% endblock %}
+{% block keywords %}{{ post.tags.all|join:', ' }}{% endblock %}
+{% block description %}{{ post.blog.description }}{% endblock %}
 
 {% block content %}
     <h1>{{ post.title|safe }}</h1>
@@ -10,5 +11,14 @@
 {% endblock %}
 
 {% block sidebar %}
-    {{ post.tags.all|join:', ' }}
+    {% for tag in post.tags.all %}
+        {% if forloop.first %}
+            {% trans "Tags:" %}
+            <ul class="tag_list">
+        {% endif %}
+        <li>{{tag.name}}{% if tag.n_posts > 1 %}<sup>{{tag.n_posts}}{% endif %}</sup></li>
+        {% if forloop.last %}
+            </ul>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
