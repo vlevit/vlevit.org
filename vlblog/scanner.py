@@ -308,6 +308,7 @@ def markdown_convert(source):
     Return a valid django template for markdown-formatted source.
 
     """
-    markdown = Markdown(extensions=['footnotes', 'toc',
+    markdown = Markdown(output_format='html5',
+                        extensions=['footnotes', 'toc',
                                     'codehilite', attr_list_strict()])
     return markdown.convert(source)
