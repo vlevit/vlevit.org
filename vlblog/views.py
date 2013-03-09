@@ -1,11 +1,16 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 
+from vlevitorg import settings
 from vlblog import models
 from vlblog import scanner
 
 
 def scan(request):
+    if 'key' not in request.GET or \
+            request.GET['key'] != settings.SECRET_URL_KEY:
+        return HttpResponse("Key is not specified or incorrect",
+                            content_type="text/plain")
     force_reimport = False
     if 'force_reimport' in request.GET:
         force_reimport = True
