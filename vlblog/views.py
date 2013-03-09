@@ -6,7 +6,10 @@ from vlblog import scanner
 
 
 def scan(request):
-    scanner.scan()
+    force_reimport = False
+    if 'force_reimport' in request.GET:
+        force_reimport = True
+    scanner.scan(force_reimport=force_reimport)
     return HttpResponse('See log', content_type="text/plain")
 
 

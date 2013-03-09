@@ -174,18 +174,21 @@ def load_post(content_dir, relpath, blog_info, digest=None):
     return post_dict
 
 
-def detect_changes(content_dir):
+def detect_changes(content_dir, force_reimport=False):
     unmodified = set()
     modified = {}
     removed = {}
     for post in models.Post.objects.all():
         abspath = path.join(content_dir, post.file)
         if path.exists(abspath):
-            digest = calc_digest(abspath)
-            if digest == post.file_digest:
-                unmodified.add(abspath)
+            if force_reimport:
+                modified[abspath] = (post.pk, None)
             else:
-                modified[abspath] = (post.pk, digest)
+                digest = calc_digest(abspath)
+                if digest == post.file_digest:
+                    unmodified.add(abspath)
+                else:
+                    modified[abspath] = (post.pk, digest)
         else:
             removed[post.file_digest] = (post.pk, post.file)
     return unmodified, modified, removed
@@ -256,8 +259,8 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
                 n_skipped, len(modified) + n_new - n_skipped)
 
 
-def scan(content_dir=settings.CONTENT_DIR):
-    unmodified, modified, removed = detect_changes(content_dir)
+def scan(content_dir=settings.CONTENT_DIR, force_reimport=False):
+    unmodified, modified, removed = detect_changes(content_dir, force_reimport)
     scan_filesystem(content_dir, unmodified, modified, removed)
 
 
