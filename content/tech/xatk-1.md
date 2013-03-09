@@ -87,7 +87,7 @@ Firefox'а, которому соответствует клавиша f, буд
 ~/.xatk/xatkrc. 
 
 Файл xatk.py был переименован в xatk. Шебанг был изменён с `#!/usr/bin/env
-python` на `#!/usr/bin/env python2` в связи с ~~моим переходом на Arch~~
+python` на `#!/usr/bin/env python2` в связи с <s>моим переходом на Arch</s>
 [PEP 394].
 
 [PEP 394]: http://www.python.org/dev/peps/pep-0394/
