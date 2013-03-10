@@ -2,6 +2,10 @@
 /created: 2011-08-06 16:30+02:00
 /tags: xchainkeys, xbindkeys, клавиши
 
+/excerpt: on
+xchainkeys позволяет создавать глобальные сочетания клавиш в стиле Emacs и ratpoison.
+/endexcerpt
+
 [TOC]
 
 ## xbindkeys

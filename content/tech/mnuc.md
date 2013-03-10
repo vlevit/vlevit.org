@@ -2,7 +2,7 @@
 /created: 2013-01-22 00:51+02:00
 /tags: mnuc, mpd, ncmpcpp, urxvt, ImageMagick, bash, велосипед
 
-/excerpt
+/excerpt: on
 Эта заметка о том, как заставить эмулятор терминала __urxvt__ с запущенным в нём
 __ncmpcpp__ отображать обложку альбома текущей композиции.
 /endexcerpt
