@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block language %}{{ post.language }}{% endblock %}
 {% block keywords %}{{ post.tags.all|join:', ' }}{% endblock %}
 {% block description %}{{ post.blog.description }}{% endblock %}
 

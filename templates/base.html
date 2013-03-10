@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="{% block language %}en{% endblock %}">
+<!DOCTYPE html>{% load i18n %}
+<html lang="{{LANGUAGE_CODE}}">
     <head>
         <meta charset="UTF-8">
         <meta name="keywords" content="{% block keywords %}Linux, Music, Noise, Life, Death{% endblock %}">
