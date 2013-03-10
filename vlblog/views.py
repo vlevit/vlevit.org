@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, \
+    get_object_or_404, get_list_or_404
 
 from vlevitorg import settings
 from vlblog import models
@@ -23,3 +24,14 @@ def post(request, blog, post):
     post_obj = get_object_or_404(
         models.Post, language=request.LANGUAGE_CODE, blog=blog_obj, name=post)
     return render_to_response('tech_post.html', {'post': post_obj})
+
+
+def post_list(request, blog, tag=None):
+    blog_obj = get_object_or_404(models.Blog, name=blog)
+    if tag:
+        posts = get_list_or_404(models.Post, language=request.LANGUAGE_CODE,
+                                blog=blog_obj, tags__name=tag)
+    else:
+        posts = get_list_or_404(models.Post, language=request.LANGUAGE_CODE,
+                                blog=blog_obj)
+    return render_to_response('tech_post_list.html', {'posts': posts})

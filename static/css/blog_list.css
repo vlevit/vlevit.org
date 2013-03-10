@@ -1,0 +1,36 @@
+h1 {
+  font-size: 1.1em;
+}
+
+p {
+  margin-left: 1em;
+}
+
+.header-wrapper {
+  display: table;
+  width: 100%
+}
+
+.header {
+  display: table-cell;
+}
+
+.date {
+  display: table-cell;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-align: right;
+  color:rgb(200, 195, 183);
+}
+
+.tags {
+  margin-top: -8px;
+  margin-bottom: 8px;
+  font-size: 0.75em;
+  font-style: italic;
+  text-align: right;
+}
+
+a {
+  border-bottom-style: none;
+}

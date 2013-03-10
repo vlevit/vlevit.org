@@ -3,6 +3,7 @@
 
 {% block keywords %}{{ post.tags.all|join:', ' }}{% endblock %}
 {% block description %}{{ post.blog.description }}{% endblock %}
+{% block title %}{{post.title}} | {{ post.blog.description }}{% endblock %}
 
 {% block content %}
     <h1>{{ post.title|safe }}</h1>
