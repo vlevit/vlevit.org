@@ -51,8 +51,9 @@ def name(context, value):
 
 class ExcerptNode(template.Node):
 
-    def __init__(self, nodelist):
+    def __init__(self, nodelist, show='off'):
         self.nodelist = nodelist
+        self.show = show
 
     def render(self, context):
         logger.debug('FieldNode render')
@@ -60,12 +61,17 @@ class ExcerptNode(template.Node):
         if 'vars' not in context.dicts[0]:
             context.dicts[0]['vars'] = {}
         context.dicts[0]['vars']['excerpt'] = excerpt
-        return excerpt
+        if self.show == 'on':
+            return excerpt
+        return u''
 
 
 @register.tag
 def excerpt(parser, token):
-    # return FieldNode(token.split_contents()[1:])
+    show = 'off'
+    cont = token.split_contents()
+    if len(cont) > 1:
+        show = cont[1][1:-1]
     nodelist = parser.parse(('endexcerpt', ))
     parser.delete_first_token()
-    return ExcerptNode(nodelist)
+    return ExcerptNode(nodelist, show)
