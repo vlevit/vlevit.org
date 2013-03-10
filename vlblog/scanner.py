@@ -162,6 +162,8 @@ def load_post(content_dir, relpath, blog_info, digest=None):
     context = Context()
     body = template.render(context)
     post_dict.update(context.get('vars', {}))
+    if 'excerpt' in post_dict:
+        post_dict['excerpt'] = markdown_convert(post_dict['excerpt'])
     post_dict['body'] = markdown_convert(body)
     post_dict['file'] = relpath
     post_dict['file_digest'] = digest if digest else calc_digest(abspath)
