@@ -279,16 +279,18 @@ def expand_template_tags(source):
     {% tag "value" %}
 
     """
-    lines = source.splitlines()
-    for i, line in enumerate(lines):
+    result = []
+    for line in source.splitlines():
         m = TAG_RE.match(line)
         if m:
             tag, value = m.group('tag'), m.group('value')
             if value:
-                lines[i] = u"{{% {} \"{}\" %}}".format(tag, value)
+                result.append(u"{{% {} \"{}\" %}}".format(tag, value))
             else:
-                lines[i] = u"{{% {} %}}".format(tag)
-    return u'\n'.join(lines)
+                result.append(u"{{% {} %}}".format(tag))
+        else:
+            result.append(line + u'\n')
+    return u''.join(result)
 
 
 def attr_list_strict():
