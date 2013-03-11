@@ -16,7 +16,7 @@
             {% trans "Tags:" %}
             <ul class="tag_list">
         {% endif %}
-        <li>{{tag.name}}{% if tag.n_posts > 1 %}<sup>{{tag.n_posts}}{% endif %}</sup></li>
+        <li><a href="{% url post_list_tag post.blog.name tag.name%}">{{tag.name}}{% if tag.n_posts > 1 %}<sup>{{tag.n_posts}}{% endif %}</sup></a></li>
         {% if forloop.last %}
             </ul>
         {% endif %}
