@@ -4,7 +4,11 @@ from django.db import models
 class Blog(models.Model):
 
     name = models.CharField(max_length=50, unique=True)
+    language = models.CharField(max_length=5)
     description = models.CharField(max_length=200, blank=True)
+
+    class Meta:
+        unique_together = (('name', 'language'))
 
     def __unicode__(self):
         return self.name
@@ -38,8 +42,7 @@ class Post(models.Model):
     file = models.CharField(max_length=256)
     file_digest = models.CharField(max_length=40)
     blog = models.ForeignKey(Blog)
-    language = models.CharField(max_length=5)
-    # unique name per blog per language, the part of url
+    # unique name per blog, the part of url
     # also used to link posts of different languages
     name = models.SlugField(max_length=50)
     created = models.DateTimeField()
@@ -49,7 +52,7 @@ class Post(models.Model):
     excerpt = models.TextField(blank=True)
 
     class Meta:
-        unique_together = (('blog', 'language', 'name'))
+        unique_together = (('blog', 'name'))
         ordering = ['-created']
 
     def __unicode__(self):

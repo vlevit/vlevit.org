@@ -78,14 +78,18 @@ def save_post(post_dict, blog_info, post_pk=None):
 
     """
     try:
-        blog = models.Blog.objects.get(name=blog_info['blog'])
+        blog = models.Blog.objects.get(name=blog_info['blog'],
+                                       language=blog_info['language'])
     except models.Blog.DoesNotExist:
         blog = models.Blog(name=blog_info['blog'],
+                           language=blog_info['language'],
                            description=blog_info['description'])
         blog.save()
     else:
-        if blog.description != blog_info['description']:
+        if blog.description != blog_info['description'] or \
+                blog.language != blog_info['language']:
             blog.description = blog_info['description']
+            blog.language = blog_info['language']
             blog.save()
     tags = []
     if post_pk is not None:         # remove tags
@@ -99,7 +103,6 @@ def save_post(post_dict, blog_info, post_pk=None):
         file=post_dict['file'],
         file_digest=post_dict['file_digest'],
         blog=blog,
-        language=blog_info['language'],
         name=post_dict['name'],
         created=post_dict['created'],
         title=post_dict['title'],
