@@ -6,6 +6,10 @@ p {
   margin-left: 1em;
 }
 
+.entry {
+  margin-bottom: 0em;
+}
+
 .header-wrapper {
   display: table;
   width: 100%
@@ -21,14 +25,20 @@ p {
   font-weight: bold;
   text-align: right;
   color:rgb(200, 195, 183);
+  white-space: nowrap;
 }
 
 .tags {
-  margin-top: -8px;
-  margin-bottom: 8px;
+  margin-top: 0.5em;
   font-size: 0.75em;
   font-style: italic;
   text-align: right;
+}
+
+p {
+  /* heading's default margins are sufficient */
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 a {
