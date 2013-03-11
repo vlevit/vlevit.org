@@ -33,4 +33,5 @@ def post_list(request, blog, tag=None):
         posts = get_list_or_404(models.Post, blog=blog_obj, tags__name=tag)
     else:
         posts = get_list_or_404(models.Post, blog=blog_obj)
-    return render_to_response('tech_post_list.html', {'posts': posts})
+    return render_to_response('tech_post_list.html',
+                              {'blog': blog_obj, 'posts': posts})
