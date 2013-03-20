@@ -12,6 +12,10 @@ urlpatterns = patterns('',
 
     url(r'^scan/', 'vlblog.views.scan'),
     url(r'^admin/', include(admin.site.urls)),
+    # impossible to customize urls from the comments app?
+    url(r'^comments/preview/$', 'threadedcomments.views.preview_comment'),
+    url(r'^comments/post/$', 'threadedcomments.views.post_comment'),
+    url(r'^comments/', include('django.contrib.comments.urls')),
 )
 
 

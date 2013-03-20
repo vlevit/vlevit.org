@@ -125,13 +125,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'threadedcomments',
     'django.contrib.comments',
     'vlblog',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+COMMENTS_APP = 'threadedcomments'
 
 LOGGING = {
     'version': 1,
