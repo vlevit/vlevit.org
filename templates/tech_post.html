@@ -1,13 +1,25 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load threadedcomments_tags %}
 
 {% block keywords %}{{ post.tags.all|join:', ' }}{% endblock %}
 {% block description %}{{ post.blog.description }}{% endblock %}
 {% block title %}{{ post.title }}{% endblock %}
+{% block headlinks %}
+    <link rel="stylesheet" href="/static/css/pygments.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/comments.css" type="text/css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/static/js/csrf.js"></script>
+    <script src="/static/js/comments.js"></script>
+{% endblock %}
 
 {% block content %}
     <h1>{{ post.title|safe }}</h1>
     {{ post.body|safe }}
+    <hr>
+    <h3 id="comment-header">{% trans "Comments" %}</h2>
+    {% render_comment_list for post %}
+    {% render_comment_form for post %}
 {% endblock %}
 
 {% block sidebar %}
@@ -16,7 +28,7 @@
             {% trans "Tags:" %}
             <ul class="tag_list">
         {% endif %}
-        <li><a href="{% url post_list_tag post.blog.name tag.name%}">{{tag.name}}{% if tag.n_posts > 1 %}<sup>{{tag.n_posts}}{% endif %}</sup></a></li>
+        <li><a href="{% url post_list_tag post.blog.name tag.name%}">{{tag.name}}{% if tag.n_posts > 1 %}<sup>{{tag.n_posts}}</sup>{% endif %}</a></li>
         {% if forloop.last %}
             </ul>
         {% endif %}
