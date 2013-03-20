@@ -1,5 +1,8 @@
 from itertools import chain, imap
 
+from markdown import Markdown
+
+
 __all__ = ['fill_tree', 'annotate_tree_properties', ]
 
 def _mark_as_root_path(comment):
@@ -71,3 +74,9 @@ def annotate_tree_properties(comments):
 
     old.close = range(old.depth)
     yield old
+
+
+def safe_markdown(source):
+    markdown = Markdown(output_format='html5', safe_mode='escape',
+                        extensions=['codehilite'])
+    return markdown.convert(source)
