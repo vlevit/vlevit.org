@@ -1,0 +1,5 @@
+<div class="comment-error">
+    {% if form.comment.errors %}<p>{{form.comment.label}}: {{form.comment.errors.0}}</p>{% endif %}
+    {% if form.name.errors %}<p>{{form.name.label}}: {{form.name.errors.0}}</p>{% endif %}
+    {% if form.url.errors %}<p>{{form.url.label}}: {{form.url.errors.0}}</p>{% endif %}
+</div>

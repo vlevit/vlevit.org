@@ -1,0 +1,16 @@
+{% load i18n %}
+
+{% for field in form.hidden_fields %}<div>{{ field }}</div>{% endfor %}
+
+<div id="comment-comment">
+    {{ form.comment }}
+</div>
+
+<div id="comment-preview"></div>
+
+<div id="fields-wrapper">
+    <div id="comment-name"> {{ form.name }} </div>
+    <div id="comment-url"> {{ form.url }} </div>
+</div>
+
+<div style="display:none;"> {{ form.honeypot.label_tag }} {{ form.honeypot }} </div>

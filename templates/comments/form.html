@@ -1,0 +1,20 @@
+{% load comments i18n %}
+
+<div id="wrap_write_comment">
+    <div id="form-comment">
+        <div id="markdown-info">{% trans "You can write here in "%} <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a></div>
+        <div id="preview-link"><a href="{% url threadedcomments.views.preview_comment %}">{% trans "Preview" %}</a></div>
+        <div id="preview-cancel"><a href="">{% trans "Edit" %}</a></div>
+        <div class="clear"></div>
+        <form id="comment-form" action="{% url threadedcomments.views.post_comment %}" method="post">{% csrf_token %}
+            {% if next %}<div><input type="hidden" name="next" value="{{ next }}" /></div>{% endif %}
+            {% include "comments/form_fields.html" %}
+            <div id="comment-error"></div>
+            <div id="comment-submit">
+                <input type="submit" name="post" class="submit-post" value="{% trans "Post" %}" />
+                <!-- <input type="submit" name="preview" class="submit-preview" value="{% trans "Preview" %}" /> -->
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+</div>

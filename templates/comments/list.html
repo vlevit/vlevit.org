@@ -1,0 +1,42 @@
+{% load i18n threadedcomments_tags %}
+
+{% comment %}
+<dl id="comments">
+  {% for comment in comment_list %}
+    <dt id="c{{ comment.id }}">
+        {{ comment.submit_date }} - {{ comment.name }}
+    </dt>
+    <dd>
+        <p>{{ comment.comment }}</p>
+    </dd>
+  {% endfor %}
+</dl>
+{% endcomment %}
+
+<div class="comments">
+    {% for comment in comment_list|fill_tree|annotate_tree %}{% if not comment.open and not comment.close %}</li>{% endif %}{% if comment.open %}
+        <ul>{% endif %}
+    <li class="comment_li" id="c{{ comment.id }}">{# c## is used by the absolute URL of the Comment model, so keep that as it is. #}
+        <div class="comment">
+            <div class="comment_info">
+                <div class="comment_user">{% if comment.user_url %}<a href="{{ comment.user_url }}">{{ comment.user_name }}</a>{% else %}{{ comment.user_name }}{% endif %}</div>
+                <div class="comment_date">
+                    {{ comment.submit_date|date:"d M Y, H:i" }}
+                </div>
+            </div>
+            <div class="comment_text">
+                {#{ comment.comment }#}
+                {{ comment.comment_html|safe }}
+            </div>
+            <div class="reply_block">
+                <span class="comment_reply">
+                    <a href="#c{{ comment.id }}" data-comment-id="{{ comment.id }}" class="comment_reply_link">{% trans "Reply" %}</a>
+                </span>
+                <span class="comment_cancel">
+                    <a href="#c0" class="cancel_reply">{% trans "Cancel reply" %}</a>
+                </span>
+            </div>
+        </div>
+        {% for close in comment.close %}</li></ul>{% endfor %}
+    {% endfor %}
+</div>
