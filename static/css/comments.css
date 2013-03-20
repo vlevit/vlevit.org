@@ -1,0 +1,162 @@
+#comment-header {
+  margin-top: 40px;
+}
+
+.comment_li {
+  margin: 20px 0px;
+  list-style: none;
+}
+
+.comment_li ul {
+  padding-left: 50px;
+}
+
+.comments > ul {
+  padding-left: 0px;
+  margin-left: 40px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(200, 195, 183);
+}
+
+.comment_user {
+  font-weight: bold;
+}
+
+.comment_user a{
+  border-style: none;
+}
+
+.comment_date {
+  margin-top: 5px;
+  font-size: 0.75em;
+  color: rgb(200, 195, 183);
+}
+
+.reply_block {
+  margin-top: 12px;
+  font-size: 0.75rem;
+}
+
+.comment_reply {
+  margin-right: 1em;
+}
+
+.comment_cancel {
+  display: none;
+}
+
+.reply_block a{
+  color: rgb(200, 195, 183);
+}
+
+.comment_text {
+  margin-top: 16px;
+}
+
+input, textarea {
+  margin: 0px;
+  border-color: rgb(186, 189, 182);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+input[type="submit"], button {
+  background-color: rgb(237, 237, 237);
+  padding: 8px;
+}
+
+input[type="submit"]:hover , button:hover{
+  background-color: rgb(245, 245, 245);
+  border-color: rgb(136, 138, 133);
+  cursor: pointer;
+}
+
+#form-comment {
+  padding: 0px 10px 0px 0px;    /* (padding: 4px + border: 1px) x 2 */
+  margin: 20px 0px 0px 40px;
+}
+
+#fields-wrapper {
+  margin-top: 7px;
+  display: table;
+  width: 100%;
+}
+
+#id_comment {
+  width: 100%;
+}
+
+#markdown-info {
+  float: left;
+}
+
+#preview-link, #preview-cancel {
+  float: right;
+}
+
+#markdown-info, #preview-link, #preview-cancel {
+  color: rgb(171, 164, 149);
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+}
+
+#markdown-info a, #preview-link a, #preview-cancel a {
+  color: rgb(171, 164, 149);
+  font-size: 0.75rem;
+}
+
+#preview-cancel {
+  display: none;
+}
+
+#comment-preview {
+  display: none;
+}
+
+#comment-name {
+  display: table-cell;
+  padding-right: 7px;
+}
+
+#comment-url {
+  display: table-cell;
+  padding-left: 7px;
+}
+
+#id_name {
+  width: 100%;
+}
+
+#id_url {
+  width: 100%;
+}
+
+#comment-submit {
+  margin-top: 12px;
+  margin-right: -10px;
+  float: right;
+}
+
+#comment-error {
+  margin-top: 7px;
+  margin-right: -10px;
+  background-color: rgb(245, 206, 196);
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(245, 154, 132);
+  border-radius: 4px;
+  display: none;
+}
+
+#comment-error p {
+  text-align: center;
+  margin: 0px;
+  font-weight: bold;
+}
+
+.clear {
+  clear: both;
+}
