@@ -11,7 +11,7 @@ class Blog(models.Model):
         unique_together = (('name', 'language'))
 
     def __unicode__(self):
-        return self.name
+        return "{}: {}".format(self.language, self.name)
 
 
 class Tag(models.Model):
@@ -56,7 +56,7 @@ class Post(models.Model):
         ordering = ['-created']
 
     def __unicode__(self):
-        return "{}: {}: {}".format(self.blog.name, self.language, self.name)
+        return "{}: {}".format(self.blog, self.name)
 
     def clear_tags(self):
         for tag in self.tags.all():
