@@ -78,5 +78,5 @@ def annotate_tree_properties(comments):
 
 def safe_markdown(source):
     markdown = Markdown(output_format='html5', safe_mode='escape',
-                        extensions=['codehilite'])
+                        extensions=['codehilite', 'footnotes'])
     return markdown.convert(source)
