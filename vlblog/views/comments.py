@@ -161,7 +161,7 @@ def export_comments(request, content_dir=settings.CONTENT_DIR):
         comment_dict['author'] = plain(comment.user_name)
         if comment.user_url:
             comment_dict['website'] = plain(comment.user_url)
-        comment_dict['published'] = plain(comment.submit_date)
+        comment_dict['published'] = comment.submit_date
         comment_dict['content'] = literal(comment.comment)
         return comment_dict
 
