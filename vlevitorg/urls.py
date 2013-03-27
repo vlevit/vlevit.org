@@ -19,6 +19,7 @@ urlpatterns += i18n_patterns('',
 urlpatterns += patterns('vlblog.views',
     url(r'^import/blog/', 'posts.scan'),
     url(r'^import/comments/', 'comments.import_comments'),
+    url(r'^export/comments/', 'comments.export_comments'),
 )
 
 urlpatterns += patterns('',
