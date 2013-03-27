@@ -19,6 +19,13 @@ logger = logging.getLogger(__name__)
 
 
 def import_comments(request, content_dir=settings.CONTENT_DIR):
+    """
+    Import all comments found in [content_dir]/[blog]/comments to the database.
+
+    Name of comment file is excepted to be the same (except extension)
+    as for post file.
+
+    """
 
     if 'key' not in request.GET or \
             request.GET['key'] != settings.SECRET_URL_KEY:
