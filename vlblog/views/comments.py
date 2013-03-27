@@ -86,7 +86,7 @@ def import_comments(request, content_dir=settings.CONTENT_DIR):
             # load comment file
             with open(comment_file) as f:
                 try:
-                    comments = yaml.load(f)
+                    comments = yaml.safe_load(f)
                 except yaml.YAMLError, e:
                     logger.error("error loading a comment file: %s", e)
                     continue
