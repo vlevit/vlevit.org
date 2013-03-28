@@ -70,62 +70,6 @@ def read_blog_info(config_path):
     return config
 
 
-@transaction.commit_on_success
-def save_post(post_dict, blog_info, post_pk=None):
-    """
-    Add a new post to the database or if post_pk is not None, update
-    that post.
-
-    """
-    try:
-        blog = models.Blog.objects.get(name=blog_info['blog'],
-                                       language=blog_info['language'])
-    except models.Blog.DoesNotExist:
-        blog = models.Blog(name=blog_info['blog'],
-                           language=blog_info['language'],
-                           description=blog_info['description'])
-        blog.save()
-    else:
-        if blog.description != blog_info['description'] or \
-                blog.language != blog_info['language']:
-            blog.description = blog_info['description']
-            blog.language = blog_info['language']
-            blog.save()
-    tags = []
-    if post_pk is not None:         # remove tags
-        post = models.Post.objects.get(pk=post_pk)
-        post.clear_tags()
-    for tagname in post_dict['tags']:
-        tag = models.Tag.new_tag(tagname, blog, blog_info['language'])
-        tag.save()
-        tags.append(tag)
-    post = models.Post(
-        file=post_dict['file'],
-        file_digest=post_dict['file_digest'],
-        blog=blog,
-        name=post_dict['name'],
-        created=post_dict['created'],
-        title=post_dict['title'],
-        body=post_dict['body'],
-        excerpt=post_dict['excerpt']
-    )
-    post.pk = post_pk
-    post.save()
-    post.tags.add(*tags)
-
-
-def rename_post(post_pk, new_file, new_name=None):
-    post = models.Post.objects.get(pk=post_pk)
-    post.file = new_file
-    if new_name:
-        post.name = new_name
-    post.save()
-
-
-def delete_post(post_pk):
-    models.Post.objects.get(pk=post_pk).delete()
-
-
 def calc_digest(path):
     with open(path) as f:
         text = f.read()
@@ -137,7 +81,7 @@ def name_from_file(relpath):
     return re.sub('[^\w-]', '-', basename[:basename.rfind('.')])
 
 
-def load_post(content_dir, relpath, blog_info, digest=None):
+def load_post(content_dir, relpath, file_as_name=False, digest=None):
 
     def add_missing_keys(post_dict):
         optional = ('title', 'excerpt')
@@ -160,7 +104,7 @@ def load_post(content_dir, relpath, blog_info, digest=None):
         logger.error(e)
         return
     post_dict = {}
-    if blog_info['file_as_name']:
+    if file_as_name:
         post_dict['name'] = name_from_file(relpath)
     context = Context()
     body = template.render(context)
@@ -217,6 +161,8 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
             logger.error(unicode(e))
             logger.info("directory %s skipped", root)
             continue
+        blog = models.Blog.get_or_create(
+            blog_info['blog'], blog_info['language'], blog_info['description'])
         for filename in filter(lambda s: s.endswith('.markdown') or
                                s.endswith('.md'), files):
             abspath = path.join(root, filename)
@@ -235,20 +181,20 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
                     new_name = None
                     if blog_info['file_as_name']:
                         new_name = name_from_file(relpath)
-                    rename_post(post_pk, relpath, new_name)
+                    models.Post.rename(post_pk, relpath, new_name)
                     renamed.add(digest)
                     logger.info("%s renamed to %s", old_file, relpath)
                     continue
                 else:
                     n_new += 1
             post_dict = load_post(content_dir, relpath,
-                                  blog_info, digest=digest)
+                                  blog_info['file_as_name'], digest=digest)
             if not post_dict:
                 logger.info("%s skipped", abspath)
                 n_skipped += 1
                 continue
             try:
-                save_post(post_dict, blog_info, post_pk=post_pk)
+                models.Post.insert_or_update(post_dict, blog, post_pk)
             except Exception, e:
                 n_skipped += 1
                 logger.exception('%s skipped: %s', abspath, e)
@@ -256,7 +202,7 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
                 logger.info('%s imported', abspath)
     for digest in set(removed).difference(renamed):
         post_pk, old_file = removed[digest]
-        delete_post(post_pk)
+        models.Post.delete(post_pk)
         logger.info('%s deleted', old_file)
     logger.info("%d new posts, %d changed, %d unchanged, %d removed, "
                 "%d renamed, %d skipped , %d imported", n_new, len(modified),
