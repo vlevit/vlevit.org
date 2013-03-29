@@ -1,16 +1,14 @@
-import hashlib
 import logging
 import os
-import re
 from os import path
 
 from django.template.loader import BaseLoader
 from django.template import Context, TemplateSyntaxError
-from django.db import transaction
-from markdown import Markdown
+
 
 from vlevitorg import settings
 from vlblog import models
+from vlblog import utils
 
 
 logger = logging.getLogger(__name__)
@@ -29,7 +27,7 @@ class PostLoader(BaseLoader):
         tl_path = path.join(template_dirs[0], template_name)
         with open(tl_path) as f:
             text = f.read().decode('UTF-8')
-        output = expand_template_tags(text)
+        output = utils.expand_template_tags(text)
         output = POST_TEMPLATE.format(content=output)
         return output, tl_path
 
@@ -70,17 +68,6 @@ def read_blog_info(config_path):
     return config
 
 
-def calc_digest(path):
-    with open(path) as f:
-        text = f.read()
-        return hashlib.sha1(text).hexdigest()
-
-
-def name_from_file(relpath):
-    basename = path.basename(relpath)
-    return re.sub('[^\w-]', '-', basename[:basename.rfind('.')])
-
-
 def load_post(content_dir, relpath, file_as_name=False, digest=None):
 
     def add_missing_keys(post_dict):
@@ -105,15 +92,15 @@ def load_post(content_dir, relpath, file_as_name=False, digest=None):
         return
     post_dict = {}
     if file_as_name:
-        post_dict['name'] = name_from_file(relpath)
+        post_dict['name'] = utils.name_from_file(relpath)
     context = Context()
     body = template.render(context)
     post_dict.update(context.get('vars', {}))
     if 'excerpt' in post_dict:
-        post_dict['excerpt'] = markdown_convert(post_dict['excerpt'])
-    post_dict['body'] = markdown_convert(body)
+        post_dict['excerpt'] = utils.markdown_convert(post_dict['excerpt'])
+    post_dict['body'] = utils.markdown_convert(body)
     post_dict['file'] = relpath
-    post_dict['file_digest'] = digest if digest else calc_digest(abspath)
+    post_dict['file_digest'] = digest if digest else utils.calc_digest(abspath)
     add_missing_keys(post_dict)
     missing = missing_required_keys(post_dict)
     if missing:
@@ -133,7 +120,7 @@ def detect_changes(content_dir, force_reimport=False):
             if force_reimport:
                 modified[abspath] = (post.pk, None)
             else:
-                digest = calc_digest(abspath)
+                digest = utils.calc_digest(abspath)
                 if digest == post.file_digest:
                     unmodified.add(abspath)
                 else:
@@ -174,13 +161,13 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
             elif abspath in modified:
                 post_pk, digest = modified[abspath]
             else:
-                digest = calc_digest(abspath)
+                digest = utils.calc_digest(abspath)
                 logger.debug("%s digest: %s", relpath, digest)
                 if digest in removed:  # file renamed
                     post_pk, old_file = removed[digest]
                     new_name = None
                     if blog_info['file_as_name']:
-                        new_name = name_from_file(relpath)
+                        new_name = utils.name_from_file(relpath)
                     models.Post.rename(post_pk, relpath, new_name)
                     renamed.add(digest)
                     logger.info("%s renamed to %s", old_file, relpath)
@@ -213,58 +200,3 @@ def scan_filesystem(content_dir, unmodified=set(), modified={}, removed={}):
 def scan(content_dir=settings.CONTENT_DIR, force_reimport=False):
     unmodified, modified, removed = detect_changes(content_dir, force_reimport)
     scan_filesystem(content_dir, unmodified, modified, removed)
-
-
-TAG_RE = re.compile(r'/(?P<tag>\w+)(:\s*(?P<value>.*))?\s*$', re.UNICODE)
-
-
-def expand_template_tags(source):
-    """
-    Replace short tags with django templates tags
-
-    Example:
-    /tag: value
-    is replaced with
-    {% tag "value" %}
-
-    """
-    result = []
-    for line in source.splitlines():
-        m = TAG_RE.match(line)
-        if m:
-            tag, value = m.group('tag'), m.group('value')
-            if value:
-                result.append(u"{{% {} \"{}\" %}}".format(tag, value))
-            else:
-                result.append(u"{{% {} %}}".format(tag))
-        else:
-            result.append(line + u'\n')
-    return u''.join(result)
-
-
-def attr_list_strict():
-    """
-    Attribute Lists Markdown Extension Hack
-
-    Syntax for attribute list is {: ... }, but the colon is optional. This
-    syntax clashes with django templates (the extension interprets django tags
-    as attribute lists). This hack makes the colon mandatory.
-
-    """
-    import markdown.extensions.attr_list as al
-    BASE_RE = r'\{\:([^\}]*)\}'
-    al.AttrListTreeprocessor.HEADER_RE = re.compile(r'[ ]*%s[ ]*$' % BASE_RE)
-    al.AttrListTreeprocessor.BLOCK_RE = re.compile(r'\n[ ]*%s[ ]*$' % BASE_RE)
-    al.AttrListTreeprocessor.INLINE_RE = re.compile(r'^%s' % BASE_RE)
-    return al.AttrListExtension()
-
-
-def markdown_convert(source):
-    """
-    Return a valid django template for markdown-formatted source.
-
-    """
-    markdown = Markdown(output_format='html5',
-                        extensions=['footnotes', 'toc',
-                                    'codehilite', attr_list_strict()])
-    return markdown.convert(source)
