@@ -6,6 +6,8 @@ class Blog(models.Model):
     name = models.CharField(max_length=50, unique=True)
     language = models.CharField(max_length=5)
     description = models.CharField(max_length=200, blank=True)
+    template = models.CharField(max_length=50)
+    list_template = models.CharField(max_length=50)
 
     class Meta:
         unique_together = (('name', 'language'))
@@ -14,25 +16,31 @@ class Blog(models.Model):
         return "{}: {}".format(self.language, self.name)
 
     @classmethod
-    def get_or_create(cls, name, language, description):
+    def get_or_create(cls, **kwargs):
         """
         Return an existing Blog object with specified name and language.
-        If specified and existing descriptions differ, update the field to new
-        description.
 
-        If blog with specified language and description doesn't exist,
-        create and return a new blog.
+        If some specified arguments and existing fields differ, update fields
+        to new specified values.
+
+        If blog with specified name and language doesn't exist, create and
+        return a new blog.
 
         """
+        save = False
         try:
-            blog = Blog.objects.get(name=name, language=language)
+            blog = Blog.objects.get(name=kwargs['name'],
+                                    language=kwargs['language'])
         except Blog.DoesNotExist:
-            blog = Blog(name=name, language=language, description=description)
-            blog.save()
+            blog = Blog(**kwargs)
+            save = True
         else:
-            if blog.description != description:
-                blog.description = description
-                blog.save()
+            for fname in blog._meta.get_all_field_names():
+                if fname in kwargs and getattr(blog, fname) != kwargs[fname]:
+                    setattr(blog, fname, kwargs[fname])
+                    save = True
+        if save:
+            blog.save()
         return blog
 
 

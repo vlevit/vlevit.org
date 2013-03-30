@@ -80,7 +80,7 @@ class BaseConfLoader(object):
 
 class BlogConfLoader(BaseConfLoader):
 
-    required = ('blog', 'language', 'description')
+    required = ('blog', 'language', 'description', 'template', 'list_template')
     optional = {'file_as_name': False}
     types = {'file_as_name': bool}
 
@@ -279,8 +279,11 @@ class BlogImporter(BaseImporter):
         if blog_key in self._blog_cache:
             blog = self._blog_cache[blog_key]
         else:
-            blog = models.Blog.get_or_create(
-                conf['blog'], conf['language'], conf['description'])
+            data = conf.copy()
+            data['name'] = data['blog']
+            data.pop('blog')
+            data.pop('file_as_name')
+            blog = models.Blog.get_or_create(**data)
             # keep only the last blog in cache
             self._blog_cache.clear()
             self._blog_cache[blog_key] = blog

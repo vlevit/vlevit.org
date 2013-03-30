@@ -23,7 +23,7 @@ def post(request, blog, post):
     blog_obj = get_object_or_404(models.Blog, name=blog,
                                  language=request.LANGUAGE_CODE)
     post_obj = get_object_or_404(models.Post, blog=blog_obj, name=post)
-    return render(request, 'tech_post.html', {'post': post_obj})
+    return render(request, blog_obj.template, {'post': post_obj})
 
 
 def post_list(request, blog, tag=None):
@@ -33,5 +33,5 @@ def post_list(request, blog, tag=None):
         posts = get_list_or_404(models.Post, blog=blog_obj, tags__name=tag)
     else:
         posts = get_list_or_404(models.Post, blog=blog_obj)
-    return render(request, 'tech_post_list.html',
+    return render(request, blog_obj.list_template,
                   {'blog': blog_obj, 'posts': posts})
