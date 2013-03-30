@@ -56,7 +56,6 @@ class ExcerptNode(template.Node):
         self.show = show
 
     def render(self, context):
-        logger.debug('FieldNode render')
         excerpt = self.nodelist.render(context)
         if 'vars' not in context.dicts[0]:
             context.dicts[0]['vars'] = {}
