@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 
 from vlevitorg import settings
 from vlblog import models
-from vlblog import scanner
+from vlblog import importers
 
 
 def scan(request):
@@ -14,7 +14,7 @@ def scan(request):
     force_reimport = False
     if 'force_reimport' in request.GET:
         force_reimport = True
-    blog_importer = scanner.BlogImporter(settings.CONTENT_DIR)
+    blog_importer = importers.BlogImporter(settings.CONTENT_DIR)
     blog_importer.import_all(force_reimport=force_reimport)
     return HttpResponse('See log', content_type="text/plain")
 

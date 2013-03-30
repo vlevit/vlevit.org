@@ -12,7 +12,7 @@ from threadedcomments.models import ThreadedComment
 from threadedcomments.util import safe_markdown
 from vlblog import models
 from vlblog import utils
-from vlblog.scanner import BlogConfLoader, ConfLoaderError
+from vlblog.importers import BlogConfLoader, ConfLoaderError
 from vlevitorg import settings
 
 
