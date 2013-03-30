@@ -11,7 +11,8 @@ import yaml
 from threadedcomments.models import ThreadedComment
 from threadedcomments.util import safe_markdown
 from vlblog import models
-from vlblog.scanner import read_blog_info, name_from_file, BlogInfoError
+from vlblog import utils
+from vlblog.scanner import BlogConfLoader, ConfLoaderError
 from vlevitorg import settings
 
 
@@ -33,6 +34,7 @@ def import_comments(request, content_dir=settings.CONTENT_DIR):
                             content_type="text/plain")
 
     blog_info_cache = {}
+    conf_loader = BlogConfLoader()
 
     # keep timezone info for datetime objects
     yaml.add_constructor(u'tag:yaml.org,2002:timestamp',
@@ -54,8 +56,8 @@ def import_comments(request, content_dir=settings.CONTENT_DIR):
             blog_info = blog_info_cache['root_parent']
         else:
             try:
-                blog_info = read_blog_info(blog_conf)
-            except BlogInfoError, e:
+                blog_info = conf_loader.load(blog_conf)
+            except ConfLoaderError, e:
                 logger.error(unicode(e))
                 logger.info("directory %s skipped", root)
                 continue
@@ -76,7 +78,7 @@ def import_comments(request, content_dir=settings.CONTENT_DIR):
             if not comment_file.endswith('.yaml'):
                 continue
             comment_file = path.join(root, comment_file)
-            post_name = name_from_file(comment_file)
+            post_name = utils.name_from_file(comment_file)
             try:
                 post = models.Post.objects.get(blog=blog, name=post_name)
             except models.Post.DoesNotExist:

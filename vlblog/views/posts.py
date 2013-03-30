@@ -14,7 +14,8 @@ def scan(request):
     force_reimport = False
     if 'force_reimport' in request.GET:
         force_reimport = True
-    scanner.scan(force_reimport=force_reimport)
+    blog_importer = scanner.BlogImporter(settings.CONTENT_DIR)
+    blog_importer.import_all(force_reimport=force_reimport)
     return HttpResponse('See log', content_type="text/plain")
 
 
