@@ -15,10 +15,10 @@ def import_entries(request, what):
     if 'force_reimport' in request.GET:
         force_reimport = True
     if what in ('blog', 'all'):
-        blog_importer = importers.BlogImporter(settings.CONTENT_DIR)
+        blog_importer = importers.BlogImporter(settings.BLOG_DIR)
         blog_importer.import_all(force_reimport=force_reimport)
     if what in ('pages', 'all'):
-        pages_importer = importers.PagesImporter(settings.CONTENT_DIR)
+        pages_importer = importers.PagesImporter(settings.PAGES_DIR)
         pages_importer.import_all(force_reimport=force_reimport)
     return HttpResponse('See log', content_type="text/plain")
 

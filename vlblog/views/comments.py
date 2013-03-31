@@ -19,9 +19,9 @@ from vlevitorg import settings
 logger = logging.getLogger(__name__)
 
 
-def import_comments(request, content_dir=settings.CONTENT_DIR):
+def import_comments(request, blog_dir=settings.BLOG_DIR):
     """
-    Import all comments found in [content_dir]/[blog]/comments to the database.
+    Import all comments found in [blog_dir]/[blog]/comments to the database.
 
     Name of comment file is excepted to be the same (except extension)
     as for post file.
@@ -40,7 +40,7 @@ def import_comments(request, content_dir=settings.CONTENT_DIR):
     yaml.add_constructor(u'tag:yaml.org,2002:timestamp',
                          lambda cls, node: parse_datetime(node.value))
 
-    for root, dirs, files in os.walk(content_dir):
+    for root, dirs, files in os.walk(blog_dir):
 
         # we are interested only in comments directories
         if not root.endswith('/comments'):
@@ -132,12 +132,12 @@ def import_comments(request, content_dir=settings.CONTENT_DIR):
     return HttpResponse('<html><body>See log</body></html>')
 
 
-def export_comments(request, content_dir=settings.CONTENT_DIR):
+def export_comments(request, blog_dir=settings.BLOG_DIR):
     """
     Export all Post comments in database to readable yaml files.
 
     One yaml file is created per post with comments and is put under
-    [content_dir]/[blog]/exported_comments directory.
+    [blog_dir]/[blog]/exported_comments directory.
 
     """
     if 'key' not in request.GET or \
@@ -196,7 +196,7 @@ def export_comments(request, content_dir=settings.CONTENT_DIR):
 
         if comment_list:
             comment_dir = "{}/{}/exported_comments".format(
-                content_dir, post.blog.name)
+                blog_dir, post.blog.name)
             if not path.exists(comment_dir):
                 try:
                     os.mkdir(comment_dir)
