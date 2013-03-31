@@ -319,12 +319,7 @@ class BlogImporter(BaseImporter):
         data = self.loader.load(relpath, conf, digest)
         if not data:
             return False
-        try:
-            models.Post.insert_or_update(data, blog, pk)
-        # TODO: replace with more specific exceptions
-        except Exception, e:
-            logger.exception("error while importing post: %s", e)
-            return False
+        models.Post.insert_or_update(data, blog, pk)
         return True
 
     def rename_entry(self, pk, new_relpath, conf):
@@ -335,7 +330,8 @@ class BlogImporter(BaseImporter):
         models.Post.rename(pk, new_relpath, new_name)
 
     def remove_entry(self, pk):
-        models.Post.delete(pk)
+        post = models.Post.objects.get(pk=pk)
+        post.delete()
 
 
 class PagesImporter(BaseImporter):
@@ -363,8 +359,7 @@ class PagesImporter(BaseImporter):
             new_name = utils.name_from_file(new_relpath)
         else:
             new_name = None
-        page = models.Page.objects.get(pk=pk)
-        page.rename(new_relpath, new_name)
+        models.Page.rename(pk, new_relpath, new_name)
 
     def remove_entry(self, pk):
         models.Page.objects.filter(pk=pk).delete()
