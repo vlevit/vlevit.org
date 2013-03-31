@@ -87,6 +87,15 @@ class BlogConfLoader(BaseConfLoader):
     filename = 'blog.conf'
 
 
+class PagesConfLoader(BaseConfLoader):
+
+    required = ('language', 'template')
+    optional = {'file_as_name': False}
+    types = {'file_as_name': bool}
+
+    filename = 'pages.conf'
+
+
 class BaseLoader(object):
 
     required = ()
@@ -128,10 +137,26 @@ class PostLoader(BaseLoader):
     required = ('created', 'name')
     optional = {'title': '', 'excerpt': '', 'tags': []}
 
-    def load(self, relpath, file_as_name=False, digest=None):
-        data = super(PostLoader, self).load(relpath, file_as_name, digest)
-        if data['excerpt']:
+    def load(self, relpath, conf, digest=None):
+        data = super(PostLoader, self).load(relpath, conf, digest)
+        if data and data['excerpt']:
             data['excerpt'] = utils.markdown_convert(data['excerpt'])
+        return data
+
+
+class PageLoader(BaseLoader):
+
+    required = ('name',)
+    optional = {'title': ''}
+
+    def load(self, relpath, conf, digest=None):
+        data = conf.copy()
+        data.pop('file_as_name', None)
+        page_data = super(PageLoader, self).load(relpath, conf, digest)
+        if page_data:
+            data.update(page_data)
+        else:
+            data = None
         return data
 
 
@@ -311,3 +336,35 @@ class BlogImporter(BaseImporter):
 
     def remove_entry(self, pk):
         models.Post.delete(pk)
+
+
+class PagesImporter(BaseImporter):
+
+    def __init__(self, base_dir):
+        super(PagesImporter, self).__init__(base_dir)
+        self.loader = PageLoader(base_dir)
+        self.conf_loader = PagesConfLoader()
+        self.model = models.Page
+
+    def import_entry(self, relpath, conf, digest=None, pk=None):
+        data = self.loader.load(relpath, conf, digest)
+        if not data:
+            return False
+        print data
+        if pk:
+            models.Page.objects.filter(pk=pk).update(**data)
+        else:
+            page = models.Page(**data)
+            page.save()
+        return True
+
+    def rename_entry(self, pk, new_relpath, conf):
+        if conf['file_as_name']:
+            new_name = utils.name_from_file(new_relpath)
+        else:
+            new_name = None
+        page = models.Page.objects.get(pk=pk)
+        page.rename(new_relpath, new_name)
+
+    def remove_entry(self, pk):
+        models.Page.objects.filter(pk=pk).delete()

@@ -150,3 +150,28 @@ class Post(models.Model):
                 tag.n_posts -= 1
                 tag.save()
         self.tags.clear()
+
+
+class Page(models.Model):
+
+    # relative path to the source starting from CONTENT_DIR
+    file = models.CharField(max_length=256)
+    file_digest = models.CharField(max_length=40)
+    # unique name per language, the part of url
+    name = models.SlugField(max_length=50)
+    title = models.CharField(max_length=200, blank=True)
+    body = models.TextField()
+    language = models.CharField(max_length=5)
+    template = models.CharField(max_length=50)
+
+    class Meta:
+        unique_together = (('name', 'language'))
+
+    def __unicode__(self):
+        return "{}: {}".format(self.language, self.name)
+
+    def rename(self, new_file, new_name=None):
+        self.file = new_file
+        if new_name:
+            self.name = new_name
+        self.save()
