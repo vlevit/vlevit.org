@@ -3,14 +3,14 @@ from django.db import models
 
 class Blog(models.Model):
 
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     language = models.CharField(max_length=5)
     description = models.CharField(max_length=200, blank=True)
     template = models.CharField(max_length=50)
     list_template = models.CharField(max_length=50)
 
     class Meta:
-        unique_together = (('name', 'language'))
+        unique_together = ('name', 'language')
 
     def __unicode__(self):
         return "{}: {}".format(self.language, self.name)
@@ -46,10 +46,13 @@ class Blog(models.Model):
 
 class Tag(models.Model):
 
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     blog = models.ForeignKey(Blog)
     # number of posts with this tag of the same blog
     n_posts = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('name', 'blog')
 
     def __unicode__(self):
         return self.name
@@ -86,7 +89,7 @@ class Post(models.Model):
     excerpt = models.TextField(blank=True)
 
     class Meta:
-        unique_together = (('blog', 'name'))
+        unique_together = ('blog', 'name')
         ordering = ['-created']
 
     def __unicode__(self):
@@ -164,7 +167,7 @@ class Page(models.Model):
     template = models.CharField(max_length=50)
 
     class Meta:
-        unique_together = (('name', 'language'))
+        unique_together = ('name', 'language')
 
     def __unicode__(self):
         return "{}: {}".format(self.language, self.name)
