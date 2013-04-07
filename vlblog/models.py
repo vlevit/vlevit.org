@@ -73,11 +73,18 @@ class Tag(models.Model):
         return tag
 
 
+class File(models.Model):
+    # absolute path to file
+    path = models.CharField(max_length=256, unique=True)
+    digest = models.CharField(max_length=40)
+
+    def __unicode__(self):
+        return self.path
+
+
 class Post(models.Model):
 
-    # relative path to the source starting from BLOG_DIR
-    file = models.CharField(max_length=256)
-    file_digest = models.CharField(max_length=40)
+    file = models.ForeignKey(File)
     blog = models.ForeignKey(Blog)
     # unique name per blog, the part of url
     # also used to link posts of different languages
@@ -96,41 +103,34 @@ class Post(models.Model):
         return "{}: {}".format(self.blog, self.name)
 
     @classmethod
-    def insert_or_update(cls, data, blog, pk=None):
+    def insert_or_update(cls, data, file, blog):
         """
-        If pk is None, create a new post from data and save.
-        If pk is not None, update that post with data and save.
+        Create or update post from data and save it.
 
         data['tags'] is expected to be a list of strings, not objects
 
         """
         data['blog'] = blog
+        data['file'] = file
         tagnames = data.pop('tags')
         tags = []
-        # post update: clear old posts' tags
-        if pk is not None:
-            post = Post.objects.get(pk=pk)
+
+        try:
+            post = Post.objects.get(blog=blog, name=data['name'])
+            pk = post.pk
+        except cls.DoesNotExist:
+            pk = None
+        else:
             post.clear_tags()
         for tagname in tagnames:
             tag = Tag.get_or_create(tagname, blog)
             tag.save()
             tags.append(tag)
+
         post = Post(**data)
         post.pk = pk
         post.save()
         post.tags.add(*tags)
-
-    @classmethod
-    def rename(cls, pk, new_file, new_name=None):
-        """
-        Change Post's file field to a new_file.
-        If new_name is specified, change Post's name too.
-
-        """
-        data = {'new_file': new_file}
-        if new_name:
-            data['new_name'] = new_name
-        Post.objects.filter(pk=pk).update(**data)
 
     def delete(self, *args, **kwargs):
         """
@@ -156,9 +156,7 @@ class Post(models.Model):
 
 class Page(models.Model):
 
-    # relative path to the source starting from PAGES_DIR
-    file = models.CharField(max_length=256)
-    file_digest = models.CharField(max_length=40)
+    file = models.ForeignKey(File)
     # unique name per language, the part of url
     name = models.SlugField(max_length=50)
     title = models.CharField(max_length=200, blank=True)
@@ -171,10 +169,3 @@ class Page(models.Model):
 
     def __unicode__(self):
         return "{}: {}".format(self.language, self.name)
-
-    @classmethod
-    def rename(self, pk, new_file, new_name=None):
-        data = {'new_file': new_file}
-        if new_name:
-            data['new_name'] = new_name
-        Page.objects.filter(pk=pk).update(**data)

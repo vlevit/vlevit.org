@@ -1,9 +1,9 @@
+import codecs
 import logging
 import os
-from os import path
+import os.path
 
-from django.template.loader import BaseLoader as TemplateBaseLoader
-from django.template import Context, TemplateSyntaxError
+from django.template import Context, Template, TemplateSyntaxError
 
 
 from vlblog import models
@@ -13,23 +13,46 @@ from vlblog import utils
 logger = logging.getLogger(__name__)
 
 
-class TemplateLoader(TemplateBaseLoader):
-    is_usable = True
+class TemplateLoader(object):
 
     TEMPLATE = (
         u"{{% load vlblog_tags %}}"
         u"{content}"
     )
 
-    def load_template_source(self, template_name, template_dirs):
-        tl_path = path.join(template_dirs[0], template_name)
-        with open(tl_path) as f:
-            text = f.read().decode('UTF-8')
-        output = utils.expand_template_tags(text)
-        output = self.TEMPLATE.format(content=output)
-        return output, tl_path
+    def load_template(self, path):
+        with codecs.open(path, 'r', 'utf-8') as f:
+            source = f.read()
+        source = self.make_template_string(source)
+        try:
+            template = Template(source)
+        except TemplateSyntaxError, e:
+            template = None
+            logger.error(e)
+        return template
 
-    load_template_source.is_usable = True
+    def load_multiple_templates(self, path):
+        tpl_lines = []
+        with codecs.open(path, 'r', 'utf-8') as f:
+            for line in f:
+                if (line.startswith('---') and tpl_lines and
+                        not tpl_lines[-1].strip()):
+                    src = ''.join(tpl_lines)
+                    tpl_lines = []
+                    source = self.make_template_string(src)
+                    try:
+                        template = Template(source)
+                    except TemplateSyntaxError, e:
+                        template = None
+                        logger.error(e)
+                    yield template
+                else:
+                    tpl_lines.append(line)
+
+    def make_template_string(self, source):
+        expanded = utils.expand_template_tags(source)
+        output = self.TEMPLATE.format(content=expanded)
+        return output
 
 
 class ConfLoaderError(Exception):
@@ -81,8 +104,8 @@ class BaseConfLoader(object):
 class BlogConfLoader(BaseConfLoader):
 
     required = ('blog', 'language', 'description', 'template', 'list_template')
-    optional = {'file_as_name': False}
-    types = {'file_as_name': bool}
+    optional = {'file_as_name': False, 'multi_entries': False}
+    types = {'file_as_name': bool, 'multi_entries': bool}
 
     filename = 'blog.conf'
 
@@ -107,29 +130,36 @@ class BaseLoader(object):
     def missing_required_keys(self, data):
         return [key for key in self.required if key not in data]
 
-    def load(self, relpath, conf, digest=None):
+    def make_data(self, template, path, conf):
         data = self.optional.copy()
-        abspath = path.join(self.base_dir, relpath)
-        tloader = TemplateLoader()
-        try:
-            template, _ = tloader.load_template(relpath, [self.base_dir])
-        except TemplateSyntaxError, e:
-            logger.error(e)
-            return
         if conf['file_as_name']:
-            data['name'] = utils.name_from_file(relpath)
+            data['name'] = utils.name_from_file(path)
         context = Context()
         body = template.render(context)
         data.update(context.get('vars', {}))
         data['body'] = utils.markdown_convert(body)
-        data['file'] = relpath
-        data['file_digest'] = digest if digest else utils.calc_digest(abspath)
         missing = self.missing_required_keys(data)
         if missing:
             logger.error("%s: the following required fields are missing: %s",
-                         abspath, ', '.join(missing))
+                         path, ', '.join(missing))
             return
         return data
+
+    def load(self, path, conf):
+        data = None
+        tloader = TemplateLoader()
+        template = tloader.load_template(path)
+        if template:
+            data = self.make_data(template, path, conf)
+        return data
+
+    def load_multiple(self, path, conf):
+        tloader = TemplateLoader()
+        templates = tloader.load_multiple_templates(path)
+        for template in templates:
+            if template:
+                data = self.make_data(template, path, conf)
+                yield data
 
 
 class PostLoader(BaseLoader):
@@ -137,8 +167,8 @@ class PostLoader(BaseLoader):
     required = ('created', 'name')
     optional = {'title': '', 'excerpt': '', 'tags': []}
 
-    def load(self, relpath, conf, digest=None):
-        data = super(PostLoader, self).load(relpath, conf, digest)
+    def make_data(self, template, path, conf):
+        data = super(PostLoader, self).make_data(template, path, conf)
         if data and data['excerpt']:
             data['excerpt'] = utils.markdown_convert(data['excerpt'])
         return data
@@ -149,10 +179,10 @@ class PageLoader(BaseLoader):
     required = ('name',)
     optional = {'title': ''}
 
-    def load(self, relpath, conf, digest=None):
+    def make_data(self, template, path, conf):
         data = conf.copy()
         data.pop('file_as_name', None)
-        page_data = super(PageLoader, self).load(relpath, conf, digest)
+        page_data = super(PostLoader, self).make_data(template, path, conf)
         if page_data:
             data.update(page_data)
         else:
@@ -168,57 +198,82 @@ class BaseImporter(object):
 
     def __init__(self, base_dir):
         self.base_dir = base_dir
+        self._file_cache = {}
 
-    def import_entry(self, relpath, conf, digest=None, pk=None):
+    def import_entries(self, path, digest, conf):
         """
         Import entry from a file. Must be overridden by a subclass.
 
         """
         raise NotImplementedError
 
-    def rename_entry(self, pk, new_relpath, conf):
+    def rename_entry(self, old_path, new_path, conf):
         """
-        Rename entry identified by pk. Must be overridden by a subclass.
+        Rename entry identified by old_path to new_path.
 
         """
-        raise NotImplementedError
+        file = models.File.objects.get(path=old_path)
+        file.path = new_path
+        file.save()
+        if conf['file_as_name']:
+            new_name = utils.name_from_file(new_path)
+            entry = self.model.objects.get(file=file)
+            entry.name = new_name
+            entry.save()
 
-    def remove_entry(self, pk):
+    def remove_entries(self, pk):
         """
         Remove entry by pk. Must be overridden by a subclass.
 
         """
         raise NotImplementedError
 
+    def get_or_create_file(self, path, digest):
+        if path in self._file_cache:
+            return self._file_cache[path]
+        try:
+            file = models.File.objects.get(path=path)
+        except models.File.DoesNotExist:
+            file = models.File(path=path, digest=digest)
+            file.save()
+        else:
+            if file.digest != digest:
+                file.digest = digest
+                file.save()
+        # keep only the last file in cache
+        self._file_cache.clear()
+        self._file_cache[path] = file
+        return file
+
     def detect_changed_files(self, force_reimport):
         """
         Walk through all entries and verify if files are changed.
 
-        self.model is expected to have file and file_digest attributes.
+        self.model is expected to have File foreign key called file.
 
         Return tuple of unmodified, modified and removed files.
         Returned value representation:
          - unmodified files: set of absolute paths,
-         - modified files: {absolute_path: (primary_key, digest)},
-         - removed files: {digest: (primary_key, absolute_path)}
+         - modified files: {absolute_path: digest},
+         - removed files: {digest: absolute_path}
 
         """
         unmodified = set()
         modified = {}
         removed = {}
-        for entry in self.model.objects.all():
-            abspath = path.join(self.base_dir, entry.file)
-            if path.exists(abspath):
-                if force_reimport:
-                    modified[abspath] = (entry.pk, None)
+
+        # iterate through all files of self.model
+        # is JOIN without WHERE clause possible with django queries?
+        cond = {self.model._meta.object_name.lower() + '__pk__isnull': False}
+        for file in models.File.objects.filter(**cond):
+            if os.path.exists(file.path):
+                digest = utils.calc_digest(file.path)
+                if digest != file.digest or force_reimport:
+                    modified[file.path] = digest
                 else:
-                    digest = utils.calc_digest(abspath)
-                    if digest == entry.file_digest:
-                        unmodified.add(abspath)
-                    else:
-                        modified[abspath] = (entry.pk, digest)
+                    unmodified.add(file.path)
             else:
-                removed[entry.file_digest] = (entry.pk, abspath)
+                removed[file.digest] = file.path
         return unmodified, modified, removed
 
     def import_all(self, force_reimport=False):
@@ -232,8 +287,8 @@ class BaseImporter(object):
         n_new = n_skipped = 0       # new/skipped posts number
 
         for root, dirs, files in os.walk(self.base_dir):
-            conf_path = path.join(root, self.conf_loader.filename)
-            if not path.exists(conf_path):
+            conf_path = os.path.join(root, self.conf_loader.filename)
+            if not os.path.exists(conf_path):
                 logger.info("no %s in %s, directory skipped",
                             self.conf_loader.filename, root)
                 continue
@@ -247,43 +302,41 @@ class BaseImporter(object):
             # search for all markdown files
             for filename in filter(lambda s: s.endswith('.markdown') or
                                    s.endswith('.md'), files):
-                abspath = path.join(root, filename)
-                relpath = abspath[len(self.base_dir) + 1:]
-                digest = None
-                pk = None
+                path = os.path.join(root, filename)
 
                 # skip untouched files
-                if abspath in unmodified:
+                if path in unmodified:
                     continue
                 # reimport modified files
-                elif abspath in modified:
-                    pk, digest = modified[abspath]
+                elif path in modified:
+                    digest = modified[path]
                 # new file?
                 else:
-                    digest = utils.calc_digest(abspath)
+                    digest = utils.calc_digest(path)
                     # file renamed
                     if digest in removed:
-                        pk, old_file = removed[digest]
-                        self.rename_entry(pk, relpath, conf)
+                        old_path = removed[digest]
+                        self.rename_entry(old_path, path, conf)
                         renamed.add(digest)
-                        logger.info("%s renamed to %s", old_file, abspath)
+                        logger.info("%s renamed to %s", old_path, path)
                         continue
                     # new file
                     else:
                         n_new += 1
 
-                ok = self.import_entry(relpath, conf, digest, pk)
+                # import a new file, or reimport existing file
+                ok = self.import_entries(path, digest, conf)
                 if not ok:
-                    logger.info("%s skipped", abspath)
+                    logger.info("%s skipped", path)
                     n_skipped += 1
                 else:
-                    logger.info('%s imported', abspath)
+                    logger.info('%s imported', path)
         for digest in set(removed).difference(renamed):
-            pk, old_file = removed[digest]
-            self.remove_entry(pk)
-            logger.info('%s deleted', old_file)
+            removed_path = removed[digest]
+            self.remove_entries(removed_path)
+            logger.info('%s deleted', removed_path)
 
-        logger.info("%d new entries, %d changed, %d unchanged, %d removed, "
+        logger.info("%d new files, %d changed, %d unchanged, %d removed, "
                     "%d renamed, %d skipped , %d imported",
                     n_new, len(modified), len(unmodified), len(removed) -
                     len(renamed), len(renamed), n_skipped, len(modified) +
@@ -299,39 +352,68 @@ class BlogImporter(BaseImporter):
         self.model = models.Post
         self._blog_cache = {}
 
-    def get_blog(self, conf):
+    def get_or_create_blog(self, conf):
         blog_key = (conf['blog'], conf['language'])
         if blog_key in self._blog_cache:
             blog = self._blog_cache[blog_key]
         else:
             data = conf.copy()
-            data['name'] = data['blog']
-            data.pop('blog')
-            data.pop('file_as_name')
+            data = {
+                'name': conf['blog'],
+                'language': conf['language'],
+                'description': conf['description'],
+                'template': conf['template'],
+                'list_template': conf['list_template'],
+            }
             blog = models.Blog.get_or_create(**data)
             # keep only the last blog in cache
             self._blog_cache.clear()
             self._blog_cache[blog_key] = blog
         return blog
 
-    def import_entry(self, relpath, conf, digest=None, pk=None):
-        blog = self.get_blog(conf)
-        data = self.loader.load(relpath, conf, digest)
-        if not data:
-            return False
-        models.Post.insert_or_update(data, blog, pk)
-        return True
+    def import_entries(self, path, digest, conf):
+        some_imported = False
+        all_imported = True
+        # many posts per file
+        if conf['multi_entries']:
+            post_names = set()
+            for data in self.loader.load_multiple(path, conf):
+                if data:
+                    # file and blog creation must occur only when post is
+                    # loaded successfully
+                    blog = self.get_or_create_blog(conf)
+                    file = self.get_or_create_file(path, digest)
+                    # save post
+                    models.Post.insert_or_update(data, file, blog)
+                    post_names.add(data['name'])
+                    some_imported = True
+                else:
+                    all_imported = False
+            all_imported = some_imported and all_imported
 
-    def rename_entry(self, pk, new_relpath, conf):
-        if conf['file_as_name']:
-            new_name = utils.name_from_file(new_relpath)
+            # delete posts which were removed from a file
+            if all_imported:
+                file_posts = models.Post.objects.filter(file=file)
+                removed_posts = file_posts.exclude(name__in=post_names)
+                for post in removed_posts:
+                    post.delete()   # clean (overridden) deletion
+        # one post per file
         else:
-            new_name = None
-        models.Post.rename(pk, new_relpath, new_name)
+            data = self.loader.load(path, conf)
+            if data:
+                blog = self.get_or_create_blog(conf)
+                file = self.get_or_create_file(path, digest)
+                models.Post.insert_or_update(data, file, blog)
+                some_imported = True
+                all_imported = True
+        return some_imported
 
-    def remove_entry(self, pk):
-        post = models.Post.objects.get(pk=pk)
-        post.delete()
+    def remove_entries(self, path):
+        file = models.File.objects.get(path=path)
+        removed = models.Post.objects.filter(file=file)
+        for post in removed:
+            post.delete()
+        file.delete()
 
 
 class PagesImporter(BaseImporter):
@@ -342,24 +424,20 @@ class PagesImporter(BaseImporter):
         self.conf_loader = PagesConfLoader()
         self.model = models.Page
 
-    def import_entry(self, relpath, conf, digest=None, pk=None):
-        data = self.loader.load(relpath, conf, digest)
+    def import_entries(self, path, digest, conf):
+        data = self.loader.load(path, conf)
         if not data:
             return False
-        print data
-        if pk:
-            models.Page.objects.filter(pk=pk).update(**data)
-        else:
-            page = models.Page(**data)
-            page.save()
+        file = self.get_or_create_file(path)
+        try:
+            page_pk = models.Page.objects.get(file=file).pk
+        except models.Page.DoesNotExist:
+            page_pk = None
+        page = models.Page(**data)
+        page.pk = page_pk
+        page.save()
         return True
 
-    def rename_entry(self, pk, new_relpath, conf):
-        if conf['file_as_name']:
-            new_name = utils.name_from_file(new_relpath)
-        else:
-            new_name = None
-        models.Page.rename(pk, new_relpath, new_name)
-
-    def remove_entry(self, pk):
-        models.Page.objects.filter(pk=pk).delete()
+    def remove_entries(self, path):
+        # delete file and all its pages along with it
+        models.Page.objects.get(path=path).delete()
