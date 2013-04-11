@@ -182,7 +182,7 @@ class PageLoader(BaseLoader):
     def make_data(self, template, path, conf):
         data = conf.copy()
         data.pop('file_as_name', None)
-        page_data = super(PostLoader, self).make_data(template, path, conf)
+        page_data = super(PageLoader, self).make_data(template, path, conf)
         if page_data:
             data.update(page_data)
         else:
@@ -428,12 +428,13 @@ class PagesImporter(BaseImporter):
         data = self.loader.load(path, conf)
         if not data:
             return False
-        file = self.get_or_create_file(path)
+        file = self.get_or_create_file(path, digest)
         try:
             page_pk = models.Page.objects.get(file=file).pk
         except models.Page.DoesNotExist:
             page_pk = None
         page = models.Page(**data)
+        page.file = file
         page.pk = page_pk
         page.save()
         return True
