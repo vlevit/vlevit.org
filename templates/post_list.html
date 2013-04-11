@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{{ blog.description }}{% endblock %}
+
+{% block headlinks %}{% endblock %}
+
+{% block content %}
+    {% for post in posts %}
+        {% include "post_block.html" %}
+    {% endfor %}
+{% endblock %}

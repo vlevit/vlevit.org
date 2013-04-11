@@ -8,7 +8,7 @@ body {
 }
 
 #container {
-  background-color: rgb(243, 244, 234) ;
+  background-color: rgb(243, 244, 234);
   max-width: 1000px;
   width: 100%;
   min-height: 500px;
@@ -114,3 +114,6 @@ ul.tag_list li {
   list-style-type: none;
 }
 
+.clear {
+  clear: both;
+}

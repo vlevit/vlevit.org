@@ -1,9 +1,10 @@
-h1 {
-  font-size: 1.1em;
+#content{
+  /* increase left margin by 10px */
+  margin-left: 30px;
 }
 
-p {
-  margin-left: 1em;
+h1 {
+  font-size: 1.1em;
 }
 
 .entry {

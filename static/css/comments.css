@@ -156,7 +156,3 @@ input[type="submit"]:hover , button:hover{
   margin: 0px;
   font-weight: bold;
 }
-
-.clear {
-  clear: both;
-}
