@@ -1,8 +1,10 @@
 {% load i18n vlblog_tags %}
 
 <div class="entry">
-    <div class="header"><h1><a href="{% url post post.blog.name post.name %}">{{ post.title|safe }}</a></h1></div>
-    {{ post.body|safe }}
+    <div class="entry-header"><h1><a href="{% url post post.blog.name post.name %}">{{ post.title|safe }}</a></h1></div>
+    <div class="entry-body">
+        {{ post.body|safe }}
+    </div>
     <div class="entry-footer">
         <div class="date">
             {% trans "Published:" %} {{ post.created|timesince|upto:","}} {% trans "ago" %}

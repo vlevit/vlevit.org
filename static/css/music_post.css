@@ -13,7 +13,7 @@ body {
   background-color: white;
   margin-bottom: 40px;
   box-shadow: 0px 15px 5px -10px  rgb(39, 78, 106);
-  padding: 10px;
+  padding: 0.5em 1em 1em 1em;
 }
 
 
@@ -25,28 +25,24 @@ p, ul {
   text-align: left;
 }
 
-p {
-  margin-left: 1em;
-  margin-right: 1em;
-}
-
-.header {
-  margin-left: 1em;
-}
-
-.date {
-  float: left;
+.entry-header, .entry-body {
+  margin: auto 1em;
 }
 
 .footer-ref {
   float: right;
 }
 
+.date {
+  float: left;
+}
+
 .entry-footer {
+  margin-top: 1.5em;
   background-color: rgb(234, 234, 234);
-  padding: 4px 1em;
+  padding: 4px 8px;
   border-radius: 4px;
-  font-size: 0.9em;
+  font-size: 0.85em;
   text-align: center;
 }
 
@@ -56,4 +52,9 @@ h1 a, .entry-footer a {
 
 a {
   color: rgb(110, 113, 115);
+}
+
+.image-block {
+  text-align: center;
+  margin: 1.5em auto;
 }
