@@ -1,7 +1,8 @@
-from django import template
-from django.utils.dateparse import parse_datetime
 import logging
 
+from django import template
+from django.template.defaultfilters import stringfilter
+from django.utils.dateparse import parse_datetime
 
 logger = logging.getLogger(__name__)
 
@@ -74,3 +75,10 @@ def excerpt(parser, token):
     nodelist = parser.parse(('endexcerpt', ))
     parser.delete_first_token()
     return ExcerptNode(nodelist, show)
+
+
+# useful in conjunction with timesince tag: http://stackoverflow.com/a/6481920
+@register.filter(is_safe=True)
+@stringfilter
+def upto(value, delimiter=None):
+    return value.split(delimiter)[0]
