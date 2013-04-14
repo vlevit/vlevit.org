@@ -2,6 +2,10 @@ body {
   font-size: 81.25%;             /* most likely 13px */
 }
 
+header ul {
+  margin-left: 20px;
+}
+
 #container {
   background-color: rgb(232, 228, 209);
   border: none;

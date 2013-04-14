@@ -4,9 +4,27 @@ body {
   font-size: 81.25%;             /* most likely 13px */
 }
 
+header {
+  width: 100%;
+  max-width: 550px;
+  margin-left: 10%;
+}
+
+header ul {
+  margin-left: 20px;
+}
+
 #container {
   background-color:  rgb(59, 98, 126);;
   border: none;
+  margin: 0px auto 0px 10%;
+  width: 100%;
+  max-width: 550px;
+}
+
+#content {
+  width: auto;
+  float: none;
 }
 
 .entry {
@@ -64,4 +82,19 @@ a {
 .image-block {
   text-align: center;
   margin: 1.5em auto;
+}
+
+
+@media screen and (max-width: 800px) {
+  #container, header {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #content, header ul {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 }
