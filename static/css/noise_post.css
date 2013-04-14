@@ -27,6 +27,20 @@ header ul {
   float: none;
 }
 
+sidebar {
+  display: none;
+}
+
+ul.sitenav li a {
+  border-color: white;
+  color: white;
+}
+
+ul.sitenav li a:hover{
+	background: white;
+	color: rgb(128, 128, 128);
+}
+
 .entry {
   background-color: white;
   margin-bottom: 40px;

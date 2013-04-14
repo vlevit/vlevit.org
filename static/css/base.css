@@ -9,6 +9,7 @@ header {
   width: 100%;
   max-width: 1000px;
   margin: 20px auto;
+  font-size: 13px;
 }
 
 #container {

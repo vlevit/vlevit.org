@@ -11,6 +11,10 @@ header ul {
   border: none;
 }
 
+#content {
+  margin-top: 0px;
+}
+
 .entry {
   background-color: white;
   background-color: rgb(243, 244, 234);
