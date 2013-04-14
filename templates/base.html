@@ -1,4 +1,5 @@
-<!DOCTYPE html>{% load i18n %}
+{% load i18n %}
+<!DOCTYPE html>
 <html lang="{{LANGUAGE_CODE}}">
     <head>
         <meta charset="UTF-8">
@@ -10,9 +11,13 @@
         {% block headlinks %}{% endblock %}
     </head>
     <body>
+        <header>
+            {% include "sitenav.html" %}
+        </header>
         <div id="container">
-            <div id="sidebar">{% block sidebar %}{% endblock %}</div>
             <div id="content">{% block content %}{% endblock %}</div>
+            <div id="sidebar">{% block sidebar %}{% endblock %}</div>
+            <div class="clear"></div>
         </div>
     </body>
 </html>

@@ -3,8 +3,12 @@ body {
   background-color: rgb(232, 228, 209);
   font-family: sans-serif;
   font-size: 100%;             /* most likely 16px */
-  margin-top: -20px;
-  margin-bottom: -20px;
+}
+
+header {
+  width: 100%;
+  max-width: 1000px;
+  margin: 20px auto;
 }
 
 #container {
@@ -18,8 +22,6 @@ body {
 }
 
 #sidebar {
-  float: right;
-  width: 30%;
   position: absolute;
   left: 70%;
   margin: 20px 20px 20px 40px;
@@ -30,8 +32,35 @@ body {
   float: left;
   width: 70%;
   margin-left: 20px;
-  margin: 20px 0px 20px 20px;
+  margin: 20px;
 }
+
+#content > h1 {
+  margin-top: 0px;
+}
+
+ul.sitenav {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+ul.sitenav li {
+  display: inline;
+  margin: 0px 4px 0px 0px;
+}
+
+ul.sitenav li a {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(128, 128, 128);
+  padding: 4px 6px;
+  color: rgb(128, 128, 128);
+  font-weight: bold;
+}
+
+ul.sitenav li a:hover{
+	background: rgb(128, 128, 128);
+	color: white;
 }
 
 p, ul {
@@ -125,5 +154,6 @@ ul.tag_list li {
 
   #content {
     width: auto;
+    float: none;
   }
 }
