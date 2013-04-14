@@ -117,3 +117,13 @@ ul.tag_list li {
 .clear {
   clear: both;
 }
+
+@media screen and (max-width: 600px) {
+  #sidebar {
+    display: none;
+  }
+
+  #content {
+    width: auto;
+  }
+}
