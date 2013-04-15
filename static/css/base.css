@@ -12,6 +12,14 @@ header {
   font-size: 13px;
 }
 
+.langbar {
+  float: right;
+}
+
+.langbar a {
+  border-bottom-style: none;
+}
+
 #container {
   position: relative;
   background-color: rgb(243, 244, 234);
@@ -43,6 +51,10 @@ header {
 ul.sitenav {
   list-style-type: none;
   padding-left: 0px;
+}
+
+ul.sitenav {
+  display: inline;
 }
 
 ul.sitenav li {

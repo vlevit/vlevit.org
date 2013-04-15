@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}{{ blog.description }}{% endblock %}
 {% block headlinks %}
@@ -7,6 +8,18 @@
 
 {% block tech_active %}active{% endblock %}
 {% block tech_active_ru %}active{% endblock %}
+
+{% block langbar %}
+    {% if LANGUAGE_CODE == "en" %}
+        {% language "ru" %}
+            English | <a href="{% url post_list blog.name %}">Русский</a>
+        {% endlanguage %}
+    {% else %}
+        {% language "en" %}
+            <a href="{% url post_list blog.name %}">English</a> | Русский
+        {% endlanguage %}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     {% for post in posts %}

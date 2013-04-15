@@ -11,6 +11,7 @@
         {% block headlinks %}{% endblock %}
     </head>
     <body>
+
         <header>
             <ul class="sitenav">
                 {% if LANGUAGE_CODE == "en" %}
@@ -29,11 +30,23 @@
                     <li><a class="{% block noise_active_ru %}{% endblock %}" href="{% url post_list "noise" %}">Шум<sup></sup></a></li>
                 {% endif %}
             </ul>
+
+            <div class="langbar">
+                {% block langbar %}
+                    {% if LANGUAGE_CODE == "en" %}
+                        English | <a href="/ru/">Русский</a>
+                    {% else %}
+                        <a href="/en/">English</a> | Русский
+                    {% endif %}
+                {% endblock %}
+            </div>
         </header>
+
         <div id="container">
             <div id="content">{% block content %}{% endblock %}</div>
             <div id="sidebar">{% block sidebar %}{% endblock %}</div>
             <div class="clear"></div>
         </div>
+
     </body>
 </html>

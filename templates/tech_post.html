@@ -13,6 +13,18 @@
     <script src="/static/js/comments.js"></script>
 {% endblock %}
 
+{% block langbar %}
+    {% if LANGUAGE_CODE == "en" %}
+        {% language "ru" %}
+            English | <a href="{% url post post.blog.name post.name %}">Русский</a>
+        {% endlanguage %}
+    {% else %}
+        {% language "en" %}
+            <a href="{% url post post.blog.name post.name %}">English</a> | Русский
+        {% endlanguage %}
+    {% endif %}
+{% endblock %}
+
 {% block tech_active %}active{% endblock %}
 {% block tech_active_ru %}active{% endblock %}
 
