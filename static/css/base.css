@@ -59,7 +59,7 @@ ul.sitenav li a {
   font-weight: bold;
 }
 
-ul.sitenav li a:hover{
+ul.sitenav li a.active, ul.sitenav li a:hover{
 	background: rgb(128, 128, 128);
 	color: white;
 }

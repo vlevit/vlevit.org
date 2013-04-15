@@ -13,6 +13,9 @@
     <script src="/static/js/comments.js"></script>
 {% endblock %}
 
+{% block tech_active %}active{% endblock %}
+{% block tech_active_ru %}active{% endblock %}
+
 {% block content %}
     <h1>{{ post.title|safe }}</h1>
     {{ post.body|safe }}

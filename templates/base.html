@@ -12,7 +12,23 @@
     </head>
     <body>
         <header>
-            {% include "sitenav.html" %}
+            <ul class="sitenav">
+                {% if LANGUAGE_CODE == "en" %}
+                    <li><a class="{% block tech_active %}{% endblock %}" href="{% url post_list "tech" %}">Tech</a></li>
+                    {% language "ru" %}<li><a class="{% block life_active %}{% endblock %}" href="{% url post_list "life" %}">Life<sup>RU</sup></a></li>{% endlanguage %}
+                    {% language "en" %}<li><a class="{% block death_active %}{% endblock %}" href="{% url post_list "death" %}">Death</a></li>{% endlanguage %}
+                    {% language "ru" %}
+                        <li><a class="{% block music_active %}{% endblock %}" href="{% url post_list "music" %}">Music<sup>RU</sup></a></li>
+                        <li><a class="{% block noise_active %}{% endblock %}" href="{% url post_list "noise" %}">Noise<sup>RU</sup></a></li>
+                    {% endlanguage %}
+                {% else %} {# "ru" #}
+                    <li><a class="{% block tech_active_ru %}{% endblock %}" href="{% url post_list "tech" %}">Тех</a></li>
+                    <li><a class="{% block life_active_ru %}{% endblock %}" href="{% url post_list "life" %}">Жизнь</a></li>
+                    <li><a class="{% block death_active_ru %}{% endblock %}" href="{% url post_list "death" %}">Смерть</a></li>
+                    <li><a class="{% block music_active_ru %}{% endblock %}" href="{% url post_list "music" %}">Музыка</a></li>
+                    <li><a class="{% block noise_active_ru %}{% endblock %}" href="{% url post_list "noise" %}">Шум<sup></sup></a></li>
+                {% endif %}
+            </ul>
         </header>
         <div id="container">
             <div id="content">{% block content %}{% endblock %}</div>
