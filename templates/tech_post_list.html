@@ -21,6 +21,8 @@
     {% endif %}
 {% endblock %}
 
+{% block blog_title %}{{blog.description}}{% endblock %}
+
 {% block content %}
     {% for post in posts %}
         <div class="entry">

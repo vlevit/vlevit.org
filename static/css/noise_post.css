@@ -10,7 +10,7 @@ header {
   margin-left: 10%;
 }
 
-header ul {
+header ul, .blog-title {
   margin-left: 20px;
 }
 
@@ -39,6 +39,14 @@ ul.sitenav li a {
 ul.sitenav li a.active, ul.sitenav li a:hover{
 	background: white;
 	color: rgb(128, 128, 128);
+}
+
+.blog-title h1 {
+  color: white;
+  text-shadow: #555 1px 1px 2px;
+  font-size: 2em;
+  margin: 1.5em 0em;
+  font-style: bold;
 }
 
 .entry {
@@ -107,7 +115,7 @@ a {
 }
 
 @media screen and (max-width: 550px) {
-  #content, header ul {
+  #content, header ul, .blog-title {
     margin-left: 5px;
     margin-right: 5px;
   }

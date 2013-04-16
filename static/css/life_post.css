@@ -2,7 +2,7 @@ body {
   font-size: 81.25%;             /* most likely 13px */
 }
 
-header ul {
+header ul, .blog-title {
   margin-left: 20px;
 }
 

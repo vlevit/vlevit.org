@@ -3,6 +3,8 @@
 {% block title %}{{ post.title|safe }}{% endblock %}
 {% block headlinks %}{% endblock %}
 
+{% block blog_title %}{{post.blog.description}}{% endblock %}
+
 {% block content %}
     {% include "post_block.html" %}
 {% endblock %}

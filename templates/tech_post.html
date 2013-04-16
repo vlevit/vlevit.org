@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% load threadedcomments_tags %}
+{% load i18n threadedcomments_tags%}
 
 {% block keywords %}{{ post.tags.all|join:', ' }}{% endblock %}
 {% block description %}{{ post.blog.description }}{% endblock %}
@@ -27,6 +26,8 @@
 
 {% block tech_active %}active{% endblock %}
 {% block tech_active_ru %}active{% endblock %}
+
+{% block blog_title %}{{post.blog.description}}{% endblock %}
 
 {% block content %}
     <h1>{{ post.title|safe }}</h1>
