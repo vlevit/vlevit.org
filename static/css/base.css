@@ -28,6 +28,7 @@ header {
   min-height: 500px;
   margin: 0px auto 0px auto;
   border: 1px solid rgb(200, 195, 183);
+  border-radius: 4px;
 }
 
 #sidebar {
@@ -46,6 +47,7 @@ header {
 
 #content > h1 {
   margin-top: 0px;
+  margin-bottom: 20px;
 }
 
 ul.sitenav {
@@ -116,11 +118,14 @@ a.footnote-ref, a.footnote-backref {
   border-style: none;
 }
 
+.footnote {
+  font-size: 0.9em;
+}
+
 hr {
   margin: 18px auto;
   border: 0px;
-  width: 50%;
-  height: 2px;
+  height: 1px;
   background-color: rgb(200, 195, 183);
 }
 
