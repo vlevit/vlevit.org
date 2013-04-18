@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<div class="about">
+    <hr>
+    <h4>{% trans "About me:" %}</h4>
+    <div class="about-image">
+        <img src="/static/images/me.png"></img>
+    </div>
+    <p>
+    {% if LANGUAGE_CODE == "en" %}
+
+        My name is Vyacheslav Levit and I am a programmer from Odessa, Ukraine.
+        I write here mostly on Linux, Shell (Bash), and Python tools I have
+        developed or I just found useful and felt like they worth more
+        attention.
+
+    {% else %} {# "ru" #}
+
+        Меня зовут Левит Вячеслав. Я программист из Одессы. В этом блоге я пишу
+        в основном об инструментах для Linux, которые пришлось написать самому
+        для поддержания своей аскетичной компьютерной жизни, а также о не самых
+        популярных программах, которые по моему мнению достойны внимания. Мои
+        программы чаще всего написаны на Python или Shell (Bash).
+
+    {% endif %}
+    </p>
+</div>
