@@ -2,17 +2,31 @@ body {
   font-size: 81.25%;             /* most likely 13px */
 }
 
-header ul, .blog-title {
-  margin-left: 20px;
+header {
+  width: 100%;
+  max-width: 650px;
+  margin-left: 10%;
 }
 
 #container {
   background-color: rgb(232, 228, 209);
   border: none;
+  margin: 0px auto 0px 10%;
+  width: 100%;
+  max-width: 650px;
+}
+
+#column-content {
+  width: 100%;
+  margin: 0px;
+}
+
+#column-sidebar {
+  display: none;
 }
 
 #content {
-  margin-top: 0px;
+  margin: 0px;
 }
 
 .entry {
@@ -64,4 +78,11 @@ a {
 .image-block {
   text-align: center;
   margin: 1.5em auto;
+}
+
+@media screen and (max-width: 812px) {
+  #container, header {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

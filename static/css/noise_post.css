@@ -10,10 +10,6 @@ header {
   margin-left: 10%;
 }
 
-header ul, .blog-title {
-  margin-left: 20px;
-}
-
 #container {
   background-color:  rgb(59, 98, 126);;
   border: none;
@@ -22,13 +18,17 @@ header ul, .blog-title {
   max-width: 550px;
 }
 
-#content {
-  width: auto;
-  float: none;
+#column-content {
+  width: 100%;
+  margin: 0px;
 }
 
-sidebar {
+#column-sidebar {
   display: none;
+}
+
+#content {
+  margin: 0px;
 }
 
 ul.sitenav li a {
@@ -106,17 +106,9 @@ a {
   margin: 1.5em auto;
 }
 
-
 @media screen and (max-width: 800px) {
   #container, header {
     margin-left: auto;
     margin-right: auto;
-  }
-}
-
-@media screen and (max-width: 550px) {
-  #content, header ul, .blog-title {
-    margin-left: 5px;
-    margin-right: 5px;
   }
 }
