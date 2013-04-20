@@ -53,6 +53,7 @@ header {
 ul.sitenav {
   list-style-type: none;
   padding-left: 0px;
+  white-space: nowrap;
 }
 
 ul.sitenav {
