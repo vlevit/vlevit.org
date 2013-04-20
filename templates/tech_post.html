@@ -5,6 +5,7 @@
 {% block description %}{{ post.blog.description }}{% endblock %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block headlinks %}
+    {{block.super}}
     <link rel="stylesheet" href="/static/css/pygments.css" type="text/css">
     <link rel="stylesheet" href="/static/css/comments.css" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
