@@ -30,7 +30,6 @@
                     <li><a class="{% block noise_active_ru %}{% endblock %}" href="{% url post_list "noise" %}">Шум<sup></sup></a></li>
                 {% endif %}
             </ul>
-
             <div class="langbar">
                 {% block langbar %}
                     {% if LANGUAGE_CODE == "en" %}
@@ -45,8 +44,12 @@
         </header>
 
         <div id="container">
-            <div id="content">{% block content %}{% endblock %}</div>
-            <div id="sidebar">{% block sidebar %}{% endblock %}</div>
+            <div id="column-content">
+                <div id="content">{% block content %}{% endblock %}</div>
+            </div>
+            <div id="column-sidebar">
+                <div id="sidebar">{% block sidebar %}{% endblock %}</div>
+            </div>
             <div class="clear"></div>
         </div>
 
