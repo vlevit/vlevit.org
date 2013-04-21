@@ -48,6 +48,11 @@
 
 .reply_block a{
   color: rgb(200, 195, 183);
+  border-bottom-style: dotted;
+}
+
+.reply_block a:hover{
+  border-bottom-style: solid;
 }
 
 .comment_text {
@@ -103,9 +108,14 @@ input[type="submit"]:hover , button:hover{
   font-size: 0.75rem;
 }
 
-#markdown-info a, #preview-link a, #preview-cancel a {
+#form-comment a {
+  border-bottom-style: dotted;
   color: rgb(171, 164, 149);
   font-size: 0.75rem;
+}
+
+#form-comment a:hover {
+  border-bottom-style: solid;
 }
 
 #preview-cancel {

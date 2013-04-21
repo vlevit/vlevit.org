@@ -11,6 +11,15 @@ a {
   border-bottom-style: none;
 }
 
+a:hover {
+  border-bottom-style: solid;
+}
+
+footer a {
+  border-bottom-style: dotted;
+  color: rgb(110, 113, 115);
+}
+
 /* post list */
 
 .entry {

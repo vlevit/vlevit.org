@@ -53,5 +53,72 @@
             <div class="clear"></div>
         </div>
 
+        <footer>
+            <div class="footer-column">
+                <div class="footer-column-content">
+                    <h3>{% trans "Pages" %}</h3>
+                    <ul>
+                        <li><a href="{% url page "about" %}">{% trans "About me" %}</a></li>
+                        <li><a href="{% url page "projects" %}">{% trans "Projects" %}</a></li>
+                        <li><a href="{% url page "wishlist" %}">{% trans "Wishlist" %}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-column">
+                <div class="footer-column-content">
+                    <h3>Feeds</h3>
+                    <ul>
+                        <li><a href="">{% trans "Tech" %}</a></li>
+                        <li><a href="">{% trans "Life" %}</a></li>
+                        <li><a href="">{% trans "Music" %}</a></li>
+                        <li><a href="">{% trans "Noise" %}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-column">
+                <div class="footer-column-content">
+                    <h3>{% trans "Profiles" %}</h3>
+                    <ul>
+                        <li><a href="https://plus.google.com/114552310880483864919">{% trans "Google+" %}</a></li>
+                        <li><a href="https://github.com/vlevit">{% trans "GitHub" %}</a></li>
+                        <li><a href="https://code.google.com/u/levit.slava/">{% trans "Google Code" %}</a></li>
+                        <li><a href="http://libre.fm/user/Nestor/">{% trans "Libre.fm" %}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-column">
+                <div class="footer-column-content">
+                    <h3>{% trans "Contacts" %}</h3>
+                    <ul>
+                        <li>Email: &#x6c;&#x65;&#x76;&#x69;&#116;<span class="devlinus">&#46;&#x73;&#108;&#x61;&#118;&#x61;<span class="devnull">&#103;&#99;&#112;&#105;&#122;&#x61;&#101;&#111;&#108;&#109;</span></span>&#64;&#103;&#x6d;&#97;&#x69;&#108;<span class="devnull">&#110;&#107;&#102;</span>.&#x63;&#x6f;&#x6d;</li>
+                        <li>XMPP: &#x6c;&#x65;&#x76;&#x69;&#116;<span class="devlinus">&#46;&#x73;&#108;&#x61;&#118;&#x61;<span class="devnull">&#103;&#99;&#112;&#105;&#122;&#x61;&#101;&#111;&#108;&#109;</span></span>&#64;&#103;&#x6d;&#97;&#x69;&#108;<span class="devnull">&#110;&#107;&#102;</span>.&#x63;&#x6f;&#x6d;</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+
+            <div class="footer-licence">
+                {% if LANGUAGE_CODE == "en" %}
+                <p>
+                    © 2011-2013 Vyacheslav Levit.
+                    The content of this blog is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a>.
+                </p>
+                <p>
+                    Handmade website™ using <a href="https://www.djangoproject.com/">Django</a>.
+                    Hosted on <a href="http://www.heroku.com/">Heroku</a>.
+                </p>
+                {% else %}
+                <p>
+                    © 2011-2013 Левит Вячеслав.
+                    Содержимое этого блога доступно по лицензии <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.ru">CC BY-NC-SA 3.0</a>.
+                <p>
+                    Сайт: ручная работа™ с использованием <a href="https://www.djangoproject.com/">Django</a>.
+                    Размёщено  на <a href="http://www.heroku.com/">Heroku</a>.
+                </p>
+                {% endif %}
+            </div>
+        </footer>
+
     </body>
 </html>

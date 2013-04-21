@@ -84,7 +84,7 @@ ul.sitenav li a.active, ul.sitenav li a:hover{
   text-shadow: #EEE 1px 1px 2px;
   font-size: 2.5em;
   margin: 0.75em 0em;
-  font-style: bold;
+  font-weight: bold;
 }
 
 p, ul {
@@ -106,7 +106,7 @@ h3 {
 
 h4 {
   font-size: 0.95em;
-  font-style: bold;
+  font-weight: bold;
   margin: 1em 0em 0.5em 0em;
 }
 
@@ -193,8 +193,67 @@ ul.tag_list li {
   margin: 6px auto;
 }
 
+footer {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto auto;
+  margin-top: 20px;
+  color: rgb(160, 160, 160);
+}
+
+.footer-column {
+  float: left;
+  width: 25%;
+}
+
+.footer-column-content {
+  /* margin: 20px; */
+  margin-left: 5px;
+}
+
+.footer-column-content a {
+  color: rgb(160, 160, 160);
+  border-bottom-style: none;
+}
+
+.footer-column-content a:hover {
+  border-bottom-style: solid;
+}
+
+.footer-column-content h3 {
+  margin-bottom: 0.5em;
+}
+
+.footer-column-content ul {
+  padding-left: 0px;
+}
+
+.footer-column-content ul li {
+  list-style-type: none;
+  line-height: 2;
+}
+
+.footer-licence {
+  margin-top: 30px;
+  font-size: 0.75em;
+}
+
+.footer-licence p {
+  text-align: right;
+  text-align: center;
+  margin: 0.25em auto;
+}
+
 .clear {
   clear: both;
+}
+
+.devnull {
+  display: none;
+}
+
+.devlinus {
+  display: inline;
 }
 
 @media screen and (max-width: 800px) {
