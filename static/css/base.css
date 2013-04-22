@@ -79,6 +79,11 @@ ul.sitenav li a.active, ul.sitenav li a:hover{
 	color: white;
 }
 
+ul.sitenav li sup {
+  font-weight: normal;
+  font-size: 0.8em;
+}
+
 .blog-title h1 {
   color: rgb(186, 181, 168);
   text-shadow: #EEE 1px 1px 2px;
