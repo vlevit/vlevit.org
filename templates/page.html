@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ page.title }}{% endblock %}
+{% block headlinks %}
+    <link rel="stylesheet" href="/static/css/tech_post.css" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <h1>{{ page.title|safe }}</h1>
+    {{ page.body|safe }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include "about.html" %}
+{% endblock %}
