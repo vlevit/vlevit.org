@@ -33,9 +33,13 @@
             <div class="langbar">
                 {% block langbar %}
                     {% if LANGUAGE_CODE == "en" %}
-                        English | <a href="/ru/">Русский</a>
+                        {% language "ru" %}
+                            English | <a href="{% block url_ru %}/ru/{% endblock %}">Русский</a>
+                        {% endlanguage %}
                     {% else %}
-                        <a href="/en/">English</a> | Русский
+                        {% language "en" %}
+                            <a href="{% block url_en %}/en/{% endblock %}">English</a> | Русский
+                        {% endlanguage %}
                     {% endif %}
                 {% endblock %}
             </div>

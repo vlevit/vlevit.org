@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="/static/css/tech_post.css" type="text/css">
 {% endblock %}
 
+{% block url_ru %}{% url page page.name %}{% endblock%}
+{% block url_en %}{% url page page.name %}{% endblock%}
+
 {% block content %}
     <h1>{{ page.title|safe }}</h1>
     {{ page.body|safe }}
