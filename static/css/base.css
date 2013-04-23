@@ -141,6 +141,10 @@ hr {
   background-color: rgb(200, 195, 183);
 }
 
+#sidebar hr {
+  background-color: #d9d3c6;
+}
+
 code {
   background-color: rgb(231, 232, 222);
 }
