@@ -15,6 +15,10 @@ class Blog(models.Model):
     def __unicode__(self):
         return "{}: {}".format(self.language, self.name)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return 'post_list', (self.name,)
+
     @classmethod
     def get_or_create(cls, **kwargs):
         """
@@ -56,6 +60,10 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'post_list_tag', (self.blog.name, self.name)
 
     @classmethod
     def get_or_create(cls, tagname, blog):
@@ -101,6 +109,10 @@ class Post(models.Model):
 
     def __unicode__(self):
         return "{}: {}".format(self.blog, self.name)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'post', (self.blog.name, self.name)
 
     @classmethod
     def insert_or_update(cls, data, file, blog):
