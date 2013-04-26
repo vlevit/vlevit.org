@@ -4,6 +4,14 @@
 {% block keywords %}{{ post.tags.all|join:', ' }}{% endblock %}
 {% block description %}{{ post.blog.description }}{% endblock %}
 {% block title %}{{ post.title }}{% endblock %}
+
+{% block feeds %}
+    <link rel="alternate" type="application/rss+xml" title="{{post.blog.description}}" href="{% url blog_feed post.blog.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{post.title}}" href="{% url post_comments_feed post.blog.name post.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{post.blog.description}}" href="{% url blog_comments_feed post.blog.name %}">
+    {{block.super}}
+{% endblock %}
+
 {% block headlinks %}
     {{block.super}}
     <link rel="stylesheet" href="/static/css/pygments.css" type="text/css">

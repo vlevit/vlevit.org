@@ -7,6 +7,10 @@
         <meta name="author" content="Vyacheslav Levit">
         <meta name="description" content="{% block description %}Personal website about everything and nothing{% endblock %}">
         <title>{% block title %}{% endblock %} - Vyacheslav Levit</title>
+        {% block feeds %}
+        <link rel="alternate" type="application/rss+xml" title="{% trans "All Posts In All Blogs" %}" href="{% url site_feed %}">
+        <link rel="alternate" type="application/rss+xml" title="{% trans "All Comments In All Blogs" %}" href="{% url site_comments_feed %}">
+        {% endblock %}
         <link rel="stylesheet" href="/static/css/base.css" type="text/css">
         {% block headlinks %}{% endblock %}
     </head>
@@ -72,10 +76,12 @@
                 <div class="footer-column-content">
                     <h3>Feeds</h3>
                     <ul>
-                        <li><a href="">{% trans "Tech" %}</a></li>
-                        <li><a href="">{% trans "Life" %}</a></li>
-                        <li><a href="">{% trans "Music" %}</a></li>
-                        <li><a href="">{% trans "Noise" %}</a></li>
+                        <li><a href="{% url blog_feed "tech" %}">{% trans "Tech" %}</a></li>
+                        {% language "ru" %}
+                        <li><a href="{% url blog_feed "life" %}">{% trans "Life" %}</a></li>
+                        <li><a href="{% url blog_feed "music" %}">{% trans "Music" %}</a></li>
+                        <li><a href="{% url blog_feed "noise" %}">{% trans "Noise" %}</a></li>
+                        {% endlanguage %}
                     </ul>
                 </div>
             </div>

@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 
 {% block title %}{{ post.title|safe }}{% endblock %}
+
+{% block feeds %}
+    <link rel="alternate" type="application/rss+xml" title="{{post.blog.description}}" href="{% url blog_feed post.blog.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{post.title}}" href="{% url post_comments_feed post.blog.name post.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{post.blog.description}}" href="{% url blog_comments_feed post.blog.name %}">
+    {{block.super}}
+{% endblock %}
+
 {% block headlinks %}{% endblock %}
 
 {% block blog_title %}{{post.blog.description}}{% endblock %}
