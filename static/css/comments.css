@@ -1,3 +1,7 @@
+.comment-header-wrapper {
+  position: relative;
+}
+
 #comment-header {
   margin-top: 40px;
 }

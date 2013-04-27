@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}{{ post.title|safe }}{% endblock %}
 
@@ -12,6 +13,12 @@
 {% block headlinks %}{% endblock %}
 
 {% block blog_title %}{{post.blog.description}}{% endblock %}
+
+{% block headline_feed %}
+    <a href="{% url blog_feed post.blog.name %}" title="{% trans "Subscribe to " %} {{post.blog.description}}">
+        <img class="img-middle" src="/static/images/rss.svg" width="18px">
+    </a>
+{% endblock %}
 
 {% block content %}
     {% include "post_block.html" %}

@@ -26,11 +26,22 @@
 
 {% block blog_title %}{{post.blog.description}}{% endblock %}
 
+{% block headline_feed %}
+    <a href="{% url blog_feed post.blog.name %}" title="{% trans "Subscribe to " %} {{post.blog.description}}">
+        <img class="img-middle" src="/static/images/rss.svg" width="18px">
+    </a>
+{% endblock %}
+
 {% block content %}
     <h1>{{ post.title|safe }}</h1>
     {{ post.body|safe }}
     <hr>
-    <h3 id="comment-header">{% trans "Comments" %}</h3>
+    <div class="comment-header-wrapper">
+        <h2 id="comment-header">{% trans "Comments" %}</h2>
+        <a href="{% url post_comments_feed post.blog.name post.name %}" title="{% trans "Subscribe to comments on" %} {{post.title}}">
+            <img class="img-middle" src="/static/images/rss.svg" width="16px">
+        </a>
+    </div>
     {% render_comment_list for post %}
     {% render_comment_form for post %}
 {% endblock %}
