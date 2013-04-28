@@ -32,11 +32,11 @@ __ncmpcpp__ отображать обложку альбома текущей к
 
 2. В конфигурационном файле ncmpcpp `~/.ncmpcpp/config` установить значение:
 
-    execute_on_song_change = "mnuc"
+        execute_on_song_change = "mnuc"
 
 3. Запустить ncmpcpp примерно следующим образом:
 
-    urxvt -geometry 140x50 -e ncmpcpp
+        urxvt -geometry 140x50 -e ncmpcpp
 
 Скриншоты со светлой и тёмной обложками:
 
