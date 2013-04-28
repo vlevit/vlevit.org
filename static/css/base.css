@@ -75,8 +75,8 @@ ul.sitenav li a {
 }
 
 ul.sitenav li a.active, ul.sitenav li a:hover{
-	background: rgb(128, 128, 128);
-	color: white;
+  background: rgb(128, 128, 128);
+  color: white;
 }
 
 ul.sitenav li sup {
