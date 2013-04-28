@@ -81,14 +81,20 @@
             </div>
             <div class="footer-column">
                 <div class="footer-column-content">
-                    <h3>Feeds</h3>
+                    <h3>{% trans "Feeds" %}</h3>
                     <ul>
                         <li><a href="{% url blog_feed "tech" %}">{% trans "Tech" %}</a></li>
-                        {% language "ru" %}
-                        <li><a href="{% url blog_feed "life" %}">{% trans "Life" %}</a></li>
-                        <li><a href="{% url blog_feed "music" %}">{% trans "Music" %}</a></li>
-                        <li><a href="{% url blog_feed "noise" %}">{% trans "Noise" %}</a></li>
-                        {% endlanguage %}
+                        {% if LANGUAGE_CODE == "en" %}
+                            {% language "ru" %}
+                            <li><a href="{% url blog_feed "life" %}">Life<sup>RU</sup></a></li>
+                            <li><a href="{% url blog_feed "music" %}">Music<sup>RU</sup></a></li>
+                            <li><a href="{% url blog_feed "noise" %}">Noise<sup>RU</sup></a></li>
+                            {% endlanguage %}
+                        {% else %}
+                            <li><a href="{% url blog_feed "life" %}">{% trans "Life" %}</a></li>
+                            <li><a href="{% url blog_feed "music" %}">{% trans "Music" %}</a></li>
+                            <li><a href="{% url blog_feed "noise" %}">{% trans "Noise" %}</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

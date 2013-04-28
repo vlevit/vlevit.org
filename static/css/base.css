@@ -257,6 +257,10 @@ footer {
   line-height: 2;
 }
 
+.footer-column-content sup {
+  font-size: 0.55em;
+}
+
 .footer-licence {
   margin-top: 30px;
   font-size: 0.75em;
