@@ -50,7 +50,7 @@ class Blog(models.Model):
 
 class Tag(models.Model):
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     blog = models.ForeignKey(Blog)
     # number of posts with this tag of the same blog
     n_posts = models.IntegerField(default=0)
@@ -96,7 +96,7 @@ class Post(models.Model):
     blog = models.ForeignKey(Blog)
     # unique name per blog, the part of url
     # also used to link posts of different languages
-    name = models.SlugField(max_length=50)
+    name = models.SlugField(max_length=100)
     created = models.DateTimeField()
     tags = models.ManyToManyField(Tag, null=True)
     title = models.CharField(max_length=200, blank=True)
@@ -170,7 +170,7 @@ class Page(models.Model):
 
     file = models.ForeignKey(File)
     # unique name per language, the part of url
-    name = models.SlugField(max_length=50)
+    name = models.SlugField(max_length=100)
     title = models.CharField(max_length=200, blank=True)
     body = models.TextField()
     language = models.CharField(max_length=5)
