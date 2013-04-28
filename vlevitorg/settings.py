@@ -114,6 +114,8 @@ ROOT_URLCONF = 'vlevitorg.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'vlevitorg.wsgi.application'
 
+LOCALE_PATHS = (path.join(proj_dir, 'locale'),)
+
 TEMPLATE_DIRS = (
     path.join(proj_dir, 'templates')
 )
