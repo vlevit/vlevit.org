@@ -66,7 +66,7 @@ STATIC_ROOT = path.join(proj_dir, 'staticfiles/')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = 'http://static.vlevit.org/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -83,6 +83,13 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ['SECRET_KEY']
@@ -135,6 +142,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'threadedcomments',
     'django.contrib.comments',
+    'storages',
     'vlblog',
     'debug_toolbar',
 )
