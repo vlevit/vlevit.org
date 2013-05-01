@@ -11,7 +11,7 @@
         <link rel="alternate" type="application/rss+xml" title="{% trans "All Posts In All Blogs" %}" href="{% url site_feed %}">
         <link rel="alternate" type="application/rss+xml" title="{% trans "All Comments In All Blogs" %}" href="{% url site_comments_feed %}">
         {% endblock %}
-        <link rel="stylesheet" href="/static/css/base.css" type="text/css">
+        <link rel="stylesheet" href="{% static "css/base.css" "}" type="text/css">
         {% block headlinks %}{% endblock %}
     </head>
     <body>
@@ -52,7 +52,7 @@
                 <div class="blog-title"><h1>{% block blog_title %}{% trans "vlevit.org, my Org file on the Web" %}{% endblock %}</h1></div>
                 {% block headline_feed %}
                     <a href="{% url site_feed %}" title="{% trans "Subscribe to all posts in all blogs" %}">
-                        <img class="img-middle" src="/static/images/rss.svg" width="18px">
+                        <img class="img-middle" src="{% static "images/rss.svg" "}" width="18px">
                     </a>
                 {% endblock %}
             </div>
