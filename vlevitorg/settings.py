@@ -66,7 +66,7 @@ STATIC_ROOT = path.join(proj_dir, 'staticfiles/')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = 'http://static.vlevit.org/'
+STATIC_URL = os.environ['STATIC_URL']
 
 # Additional locations of static files
 STATICFILES_DIRS = (
