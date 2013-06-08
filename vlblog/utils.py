@@ -43,7 +43,7 @@ def expand_template_tags(source):
         if m:
             tag, value = m.group('tag'), m.group('value')
             if value:
-                result.append(u"{{% {} \"{}\" %}}".format(tag, value))
+                result.append(u"{{% {} {} %}}".format(tag, value))
             else:
                 result.append(u"{{% {} %}}".format(tag))
         else:

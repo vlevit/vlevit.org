@@ -14,7 +14,29 @@ logger = logging.getLogger(__name__)
 register = template.Library()
 
 
-@register.simple_tag(takes_context=True)
+def unquoted_tag(func):
+    function_name = getattr(func, '_decorated_function', func).__name__
+
+    class Node(template.Node):
+        def __init__(self, func, value):
+            self.func = func
+            self.value = value
+
+        def render(self, context):
+            return self.func(context, self.value)
+
+    def wrap_func(func):
+        def tag_func(parser, token):
+            tag, contents = token.contents.split(' ', 1)
+            contents = utils.unquote_string(contents)
+            return Node(func, contents)
+        register.tag(function_name, tag_func)
+        return func
+
+    return wrap_func(func)
+
+
+@unquoted_tag
 def title(context, value):
     if 'vars' not in context.dicts[0]:
         context.dicts[0]['vars'] = {}
@@ -22,7 +44,7 @@ def title(context, value):
     return u''
 
 
-@register.simple_tag(takes_context=True)
+@unquoted_tag
 def created(context, value):
     try:
         dt = parse_datetime(value)
@@ -37,7 +59,7 @@ def created(context, value):
     return u''
 
 
-@register.simple_tag(takes_context=True)
+@unquoted_tag
 def tags(context, value):
     if 'vars' not in context.dicts[0]:
         context.dicts[0]['vars'] = {}
@@ -46,7 +68,7 @@ def tags(context, value):
     return u''
 
 
-@register.simple_tag(takes_context=True)
+@unquoted_tag
 def name(context, value):
     if 'vars' not in context.dicts[0]:
         context.dicts[0]['vars'] = {}
