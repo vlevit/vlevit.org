@@ -24,7 +24,9 @@ def name_from_file(relpath):
     return re.sub('[^\w-]', '-', basename[:basename.rfind('.')])
 
 
-TAG_RE = re.compile(r'/(?P<tag>\w+)(:\s*(?P<value>.*))?\s*$', re.UNICODE)
+TAG_RE = re.compile(r'^/(?P<tag>\w+)(:\s*(?P<value>.*(\n[ \t]+\S.*)*))?',
+                    re.UNICODE | re.MULTILINE)
+TO_ONELINE_RE = re.compile(r'\s*\n\s+', re.UNICODE)
 
 
 def expand_template_tags(source):
@@ -38,16 +40,21 @@ def expand_template_tags(source):
 
     """
     result = []
-    for line in source.splitlines():
-        m = TAG_RE.match(line)
+    pos = 0
+    while True:
+        m = TAG_RE.search(source, pos)
         if m:
+            result.append(source[pos:m.start()])
             tag, value = m.group('tag'), m.group('value')
             if value:
+                value, subs = TO_ONELINE_RE.subn(' ', value)
                 result.append(u"{{% {} {} %}}".format(tag, value))
             else:
                 result.append(u"{{% {} %}}".format(tag))
+            pos = m.end()
         else:
-            result.append(line + u'\n')
+            result.append(source[pos:])
+            break
     return u''.join(result)
 
 
