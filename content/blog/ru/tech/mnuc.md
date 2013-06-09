@@ -40,9 +40,8 @@ __ncmpcpp__ отображать обложку альбома текущей к
 
 Скриншоты со светлой и тёмной обложками:
 
-![Скриншот ncmpcpp со светлой обложкой](/static/images/mnuc/urxvt-ncmpcpp-everlovely.jpg){: width="500" }
-
-![Скриншот ncmpcpp с тёмной обложкой](/static/images/mnuc/urxvt-ncmpcpp-tinhat.jpg){: width="500" }
+/image_full: "Скриншот ncmpcpp со светлой обложкой" tech/mnuc/urxvt-ncmpcpp-everlovely.jpg |
+             "Скриншот ncmpcpp с тёмной обложкой" tech/mnuc/urxvt-ncmpcpp-tinhat.jpg
 
 [mpd]: http://mpd.wikia.com/
 [ncmpcpp]: http://ncmpcpp.rybczak.net/
