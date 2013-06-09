@@ -109,12 +109,12 @@ IMAGE_BLOCK = u"""
 </div>"""
 
 
-IMAGE_HTML = u"""<img src="{static}images/{src}" alt="{alt}"></img>"""
+IMAGE_HTML = u"""<img src="{static}images/{src}" alt="{alt}">"""
 
 
 IMAGE_FULL_HTML = u"""
 <a href="{static}images-full/{src}">
-    <img src="{static}images/{src}" alt="{alt}"></img>
+    <img src="{static}images/{src}" alt="{alt}">
 </a>
 """
 
