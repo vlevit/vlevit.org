@@ -217,6 +217,11 @@ ul.tag_list li {
   margin: 6px auto;
 }
 
+.image-block {
+  text-align: center;
+  margin: 1.5em auto;
+}
+
 footer {
   width: 100%;
   max-width: 1000px;
