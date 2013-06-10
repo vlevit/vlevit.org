@@ -1,1 +1,1 @@
-web: gunicorn vlevitorg.wsgi:application
+web: newrelic-admin run-program gunicorn vlevitorg.wsgi:application
