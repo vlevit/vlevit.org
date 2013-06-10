@@ -1,11 +1,17 @@
 from django.conf.urls import patterns, include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
+from django.views.generic.simple import redirect_to
+
+from vlevitorg import settings
 
 admin.autodiscover()
 
 
 urlpatterns = patterns('',
+    # favicon for apps ignoring icon link in html
+    url(r'^favicon.ico$', redirect_to,
+        {'url': "{}/{}".format(settings.STATIC_URL, 'images/favicon.ico')}),
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
