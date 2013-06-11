@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.views.decorators.csrf import csrf_exempt
 
 from vlevitorg import settings
 from vlblog import models
@@ -7,10 +8,12 @@ from vlblog import importers
 from utils import require_key
 
 
+@csrf_exempt
 @require_key
 def import_entries(request, what):
     force_reimport = False
-    if 'force_reimport' in request.GET:
+    qd = request.GET if request.method == 'GET' else request.POST
+    if 'force_reimport' in qd:
         force_reimport = True
     if what in ('blog', 'all'):
         blog_importer = importers.BlogImporter(settings.BLOG_DIR)
