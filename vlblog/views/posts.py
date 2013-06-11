@@ -1,8 +1,8 @@
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.views.decorators.csrf import csrf_exempt
 
-from vlevitorg import settings
 from vlblog import models
 from vlblog import importers
 from utils import require_key

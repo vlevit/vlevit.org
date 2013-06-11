@@ -3,6 +3,7 @@ import logging
 import os
 from os import path
 
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponse
 from django.utils.dateparse import parse_datetime
@@ -13,7 +14,6 @@ from threadedcomments.util import safe_markdown
 from vlblog import models
 from vlblog import utils
 from vlblog.importers import BlogConfLoader, ConfLoaderError
-from vlevitorg import settings
 from utils import require_key
 
 logger = logging.getLogger(__name__)
