@@ -14,11 +14,12 @@ from vlblog import models
 from vlblog import utils
 from vlblog.importers import BlogConfLoader, ConfLoaderError
 from vlevitorg import settings
-
+from utils import require_key
 
 logger = logging.getLogger(__name__)
 
 
+@require_key
 def import_comments(request, blog_dir=settings.BLOG_DIR):
     """
     Import all comments found in [blog_dir]/[blog]/comments to the database.
@@ -27,11 +28,6 @@ def import_comments(request, blog_dir=settings.BLOG_DIR):
     as for post file.
 
     """
-
-    if 'key' not in request.GET or \
-            request.GET['key'] != settings.SECRET_URL_KEY:
-        return HttpResponse("Key is not specified or incorrect",
-                            content_type="text/plain")
 
     blog_info_cache = {}
     conf_loader = BlogConfLoader()
@@ -132,6 +128,7 @@ def import_comments(request, blog_dir=settings.BLOG_DIR):
     return HttpResponse('<html><body>See log</body></html>')
 
 
+@require_key
 def export_comments(request, blog_dir=settings.BLOG_DIR):
     """
     Export all Post comments in database to readable yaml files.
@@ -140,10 +137,6 @@ def export_comments(request, blog_dir=settings.BLOG_DIR):
     [blog_dir]/[blog]/exported_comments directory.
 
     """
-    if 'key' not in request.GET or \
-            request.GET['key'] != settings.SECRET_URL_KEY:
-        return HttpResponse("Key is not specified or incorrect",
-                            content_type="text/plain")
 
     class plain(unicode):
         """Wrapper for yaml plain style unciode representation."""

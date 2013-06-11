@@ -4,13 +4,11 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from vlevitorg import settings
 from vlblog import models
 from vlblog import importers
+from utils import require_key
 
 
+@require_key
 def import_entries(request, what):
-    if 'key' not in request.GET or \
-            request.GET['key'] != settings.SECRET_URL_KEY:
-        return HttpResponse("Key is not specified or incorrect",
-                            content_type="text/plain")
     force_reimport = False
     if 'force_reimport' in request.GET:
         force_reimport = True
