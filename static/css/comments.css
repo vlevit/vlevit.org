@@ -1,3 +1,8 @@
+textarea, input {
+  font-family: sans-serif;
+  font-size: 1em;
+}
+
 .comment-header-wrapper {
   position: relative;
 }
@@ -33,13 +38,13 @@
 
 .comment_date {
   margin-top: 5px;
-  font-size: 0.75em;
+  font-size: 11px;
   color: rgb(200, 195, 183);
 }
 
 .reply_block {
   margin-top: 12px;
-  font-size: 0.75rem;
+  font-size: 12px;
 }
 
 .comment_reply {
@@ -109,13 +114,13 @@ input[type="submit"]:hover , button:hover{
 #markdown-info, #preview-link, #preview-cancel {
   color: rgb(171, 164, 149);
   margin-bottom: 6px;
-  font-size: 0.75rem;
+  font-size: 12px;
 }
 
 #form-comment a {
   border-bottom-style: dotted;
   color: rgb(171, 164, 149);
-  font-size: 0.75rem;
+  font-size: 12px;
 }
 
 #form-comment a:hover {

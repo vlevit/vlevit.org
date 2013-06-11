@@ -1,5 +1,5 @@
 body {
-  font-size: 81.25%;             /* most likely 13px */
+  font-size: 13px;
 }
 
 header {
@@ -40,7 +40,7 @@ header {
 
 
 h1 {
-  font-size: 1.1em;
+  font-size: 14px;
 }
 
 p, ul {
@@ -63,7 +63,7 @@ p, ul {
   color: rgb(110, 113, 115);
   padding: 4px 1em;
   border-radius: 4px;
-  font-size: 0.9em;
+  font-size: 12px;
   text-align: center;
 }
 

@@ -1,7 +1,7 @@
 body {
   color: rgb(110, 113, 115);
   background-color:  rgb(59, 98, 126);;
-  font-size: 81.25%;             /* most likely 13px */
+  font-size: 13px;
 }
 
 header {
@@ -44,7 +44,7 @@ ul.sitenav li a.active, ul.sitenav li a:hover{
 .blog-title h1 {
   color: white;
   text-shadow: #555 1px 1px 2px;
-  font-size: 2em;
+  font-size: 26px;
   margin: 1.5em 0em;
   font-style: bold;
 }
@@ -58,7 +58,7 @@ ul.sitenav li a.active, ul.sitenav li a:hover{
 
 
 h1 {
-  font-size: 1.1em;
+  font-size: 14px;
 }
 
 p, ul {
@@ -82,7 +82,7 @@ p, ul {
   background-color: rgb(234, 234, 234);
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 0.85em;
+  font-size: 12px;
   text-align: center;
 }
 
