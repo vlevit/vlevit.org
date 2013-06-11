@@ -28,7 +28,7 @@
 
 {% block headline_feed %}
     <a href="{% url blog_feed post.blog.name %}" title="{% trans "Subscribe to " %} {{post.blog.description}}">
-        <img class="img-middle" src="{% static "images/rss.svg" %}" width="18">
+        <img class="img-middle" src="{% static "images/rss18.png" %}">
     </a>
 {% endblock %}
 
@@ -39,7 +39,7 @@
     <div class="comment-header-wrapper">
         <h2 id="comment-header">{% trans "Comments" %}</h2>
         <a href="{% url post_comments_feed post.blog.name post.name %}" title="{% trans "Subscribe to comments on" %} {{post.title}}">
-            <img class="img-middle" src="{% static "images/rss.svg" %}" width="16">
+            <img class="img-middle" src="{% static "images/rss16.png" %}">
         </a>
     </div>
     {% render_comment_list for post %}
