@@ -11,8 +11,16 @@ DEBUG = bool(os.environ['DEBUG'])
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    (os.environ['ADMIN_NAME'], os.environ['ADMIN_EMAIL']),
 )
+
+SERVER_EMAIL = os.environ['SERVER_EMAIL']
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_SUBJECT_PREFIX = os.environ['EMAIL_SUBJECT_PREFIX']
+
+SEND_BROKEN_LINK_EMAILS = True
 
 MANAGERS = ADMINS
 
@@ -184,11 +192,16 @@ LOGGING = {
             'formatter': 'verbose',
             'stream': sys.stdout,
         },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
     },
     'loggers': {
-        'vlblog': {
-            'handlers': ['console'],
+        'django.request': {
+            'handlers': ['console', 'mail_admins'],
             'level': 'DEBUG',
+            'propagate': True,
         }
     }
 }
