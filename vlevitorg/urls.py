@@ -26,6 +26,7 @@ urlpatterns += i18n_patterns('',
 urlpatterns += patterns('vlblog.views.tools',
     url(r'^import/(?P<what>blog|pages|all)/', 'import_entries'),
     url(r'^pingme', 'pingme'),
+    url(r'^error', 'internal_error'),
 )
 
 urlpatterns += patterns('vlblog.views.comments',

@@ -23,3 +23,8 @@ def import_entries(request, what):
 
 def pingme(request):
     return HttpResponse('Thanks!', content_type="text/plain")
+
+
+@require_key
+def internal_error(request):
+    raise Exception('Internal Error Test')
