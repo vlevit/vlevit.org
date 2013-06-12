@@ -97,7 +97,7 @@ def excerpt(parser, token):
     show = 'off'
     cont = token.split_contents()
     if len(cont) > 1:
-        show = cont[1][1:-1]
+        show = cont[1]
     nodelist = parser.parse(('endexcerpt', ))
     parser.delete_first_token()
     return ExcerptNode(nodelist, show)
