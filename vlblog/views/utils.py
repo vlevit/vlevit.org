@@ -7,14 +7,12 @@ def require_key(func):
         if len(args) < 1 or not isinstance(args[0], HttpRequest):
             raise TypeError("first argument must be HttpRequest instance")
         req = args[0]
-        if req.method == 'GET':
-            qd = req.GET
-        elif req.method == 'POST':
-            qd = req.POST
-        else:
+        if req.method != 'GET' and req.method != 'POST':
             return HttpResponse("Wrong type of request: {}".format(req.method),
                                 status=404, content_type="text/plain")
-        if 'key' not in qd or qd['key'] != settings.SECRET_URL_KEY:
+        if not ('key' in req.REQUEST and
+                req.REQUEST['key'] == settings.SECRET_URL_KEY or
+                settings.SECRET_URL_KEY in req.path):
             return HttpResponse("Key is not specified or incorrect",
                                 status=404, content_type="text/plain")
         return func(*args, **kwargs)
