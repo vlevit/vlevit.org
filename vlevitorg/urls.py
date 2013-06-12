@@ -22,10 +22,15 @@ urlpatterns += i18n_patterns('',
 
 # i18n patterns can be only in top-level URLConf
 # so non-i18n patterns can't be moved to the app's URLConf
-urlpatterns += patterns('vlblog.views',
-    url(r'^import/(?P<what>blog|pages|all)/', 'posts.import_entries'),
-    url(r'^import/comments/', 'comments.import_comments'),
-    url(r'^export/comments/', 'comments.export_comments'),
+
+urlpatterns += patterns('vlblog.views.tools',
+    url(r'^import/(?P<what>blog|pages|all)/', 'import_entries'),
+    url(r'^pingme', 'pingme'),
+)
+
+urlpatterns += patterns('vlblog.views.comments',
+    url(r'^import/comments/', 'import_comments'),
+    url(r'^export/comments/', 'export_comments'),
 )
 
 urlpatterns += patterns('',

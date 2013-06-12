@@ -1,27 +1,6 @@
-from django.conf import settings
-from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.views.decorators.csrf import csrf_exempt
 
 from vlblog import models
-from vlblog import importers
-from utils import require_key
-
-
-@csrf_exempt
-@require_key
-def import_entries(request, what):
-    force_reimport = False
-    qd = request.GET if request.method == 'GET' else request.POST
-    if 'force_reimport' in qd:
-        force_reimport = True
-    if what in ('blog', 'all'):
-        blog_importer = importers.BlogImporter(settings.BLOG_DIR)
-        blog_importer.import_all(force_reimport=force_reimport)
-    if what in ('pages', 'all'):
-        pages_importer = importers.PagesImporter(settings.PAGES_DIR)
-        pages_importer.import_all(force_reimport=force_reimport)
-    return HttpResponse('See log', content_type="text/plain")
 
 
 def post(request, blog, post):
