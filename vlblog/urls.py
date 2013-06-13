@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from django.views.generic.simple import redirect_to
 
 from vlblog import feeds
 
@@ -6,6 +7,9 @@ urlpatterns = patterns('vlblog.views.posts',
 
     # Pages
     url(r'^page/(?P<page>[\w-]+)/$', 'page', name='page'),
+
+    # Redirections
+    url(r'^blog/$', redirect_to, {'url': "/blog/tech/"}),
 
     # Feeds
     url(r'^blog/?\.rss$', feeds.SiteFeed(), name='site_feed'),
