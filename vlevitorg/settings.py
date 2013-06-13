@@ -122,6 +122,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'request.middleware.RequestMiddleware',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -155,6 +156,7 @@ INSTALLED_APPS = (
     'storages',
     'vlblog',
     'debug_toolbar',
+    'request'
 )
 
 COMMENTS_APP = 'threadedcomments'
