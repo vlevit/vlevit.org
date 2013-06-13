@@ -174,6 +174,21 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.logger.LoggingPanel',
 )
 
+REQUEST_IGNORE_IP = (os.environ['REQUEST_IGNORE_IP'])
+REQUEST_IGNORE_PATHS = (r'^admin/', '^import/', '^export/', r'^pingme',
+                        r'^error')
+REQUEST_BASE_URL = os.environ['REQUEST_BASE_URL']
+REQUEST_TRAFFIC_MODULES = (
+    'request.traffic.Ajax',
+    'request.traffic.NotAjax',
+    'request.traffic.Error',
+    'request.traffic.Error404',
+    'request.traffic.Hit',
+    'request.traffic.Search',
+    'request.traffic.UniqueVisitor',
+    'request.traffic.UniqueVisit',
+)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
