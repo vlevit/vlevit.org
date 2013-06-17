@@ -7,7 +7,6 @@ from vlevitorg import settings
 
 admin.autodiscover()
 
-
 urlpatterns = patterns('',
     # favicon for apps ignoring icon link in html
     url(r'^favicon.ico$', redirect_to,
@@ -16,6 +15,13 @@ urlpatterns = patterns('',
     url(r'^$', redirect_to, {'url': "/blog/tech/"}),
     url(r'^admin/', include(admin.site.urls)),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^500/$', 'django.views.defaults.server_error'),
+        (r'^404/$', 'django.views.generic.simple.direct_to_template',
+         {'template': '404.html'}),
+    )
 
 urlpatterns += i18n_patterns('',
     url('', include('vlblog.urls')),
