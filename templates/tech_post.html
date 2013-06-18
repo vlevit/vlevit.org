@@ -1,7 +1,7 @@
 {% extends "tech_base.html" %}
 {% load i18n static threadedcomments_tags %}
 
-{% block keywords %}{{ post.tags.all|join:', ' }}{% endblock %}
+{% block keywords %}{{ tags|join:', ' }}{% endblock %}
 {% block description %}{{ post.blog.description }}{% endblock %}
 {% block title %}{{ post.title }}{% endblock %}
 

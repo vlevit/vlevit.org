@@ -1,26 +1,35 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.http import Http404
+from django.shortcuts import render, get_object_or_404
 
 from vlblog import models
 
 
 def post(request, blog, post):
-    blog_obj = get_object_or_404(models.Blog, name=blog,
-                                 language=request.LANGUAGE_CODE)
-    post_obj = get_object_or_404(models.Post, blog=blog_obj, name=post)
-    tags = post_obj.tags.all()
-    return render(request, blog_obj.template, {'post': post_obj, 'tags': tags})
+    posts = models.Post.objects.filter(
+        blog__name=blog, blog__language=request.LANGUAGE_CODE,
+        name=post).select_related()
+    if posts:
+        post_obj = posts[0]
+        tags = post_obj.tags.all().select_related()
+        return render(request, post_obj.blog.template,
+                      {'post': post_obj, 'tags': tags})
+    else:
+        raise Http404
 
 
 def post_list(request, blog, tag=None):
-    blog_obj = get_object_or_404(models.Blog, name=blog,
-                                 language=request.LANGUAGE_CODE)
-    if tag:
-        posts = get_list_or_404(models.Post, blog=blog_obj, tags__name=tag)
+    posts = models.Post.objects.filter(
+        blog__name=blog, blog__language=request.LANGUAGE_CODE)
+    posts = posts.select_related().defer('body')
+    if posts:
+        post_obj = posts[0]
+        blog_obj = post_obj.blog
+        tags = models.Tag.objects.filter(
+            blog=blog_obj, n_posts__gt=1).select_related()
+        return render(request, blog_obj.list_template,
+                      {'blog': blog_obj, 'posts': posts, 'tags': tags})
     else:
-        posts = get_list_or_404(models.Post, blog=blog_obj)
-    tags = models.Tag.objects.filter(blog=blog_obj, n_posts__gt=1)
-    return render(request, blog_obj.list_template,
-                  {'blog': blog_obj, 'posts': posts, 'tags': tags})
+        raise Http404
 
 
 def page(request, page):
