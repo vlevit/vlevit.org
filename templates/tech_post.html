@@ -21,8 +21,25 @@
     <script src="{% static "js/comments.js" %}"></script>
 {% endblock %}
 
-{% block url_ru %}{% url post post.blog.name post.name %}{% endblock%}
-{% block url_en %}{% url post post.blog.name post.name %}{% endblock%}
+{% block langbar %}
+    {% if LANGUAGE_CODE == "en" %}
+        {% language "ru" %}
+            {% if "ru" in languages %}
+                English | <a href="{% url post post.blog.name post.name %}">Русский</a>
+            {% else %}
+                English | <a href="/ru/">Русский</a>
+            {% endif %}
+        {% endlanguage %}
+    {% else %}
+        {% language "en" %}
+            {% if "en" in languages %}
+                <a href="{% url post post.blog.name post.name %}">English</a> | Русский
+            {% else %}
+                <a href="/en/">English</a> | Русский
+            {% endif %}
+        {% endlanguage %}
+    {% endif %}
+{% endblock %}
 
 {% block blog_title %}{{post.blog.description}}{% endblock %}
 

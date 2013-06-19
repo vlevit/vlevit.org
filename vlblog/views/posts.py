@@ -10,9 +10,11 @@ def post(request, blog, post):
         name=post).select_related()
     if posts:
         post_obj = posts[0]
+        languages = models.Post.objects.filter(
+            blog__name=blog, name=post).values_list('blog__language')
         tags = post_obj.tags.all().select_related()
         return render(request, post_obj.blog.template,
-                      {'post': post_obj, 'tags': tags})
+                      {'post': post_obj, 'tags': tags, 'languages': languages})
     else:
         raise Http404
 
