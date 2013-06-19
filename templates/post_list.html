@@ -13,6 +13,9 @@
 
 {% block blog_title %}{{blog.description}}{% endblock %}
 
+{% block url_ru %}{% url post_list blog.name %}{% endblock%}
+{% block url_en %}{% url post_list blog.name %}{% endblock%}
+
 {% block headline_feed %}
     <a href="{% url blog_feed blog.name %}" title="{% trans "Subscribe to " %} {{blog.description}}">
         <img class="img-middle" src="{% static "images/rss18.png" %}">
