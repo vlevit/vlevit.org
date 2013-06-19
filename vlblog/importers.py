@@ -67,9 +67,9 @@ class BaseConfLoader(object):
 
     filename = None
 
-    def value(self, raw_value):
-        if raw_value in self.types:
-            kind = self.types[raw_value]
+    def value(self, option, raw_value):
+        if option in self.types:
+            kind = self.types[option]
             if kind == bool:
                 return raw_value.lower() in ('true', 'yes', '1')
             else:
@@ -93,7 +93,7 @@ class BaseConfLoader(object):
                         entry[0] not in self.optional:
                     raise ConfLoaderError(u"Invalid configuration property "
                                           "'{}' in {}".format(entry[0], path))
-                conf[entry[0]] = self.value(entry[1])
+                conf[entry[0]] = self.value(entry[0], entry[1])
         for p in self.required:
             if p not in conf:
                 raise ConfLoaderError(u"'{}' not present in configuration {}".
