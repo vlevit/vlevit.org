@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-28 22:41+0300\n"
-"PO-Revision-Date: 2013-04-28 22:40+0300\n"
+"POT-Creation-Date: 2013-06-19 21:42+0300\n"
+"PO-Revision-Date: 2013-06-19 21:44+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,83 +18,105 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
+#: templates/404.html:4 templates/404.html.py:8
+msgid "Page not found"
+msgstr ""
+
+#: templates/404.html:10
+msgid "We're sorry, but the requested page could not be found."
+msgstr ""
+
+#: templates/500.html:5
+msgid "Server error (500)"
+msgstr ""
+
+#: templates/500.html:8
+msgid "Server Error <em>(500)</em>"
+msgstr ""
+
+#: templates/500.html:9
+msgid ""
+"There's been an error. It's been reported to the site administrators via e-"
+"mail and should be fixed shortly. Thanks for your patience."
+msgstr ""
+
 #: templates/about.html:4
 msgid "About me:"
 msgstr "Обо мне"
 
-#: templates/base.html:11
+#: templates/base.html:13
 msgid "All Posts In All Blogs"
 msgstr "Все записи во всех блогах"
 
-#: templates/base.html:12
+#: templates/base.html:14
 msgid "All Comments In All Blogs"
 msgstr "Все комментарии во всех блогах"
 
-#: templates/base.html:52
+#: templates/base.html:54
 msgid "vlevit.org, my Org file on the Web"
 msgstr "vlevit.org, мой Org-файл в Интернете"
 
-#: templates/base.html:54
+#: templates/base.html:56
 msgid "Subscribe to all posts in all blogs"
 msgstr "Подписаться на все записи во всех блогах"
 
-#: templates/base.html:74
+#: templates/base.html:76
 msgid "Pages"
 msgstr "Страницы"
 
-#: templates/base.html:76
+#: templates/base.html:78
 msgid "About me"
 msgstr "Обо мне"
 
-#: templates/base.html:77
+#: templates/base.html:79
 msgid "Projects"
 msgstr "Проекты"
 
-#: templates/base.html:78
+#: templates/base.html:80
 msgid "Wishlist"
 msgstr "Хотелки"
 
-#: templates/base.html:84
+#: templates/base.html:86
 msgid "Feeds"
 msgstr "Ленты"
 
-#: templates/base.html:86
+#: templates/base.html:88
 msgid "Tech"
 msgstr "Тех"
 
-#: templates/base.html:94
+#: templates/base.html:96
 msgid "Life"
 msgstr "Жизнь"
 
-#: templates/base.html:95
+#: templates/base.html:97
 msgid "Music"
 msgstr "Музыка"
 
-#: templates/base.html:96
+#: templates/base.html:98
 msgid "Noise"
 msgstr "Шум"
 
-#: templates/base.html:103
+#: templates/base.html:105
 msgid "Profiles"
 msgstr "Профили"
 
-#: templates/base.html:105
+#: templates/base.html:107
 msgid "Google+"
 msgstr "Google+"
 
-#: templates/base.html:106
+#: templates/base.html:108
 msgid "GitHub"
 msgstr "GitHub"
 
-#: templates/base.html:107
+#: templates/base.html:109
 msgid "Google Code"
 msgstr "Google Code"
 
-#: templates/base.html:108
+#: templates/base.html:110
 msgid "Libre.fm"
 msgstr "Libre.fm"
 
-#: templates/base.html:114
+#: templates/base.html:116
 msgid "Contacts"
 msgstr "Контакты"
 
@@ -104,8 +126,8 @@ msgstr "Контакты"
 msgid "Comments on"
 msgstr "Комментарии к"
 
-#: templates/post.html:18 templates/post_list.html:17
-#: templates/tech_post.html:30 templates/tech_post_list.html:19
+#: templates/post.html:18 templates/post_list.html:20
+#: templates/tech_post.html:47 templates/tech_post_list.html:19
 msgid "Subscribe to "
 msgstr "Подписаться на"
 
@@ -121,11 +143,11 @@ msgstr "назад"
 msgid "Tags:"
 msgstr "Метки:"
 
-#: templates/tech_post.html:40
+#: templates/tech_post.html:57
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/tech_post.html:41
+#: templates/tech_post.html:58
 msgid "Subscribe to comments on"
 msgstr "Подписаться на комментарии к"
 
@@ -148,7 +170,7 @@ msgstr "Отправить"
 
 #: templates/comments/list.html:32
 msgid "Reply"
-msgstr "Ответ"
+msgstr "Ответить"
 
 #: templates/comments/list.html:35
 msgid "Cancel reply"
@@ -253,10 +275,10 @@ msgstr "Комментарии к блогу \"{}\""
 msgid "Comments on \"{}\""
 msgstr "Комментарии к \"{}\""
 
-#: vlevitorg/settings.py:35
+#: vlevitorg/settings.py:45
 msgid "English"
 msgstr "Английский"
 
-#: vlevitorg/settings.py:36
+#: vlevitorg/settings.py:46
 msgid "Russian"
 msgstr "Русский"
