@@ -221,6 +221,11 @@ LOGGING = {
             'handlers': ['console', 'mail_admins'],
             'level': 'DEBUG',
             'propagate': True,
+        },
+        'vlblog': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
         }
     }
 }
