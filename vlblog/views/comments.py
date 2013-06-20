@@ -134,7 +134,7 @@ def export_comments(request, blog_dir=settings.BLOG_DIR):
     Export all Post comments in database to readable yaml files.
 
     One yaml file is created per post with comments and is put under
-    [blog_dir]/[blog]/exported_comments directory.
+    [blog_dir]/[language]/[blog]/exported_comments directory.
 
     """
 
@@ -188,15 +188,15 @@ def export_comments(request, blog_dir=settings.BLOG_DIR):
             comment_ref[comment.id] = comment_dict
 
         if comment_list:
-            comment_dir = "{}/{}/exported_comments".format(
-                blog_dir, post.blog.name)
+            comment_dir = path.join(blog_dir, post.blog.language,
+                                    post.blog.name, "exported_comments")
             if not path.exists(comment_dir):
                 try:
                     os.mkdir(comment_dir)
                 except OSError:
                     logger.error('error while creating %s', comment_dir)
                     continue
-            comment_file = "{}/{}.yaml".format(comment_dir, post.name)
+            comment_file = path.join(comment_dir, post.name + '.yaml')
             with open(comment_file, 'w') as f:
                 yaml.dump(comment_list, f, encoding='utf-8', width=80,
                           indent=4, default_flow_style=False,
