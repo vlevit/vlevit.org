@@ -22,7 +22,7 @@ def post(request, blog, post):
 def post_list(request, blog, tag=None):
     posts = models.Post.objects.filter(
         blog__name=blog, blog__language=request.LANGUAGE_CODE)
-    posts = posts.select_related().defer('body')
+    posts = posts.select_related().prefetch_related('tags')
     if posts:
         post_obj = posts[0]
         blog_obj = post_obj.blog
