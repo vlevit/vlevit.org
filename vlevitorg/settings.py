@@ -10,6 +10,9 @@ proj_dir = path.dirname(path.dirname(__file__))
 DEBUG = bool(os.environ['DEBUG'])
 TEMPLATE_DEBUG = DEBUG
 
+ENVIRON_REDIRECTIONS = map(lambda s: s.split('=='),
+                           os.environ.get('ENVIRON_REDIRECTIONS', '').split())
+
 ADMINS = (
     (os.environ['ADMIN_NAME'], os.environ['ADMIN_EMAIL']),
 )

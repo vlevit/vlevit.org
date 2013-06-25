@@ -16,6 +16,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
+for rediction in settings.ENVIRON_REDIRECTIONS:
+    urlpatterns += patterns(
+        '', url(rediction[0], redirect_to, {'url': rediction[1]}))
+
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^500/$', 'django.views.defaults.server_error'),
