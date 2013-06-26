@@ -20,8 +20,13 @@ def post(request, blog, post):
 
 
 def post_list(request, blog, tag=None):
-    posts = models.Post.objects.filter(
-        blog__name=blog, blog__language=request.LANGUAGE_CODE)
+    if tag:
+        posts = models.Post.objects.filter(
+            blog__name=blog, blog__language=request.LANGUAGE_CODE,
+            tags__name=tag)
+    else:
+        posts = models.Post.objects.filter(
+            blog__name=blog, blog__language=request.LANGUAGE_CODE)
     posts = posts.select_related().prefetch_related('tags')
     if posts:
         post_obj = posts[0]
