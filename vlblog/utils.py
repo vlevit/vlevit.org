@@ -81,6 +81,6 @@ def markdown_convert(source):
 
     """
     markdown = Markdown(output_format='html5',
-                        extensions=['footnotes', 'toc',
+                        extensions=['footnotes', 'toc', 'abbr', 'tables',
                                     'codehilite', _attr_list_strict()])
     return markdown.convert(source)
