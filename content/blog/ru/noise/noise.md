@@ -1,3 +1,13 @@
+/title: PRISM
+/name: prism
+/created: 2013-06-28 15:49:21+03:00
+
+Веб-сервис [PRISM]. Вы уже зарегистрированы.
+
+[PRISM]: http://en.wikipedia.org/wiki/PRISM_(surveillance_program)
+
+-------------------------------------------------------------------------------
+
 /title: sex berlin
 /name: sex-in-berlin
 /created: 2013-06-26 14:34:57+03:00
