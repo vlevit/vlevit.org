@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponse, HttpRequest
+from django.views.generic.simple import redirect_to
 
 
 def require_key(func):
@@ -17,3 +18,9 @@ def require_key(func):
                                 status=404, content_type="text/plain")
         return func(*args, **kwargs)
     return wrapper
+
+
+def redirect_to_language(request, url, language=None):
+    if not language:
+        language = request.LANGUAGE_CODE
+    return redirect_to(request, '/{}{}'.format(language, url))

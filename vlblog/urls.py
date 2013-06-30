@@ -1,15 +1,16 @@
 from django.conf.urls import patterns, url
-from django.views.generic.simple import redirect_to
+from vlblog.views.utils import redirect_to_language
 
 from vlblog import feeds
 
 urlpatterns = patterns('vlblog.views.posts',
 
+    # Redirections
+    url(r'^$', redirect_to_language, {'url': "/blog/tech/"}),
+    url(r'^blog/$', redirect_to_language, {'url': "/blog/tech/"}),
+
     # Pages
     url(r'^page/(?P<page>[\w-]+)/$', 'page', name='page'),
-
-    # Redirections
-    url(r'^blog/$', redirect_to, {'url': "/blog/tech/"}),
 
     # Feeds
     url(r'^blog/?\.rss$', feeds.SiteFeed(), name='site_feed'),

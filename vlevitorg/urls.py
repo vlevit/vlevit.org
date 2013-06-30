@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     url(r'^favicon.ico$', redirect_to,
         {'url': "{}/{}".format(settings.STATIC_URL, 'images/favicon.ico')}),
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^$', redirect_to, {'url': "/blog/tech/"}),
     url(r'^admin/', include(admin.site.urls)),
 )
 
