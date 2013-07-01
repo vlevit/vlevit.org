@@ -30,22 +30,22 @@ header {
   border-radius: 4px;
 }
 
-#column-content {
+.column-content {
   float: left;
   width: 70%;
 }
 
-#column-sidebar {
+.column-sidebar {
   float: left;
   width: 30%;
 }
 
-#sidebar, #content {
+.sidebar, .content {
   overflow: hidden;
   margin: 20px;
 }
 
-#content > h1 {
+.content > h1 {
   margin-top: 0px;
   margin-bottom: 20px;
 }
@@ -156,7 +156,7 @@ hr {
   background-color: rgb(200, 195, 183);
 }
 
-#sidebar hr {
+.sidebar hr {
   background-color: #d9d3c6;
 }
 
@@ -290,11 +290,11 @@ footer {
 }
 
 @media screen and (max-width: 800px) {
-  #column-sidebar {
+  .column-sidebar {
     display: none;
   }
 
-  #column-content {
+  .column-content {
     width: 100%;
   }
 }

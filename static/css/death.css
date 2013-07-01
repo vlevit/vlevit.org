@@ -18,16 +18,16 @@ header {
   max-width: 650px;
 }
 
-#column-content {
+.column-content {
   width: 100%;
   margin: 0px;
 }
 
-#column-sidebar {
+.column-sidebar {
   display: none;
 }
 
-#content {
+.content {
   margin: 0px;
 }
 
