@@ -1,0 +1,23 @@
+{% extends "tech_post_list.html" %}
+{% load i18n static %}
+
+{% block container_inner %}
+    {% for post in posts %}
+         <div class="column-content">
+             <div class="content">
+                 <h1><a href="{% url post post.blog.name post.name %}">{{ post.title|safe }}</a></h1>
+                 {{ post.body|safe }}
+             </div>
+         </div>
+         <div class="column-sidebar">
+             <div class="sidebar">
+                 {% include "tag_list.html" with tags=post.tags.all %}
+                 {% if forloop.first %}
+                    <hr>
+                    {% include "about.html" %}
+                 {% endif %}
+             </div>
+         </div>
+         <div class="clear"></div>
+    {% endfor %}
+{% endblock %}
