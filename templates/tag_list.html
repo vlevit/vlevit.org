@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{% for tag in tags %}
+    {% if forloop.first %}
+        <h4>{% trans "Tags:" %}</h4>
+        <ul class="tag_list">
+    {% endif %}
+    <li><a href="{% url post_list_tag blog.name tag.name%}">{{tag.name}}{% if tag.n_posts > 1 %}<sup>{{tag.n_posts}}</sup>{% endif %}</a></li>
+    {% if forloop.last %}
+        </ul>
+    {% endif %}
+{% endfor %}

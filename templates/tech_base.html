@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load static %}
 
 {% block headlinks %}
     <link rel="stylesheet" href="{% static "css/tech_post.css" %}" type="text/css">
@@ -9,18 +9,7 @@
 {% block tech_active_ru %}active{% endblock %}
 
 {% block sidebar %}
-    {% for tag in tags %}
-        {% if forloop.first %}
-            <h4>{% trans "Tags:" %}</h4>
-            <ul class="tag_list">
-        {% endif %}
-        <li><a href="{% url post_list_tag tag.blog.name tag.name%}">{{tag.name}}{% if tag.n_posts > 1 %}<sup>{{tag.n_posts}}</sup>{% endif %}</a></li>
-        {% if forloop.last %}
-            </ul>
-        {% endif %}
-    {% endfor %}
-
+    {% include "tag_list.html"%}
     <hr>
-
     {% include "about.html" %}
 {% endblock %}
