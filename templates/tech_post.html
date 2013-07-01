@@ -2,13 +2,13 @@
 {% load i18n static threadedcomments_tags %}
 
 {% block keywords %}{{ tags|join:', ' }}{% endblock %}
-{% block description %}{{ post.blog.description }}{% endblock %}
+{% block description %}{{ blog.description }}{% endblock %}
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block feeds %}
-    <link rel="alternate" type="application/rss+xml" title="{{post.blog.description}}" href="{% url blog_feed post.blog.name %}">
-    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{post.title}}" href="{% url post_comments_feed post.blog.name post.name %}">
-    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{post.blog.description}}" href="{% url blog_comments_feed post.blog.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{{blog.description}}" href="{% url blog_feed blog.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{post.title}}" href="{% url post_comments_feed blog.name post.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{blog.description}}" href="{% url blog_comments_feed blog.name %}">
     {{block.super}}
 {% endblock %}
 
@@ -25,7 +25,7 @@
     {% if LANGUAGE_CODE == "en" %}
         {% language "ru" %}
             {% if "ru" in languages %}
-                English | <a href="{% url post post.blog.name post.name %}">Русский</a>
+                English | <a href="{% url post blog.name post.name %}">Русский</a>
             {% else %}
                 English | <a href="/ru/">Русский</a>
             {% endif %}
@@ -33,7 +33,7 @@
     {% else %}
         {% language "en" %}
             {% if "en" in languages %}
-                <a href="{% url post post.blog.name post.name %}">English</a> | Русский
+                <a href="{% url post blog.name post.name %}">English</a> | Русский
             {% else %}
                 <a href="/en/">English</a> | Русский
             {% endif %}
@@ -41,10 +41,10 @@
     {% endif %}
 {% endblock %}
 
-{% block blog_title %}{{post.blog.description}}{% endblock %}
+{% block blog_title %}{{blog.description}}{% endblock %}
 
 {% block headline_feed %}
-    <a href="{% url blog_feed post.blog.name %}" title="{% trans "Subscribe to " %} {{post.blog.description}}">
+    <a href="{% url blog_feed blog.name %}" title="{% trans "Subscribe to " %} {{blog.description}}">
         <img class="img-middle" src="{% static "images/rss18.png" %}">
     </a>
 {% endblock %}
@@ -55,7 +55,7 @@
     <hr>
     <div class="comment-header-wrapper">
         <h2 id="comment-header">{% trans "Comments" %}</h2>
-        <a href="{% url post_comments_feed post.blog.name post.name %}" title="{% trans "Subscribe to comments on" %} {{post.title}}">
+        <a href="{% url post_comments_feed blog.name post.name %}" title="{% trans "Subscribe to comments on" %} {{post.title}}">
             <img class="img-middle" src="{% static "images/rss16.png" %}">
         </a>
     </div>
