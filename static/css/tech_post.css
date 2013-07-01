@@ -49,6 +49,13 @@ footer a {
   white-space: nowrap;
 }
 
+.footer-date {
+  font-size: 13px;
+  text-align: right;
+  color: rgb(130, 133, 135);
+  margin: 2em 3em;
+}
+
 .entry-tags {
   margin-top: 0.5em;
   font-size: 11px;

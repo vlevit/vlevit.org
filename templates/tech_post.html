@@ -52,7 +52,7 @@
 {% block content %}
     <h1>{{ post.title|safe }}</h1>
     {{ post.body|safe }}
-    <hr>
+    <div class="footer-date">{{ post.created|date:"d E Y" }}</div>
     <div class="comment-header-wrapper">
         <h2 id="comment-header">{% trans "Comments" %}</h2>
         <a href="{% url post_comments_feed blog.name post.name %}" title="{% trans "Subscribe to comments on" %} {{post.title}}">
