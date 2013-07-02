@@ -117,7 +117,7 @@ class BlogCommentsFeed(CommentsFeedBase):
         post_ids = Post.objects.filter(blog=blog).values_list('id', flat=True)
         qs = CommentModel.objects.filter(is_public=True, is_removed=False)
         qs = qs.filter(content_type=ContentType.objects.get_for_model(Post))
-        qs = qs.filter(object_pk__in=post_ids)
+        qs = qs.filter(object_pk__in=map(str, post_ids))
         qs = qs.order_by('-submit_date')
         qs = qs.prefetch_related('content_object')
         return qs
