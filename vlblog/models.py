@@ -181,3 +181,7 @@ class Page(models.Model):
 
     def __unicode__(self):
         return "{}: {}".format(self.language, self.name)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'page', (self.name,)

@@ -4,7 +4,7 @@ from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
-from vlblog.models import Blog, Post
+from vlblog.models import Blog, Post, Page
 
 
 class FeedBase(Feed):
@@ -142,6 +142,30 @@ class PostCommentsFeed(CommentsFeedBase):
         qs = CommentModel.objects.filter(is_public=True, is_removed=False)
         qs = qs.filter(content_type=ContentType.objects.get_for_model(Post))
         qs = qs.filter(object_pk=post.id)
+        qs = qs.order_by('-submit_date')
+        qs = qs.prefetch_related('content_object')
+        return qs
+
+
+class PageCommentsFeed(CommentsFeedBase):
+
+    def get_object(self, request, page):
+        return get_object_or_404(
+            Page, language=request.LANGUAGE_CODE, name=page)
+
+    def link(self, page):
+        return "http://{}/#comment_header".format(page.get_absolute_url())
+
+    def title(self, page):
+        return _("Comments on \"{}\"").format(page.title)
+
+    description = title
+
+    def items(self, page):
+        CommentModel = comments.get_model()
+        qs = CommentModel.objects.filter(is_public=True, is_removed=False)
+        qs = qs.filter(content_type=ContentType.objects.get_for_model(Page))
+        qs = qs.filter(object_pk=page.id)
         qs = qs.order_by('-submit_date')
         qs = qs.prefetch_related('content_object')
         return qs

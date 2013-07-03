@@ -2,6 +2,12 @@
 {% load i18n static threadedcomments_tags %}
 
 {% block title %}{{ page.title }}{% endblock %}
+
+{% block feeds %}
+    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{page.title}}" href="{% url page_comments_feed page.name %}">
+    {{block.super}}
+{% endblock %}
+
 {% block headlinks %}
     <link rel="stylesheet" href="{% static "css/tech_post.css" %}" type="text/css">
     <link rel="stylesheet" href="{% static "css/pygments.css" %}" type="text/css">
@@ -20,6 +26,9 @@
 
     <div class="comment-header-wrapper">
         <h2 id="comment-header">{% trans "Comments" %}<sup id="fnref:comments"><a class="footnote-ref" href="#fn:comments"><small>†</small></a></sup></h2>
+        <a href="{% url page_comments_feed page.name %}" title="{% trans "Subscribe to comments on" %} {{page.title}}">
+            <img class="img-middle" src="{% static "images/rss16.png" %}">
+        </a>
     </div>
     {% render_comment_list for page %}
     {% render_comment_form for page %}

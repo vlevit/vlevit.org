@@ -21,6 +21,8 @@ urlpatterns = patterns('vlblog.views.posts',
         name='blog_comments_feed'),
     url(r'^blog/(?P<blog>[\w-]+)/(?P<post>[\w-]+)(?:/comments)?\.rss$',
         feeds.PostCommentsFeed(), name='post_comments_feed'),
+    url(r'^page/(?P<page>[\w-]+)(?:/comments)?\.rss$',
+        feeds.PageCommentsFeed(), name='page_comments_feed'),
 
     # Blog Posts
     url(r'^blog/(?P<blog>[\w-]+)/$', 'post_list', name='post_list'),
