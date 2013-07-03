@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-19 21:42+0300\n"
-"PO-Revision-Date: 2013-06-19 21:44+0300\n"
+"POT-Creation-Date: 2013-07-03 19:54+0300\n"
+"PO-Revision-Date: 2013-07-03 19:55+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -44,6 +44,15 @@ msgstr ""
 msgid "About me:"
 msgstr "Обо мне"
 
+#: templates/about_page.html:22 templates/tech_post.html:57
+#: templates/comments/comment_block.html:4
+msgid "Comments"
+msgstr "Комментарии"
+
+#: templates/about_page.html:31
+msgid "You can declare your love for me here."
+msgstr "Здесь можно признаться мне в любви."
+
 #: templates/base.html:13
 msgid "All Posts In All Blogs"
 msgstr "Все записи во всех блогах"
@@ -60,63 +69,63 @@ msgstr "vlevit.org, мой Org-файл в Интернете"
 msgid "Subscribe to all posts in all blogs"
 msgstr "Подписаться на все записи во всех блогах"
 
-#: templates/base.html:76
+#: templates/base.html:78
 msgid "Pages"
 msgstr "Страницы"
 
-#: templates/base.html:78
+#: templates/base.html:80
 msgid "About me"
 msgstr "Обо мне"
 
-#: templates/base.html:79
+#: templates/base.html:81
 msgid "Projects"
 msgstr "Проекты"
 
-#: templates/base.html:80
+#: templates/base.html:82
 msgid "Wishlist"
 msgstr "Хотелки"
 
-#: templates/base.html:86
+#: templates/base.html:88
 msgid "Feeds"
 msgstr "Ленты"
 
-#: templates/base.html:88
+#: templates/base.html:90
 msgid "Tech"
 msgstr "Тех"
 
-#: templates/base.html:96
+#: templates/base.html:98
 msgid "Life"
 msgstr "Жизнь"
 
-#: templates/base.html:97
+#: templates/base.html:99
 msgid "Music"
 msgstr "Музыка"
 
-#: templates/base.html:98
+#: templates/base.html:100
 msgid "Noise"
 msgstr "Шум"
 
-#: templates/base.html:105
+#: templates/base.html:107
 msgid "Profiles"
 msgstr "Профили"
 
-#: templates/base.html:107
+#: templates/base.html:109
 msgid "Google+"
 msgstr "Google+"
 
-#: templates/base.html:108
+#: templates/base.html:110
 msgid "GitHub"
 msgstr "GitHub"
 
-#: templates/base.html:109
+#: templates/base.html:111
 msgid "Google Code"
 msgstr "Google Code"
 
-#: templates/base.html:110
+#: templates/base.html:112
 msgid "Libre.fm"
 msgstr "Libre.fm"
 
-#: templates/base.html:116
+#: templates/base.html:118
 msgid "Contacts"
 msgstr "Контакты"
 
@@ -139,15 +148,11 @@ msgstr "Опубликовано:"
 msgid "ago"
 msgstr "назад"
 
-#: templates/tech_base.html:14
+#: templates/tag_list.html:5
 msgid "Tags:"
 msgstr "Метки:"
 
-#: templates/tech_post.html:57
-msgid "Comments"
-msgstr "Комментарии"
-
-#: templates/tech_post.html:58
+#: templates/tech_post.html:58 templates/comments/comment_block.html:5
 msgid "Subscribe to comments on"
 msgstr "Подписаться на комментарии к"
 
@@ -275,10 +280,10 @@ msgstr "Комментарии к блогу \"{}\""
 msgid "Comments on \"{}\""
 msgstr "Комментарии к \"{}\""
 
-#: vlevitorg/settings.py:45
+#: vlevitorg/settings.py:48
 msgid "English"
 msgstr "Английский"
 
-#: vlevitorg/settings.py:46
+#: vlevitorg/settings.py:49
 msgid "Russian"
 msgstr "Русский"

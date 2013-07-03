@@ -1,4 +1,5 @@
 /title: Обо мне
+/template: about_page.html
 
 #### Имя
 Меня зовут Левит Вячеслав.

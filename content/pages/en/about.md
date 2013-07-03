@@ -1,4 +1,5 @@
 /title: About me
+/template: about_page.html
 
 #### Name
 My name is Vyacheslav Levit.

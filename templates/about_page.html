@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n static threadedcomments_tags %}
+
+{% block title %}{{ page.title }}{% endblock %}
+{% block headlinks %}
+    <link rel="stylesheet" href="{% static "css/tech_post.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "css/pygments.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "css/comments.css" %}" type="text/css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="{% static "js/csrf.js" %}"></script>
+    <script src="{% static "js/comments.js" %}"></script>
+{% endblock %}
+
+{% block url_ru %}{% url page page.name %}{% endblock%}
+{% block url_en %}{% url page page.name %}{% endblock%}
+
+{% block content %}
+    <h1>{{ page.title|safe }}</h1>
+    {{ page.body|safe }}
+
+    <div class="comment-header-wrapper">
+        <h2 id="comment-header">{% trans "Comments" %}<sup id="fnref:comments"><a class="footnote-ref" href="#fn:comments"><small>†</small></a></sup></h2>
+    </div>
+    {% render_comment_list for page %}
+    {% render_comment_form for page %}
+
+    <div class="footnote">
+        <hr>
+        <ol>
+            <li id="fn:comments">
+                    {% trans "You can declare your love for me here." %}
+                    <a class="footnote-backref" href="#fnref:comments"
+                       title="Jump back to footnote comments in the text">↩</a></p>
+            </li>
+        </ol>
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+    {% include "about.html" %}
+{% endblock %}
