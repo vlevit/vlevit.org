@@ -11,6 +11,14 @@
 [3]: http://muhas.ru/?p=183
 [4]: http://proft.me/2011/09/18/xatk-udobnoe-pereklyuchenie-okon/
 
+### Django
+
+* **[vlevit.org]** is my personal site. You can read about the site in
+    [this post]. Code is available on [GitHub][vlevit.org].
+
+[vlevit.org]: https://github.com/vlevit/vlevit.org
+[this post]: http://www.vlevit.org/en/blog/tech/vlevit-org
+
 ### Bash
 
 * **[FLAC-Convert]** is a script which converts FLAC audio to lossy formats

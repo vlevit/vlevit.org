@@ -10,6 +10,14 @@
 [3]: http://muhas.ru/?p=183
 [4]: http://proft.me/2011/09/18/xatk-udobnoe-pereklyuchenie-okon/
 
+### Django
+
+* **[vlevit.org]** — мой сайт. О нём можно почитать в [этой заметке]. Код
+    находится на [GitHub][vlevit.org].
+
+[vlevit.org]: https://github.com/vlevit/vlevit.org
+[этой заметке]: http://www.vlevit.org/ru/blog/tech/vlevit-org
+
 ### Bash
 
 * **[FLAC-Convert]** — скрипт, инкрементально конвертирующий FLAC-аудио в
