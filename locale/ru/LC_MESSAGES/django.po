@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-03 19:54+0300\n"
-"PO-Revision-Date: 2013-07-03 19:55+0300\n"
+"POT-Creation-Date: 2013-07-03 23:46+0300\n"
+"PO-Revision-Date: 2013-07-03 23:40+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -44,12 +44,23 @@ msgstr ""
 msgid "About me:"
 msgstr "Обо мне"
 
-#: templates/about_page.html:22 templates/tech_post.html:57
+#: templates/about_page.html:7 templates/post.html:8 templates/post.html.py:9
+#: templates/post_list.html:8 templates/tech_post.html:10
+#: templates/tech_post.html.py:11 templates/tech_post_list.html:8
+msgid "Comments on"
+msgstr "Комментарии к"
+
+#: templates/about_page.html:28 templates/tech_post.html:57
 #: templates/comments/comment_block.html:4
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/about_page.html:31
+#: templates/about_page.html:29 templates/tech_post.html:58
+#: templates/comments/comment_block.html:5
+msgid "Subscribe to comments on"
+msgstr "Подписаться на комментарии к"
+
+#: templates/about_page.html:40
 msgid "You can declare your love for me here."
 msgstr "Здесь можно признаться мне в любви."
 
@@ -129,12 +140,6 @@ msgstr "Libre.fm"
 msgid "Contacts"
 msgstr "Контакты"
 
-#: templates/post.html:8 templates/post.html.py:9 templates/post_list.html:8
-#: templates/tech_post.html:10 templates/tech_post.html.py:11
-#: templates/tech_post_list.html:8
-msgid "Comments on"
-msgstr "Комментарии к"
-
 #: templates/post.html:18 templates/post_list.html:20
 #: templates/tech_post.html:47 templates/tech_post_list.html:19
 msgid "Subscribe to "
@@ -151,10 +156,6 @@ msgstr "назад"
 #: templates/tag_list.html:5
 msgid "Tags:"
 msgstr "Метки:"
-
-#: templates/tech_post.html:58 templates/comments/comment_block.html:5
-msgid "Subscribe to comments on"
-msgstr "Подписаться на комментарии к"
 
 #: templates/comments/form.html:5
 msgid "You can write here in "
@@ -263,22 +264,18 @@ msgstr "Древовидный комментарий"
 msgid "Threaded comments"
 msgstr "Древовидные комментарии"
 
-# Комментарий к {}
 #: vlblog/feeds.py:65
-msgid "Comment on {}"
-msgstr "Комментарий к"
+#, fuzzy
+msgid "Comment on \"{}\""
+msgstr "Комментарии к \"{}\""
 
-#: vlblog/feeds.py:88
-msgid "Comments on {}"
-msgstr "Комментарии к {}"
+#: vlblog/feeds.py:88 vlblog/feeds.py:136 vlblog/feeds.py:160
+msgid "Comments on \"{}\""
+msgstr "Комментарии к \"{}\""
 
 #: vlblog/feeds.py:111
 msgid "Comments on blog \"{}\""
 msgstr "Комментарии к блогу \"{}\""
-
-#: vlblog/feeds.py:136
-msgid "Comments on \"{}\""
-msgstr "Комментарии к \"{}\""
 
 #: vlevitorg/settings.py:48
 msgid "English"
@@ -287,3 +284,10 @@ msgstr "Английский"
 #: vlevitorg/settings.py:49
 msgid "Russian"
 msgstr "Русский"
+
+# Комментарий к {}
+#~ msgid "Comment on {}"
+#~ msgstr "Комментарий к {}"
+
+#~ msgid "Comments on {}"
+#~ msgstr "Комментарии к {}"

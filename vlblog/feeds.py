@@ -62,7 +62,7 @@ class CommentsFeedBase(Feed):
     description_template = 'feeds/comment.html'
 
     def item_title(self, comment):
-        return _("Comment on {}").format(comment.content_object.title)
+        return _("Comment on \"{}\"").format(comment.content_object.title)
 
     def item_link(self, comment):
         post = comment.content_object
@@ -85,7 +85,7 @@ class SiteCommentsFeed(CommentsFeedBase):
         return "http://{}/".format(request.get_host())
 
     def title(self, request):
-        return _("Comments on {}").format(request.get_host())
+        return _("Comments on \"{}\"").format(request.get_host())
 
     description = title
 
