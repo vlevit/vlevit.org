@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 register = template.Library()
 
 
-def unquoted_tag(func):
-    function_name = getattr(func, '_decorated_function', func).__name__
+def unquoted_tag(func=None, name=None):
+    function_name = name or getattr(func, '_decorated_function', func).__name__
 
     class Node(template.Node):
         def __init__(self, func, value):
@@ -33,7 +33,12 @@ def unquoted_tag(func):
         register.tag(function_name, tag_func)
         return func
 
-    return wrap_func(func)
+    if func is None:            # @unquoted_tag(...)
+        return wrap_func
+    elif callable(func):        # @unquoted_tag
+        return wrap_func(func)
+    else:
+        raise TypeError("Invalid arguments provided to unquoted_tag")
 
 
 @unquoted_tag
@@ -73,6 +78,14 @@ def name(context, value):
     if 'vars' not in context.dicts[0]:
         context.dicts[0]['vars'] = {}
     context.dicts[0]['vars']['name'] = value
+    return u''
+
+
+@unquoted_tag(name='template')
+def template_tag(context, value):
+    if 'vars' not in context.dicts[0]:
+        context.dicts[0]['vars'] = {}
+    context.dicts[0]['vars']['template'] = value
     return u''
 
 
