@@ -20,6 +20,15 @@ class FeedBase(Feed):
     def item_categories(self, post):
         return post.tags.all()
 
+    def author_name(self):      # will not show up in RSS
+        return _("Vyacheslav Levit")
+
+    def author_link(self):      # will not show up in RSS
+        return "http://www.vlevit.org/"
+
+    item_author_name = author_name
+    item_author_link = author_link  # will not show up in RSS
+
 
 class SiteFeed(FeedBase):
 
@@ -71,6 +80,9 @@ class CommentsFeedBase(Feed):
 
     def item_author_name(self, comment):
         return comment.user_name
+
+    def item_author_link(self, comment):  # will not show up in RSS
+        return comment.user_url
 
     def item_pubdate(self, comment):
         return comment.submit_date
