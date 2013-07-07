@@ -16,7 +16,7 @@
     находится на [GitHub][vlevit.org].
 
 [vlevit.org]: https://github.com/vlevit/vlevit.org
-[этойзаметке]: http://www.vlevit.org/ru/blog/tech/vlevit-org
+[этой заметке]: http://www.vlevit.org/ru/blog/tech/vlevit-org
 
 ### Bash
 
