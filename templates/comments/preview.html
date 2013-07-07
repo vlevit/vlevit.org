@@ -13,12 +13,12 @@
     <h1>{% trans "Preview your comment" %}</h1>
       <blockquote>{{ comment|linebreaks }}</blockquote>
       <p>
-      {% trans "and" %} <input type="submit" name="submit" class="submit-post" value="{% trans "Post your comment" %}" id="submit" /> {% trans "or make changes" %}:
+      {% trans "and" %} <input type="submit" name="submit" class="submit-post" value="{% trans "Submit your comment" %}" id="submit" /> {% trans "or make changes" %}:
       </p>
     {% endif %}
     {% include "comments/form_fields.html" %}
     <P class="submit">
-    <input type="submit" name="submit" class="submit-post" value="{% trans "Post" %}" />
+    <input type="submit" name="submit" class="submit-post" value="{% trans "Submit" %}" />
     <input type="submit" name="preview" class="submit-preview" value="{% trans "Preview" %}" />
     </p>
   </form>
