@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-08 00:34+0300\n"
-"PO-Revision-Date: 2013-07-08 00:12+0300\n"
+"PO-Revision-Date: 2013-07-08 01:01+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -197,7 +197,6 @@ msgid "and"
 msgstr "и"
 
 #: templates/comments/preview.html:16
-#, fuzzy
 msgid "Submit your comment"
 msgstr "Отправьте комментарий"
 
@@ -270,9 +269,8 @@ msgid "Vyacheslav Levit"
 msgstr "Вячеслав Левит"
 
 #: vlblog/feeds.py:74
-#, fuzzy
 msgid "Comment on \"{}\""
-msgstr "Комментарии к \"{}\""
+msgstr "Комментарий к \"{}\""
 
 #: vlblog/feeds.py:100 vlblog/feeds.py:148 vlblog/feeds.py:172
 msgid "Comments on \"{}\""
