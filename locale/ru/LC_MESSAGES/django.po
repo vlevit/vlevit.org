@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-03 23:46+0300\n"
-"PO-Revision-Date: 2013-07-03 23:40+0300\n"
+"POT-Creation-Date: 2013-07-08 00:34+0300\n"
+"PO-Revision-Date: 2013-07-08 00:12+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #: templates/500.html:5
 msgid "Server error (500)"
-msgstr ""
+msgstr "Ответить"
 
 #: templates/500.html:8
 msgid "Server Error <em>(500)</em>"
@@ -171,7 +171,7 @@ msgid "Edit"
 msgstr "Редактировать"
 
 #: templates/comments/form.html:14 templates/comments/preview.html:21
-msgid "Post"
+msgid "Submit"
 msgstr "Отправить"
 
 #: templates/comments/list.html:32
@@ -197,7 +197,8 @@ msgid "and"
 msgstr "и"
 
 #: templates/comments/preview.html:16
-msgid "Post your comment"
+#, fuzzy
+msgid "Submit your comment"
 msgstr "Отправьте комментарий"
 
 #: templates/comments/preview.html:16
@@ -264,16 +265,20 @@ msgstr "Древовидный комментарий"
 msgid "Threaded comments"
 msgstr "Древовидные комментарии"
 
-#: vlblog/feeds.py:65
+#: vlblog/feeds.py:24
+msgid "Vyacheslav Levit"
+msgstr "Вячеслав Левит"
+
+#: vlblog/feeds.py:74
 #, fuzzy
 msgid "Comment on \"{}\""
 msgstr "Комментарии к \"{}\""
 
-#: vlblog/feeds.py:88 vlblog/feeds.py:136 vlblog/feeds.py:160
+#: vlblog/feeds.py:100 vlblog/feeds.py:148 vlblog/feeds.py:172
 msgid "Comments on \"{}\""
 msgstr "Комментарии к \"{}\""
 
-#: vlblog/feeds.py:111
+#: vlblog/feeds.py:123
 msgid "Comments on blog \"{}\""
 msgstr "Комментарии к блогу \"{}\""
 
@@ -284,6 +289,9 @@ msgstr "Английский"
 #: vlevitorg/settings.py:49
 msgid "Russian"
 msgstr "Русский"
+
+#~ msgid "Post"
+#~ msgstr "Отправить"
 
 # Комментарий к {}
 #~ msgid "Comment on {}"
