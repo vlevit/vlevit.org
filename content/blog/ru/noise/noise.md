@@ -124,7 +124,7 @@
 -------------------------------------------------------------------------------
 
 /title: auto-complete.el
-/name: auto-comlete.el
+/name: auto-comlete-el
 /created: 2013-04-22 16:35:51+03:00
 
 — Ты знаешь ELisp?  

@@ -17,7 +17,7 @@
 между компьютерами (Unison). О синхронизации я как раз и расскажу в данной
 заметке.
 
-[Потеряв]: http://www.vlevit.org/ru/blog/tech/wuala
+[Потеряв]: /ru/blog/tech/wuala
 
 ## Unison
 

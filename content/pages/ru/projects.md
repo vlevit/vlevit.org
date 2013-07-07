@@ -16,7 +16,7 @@
     находится на [GitHub][vlevit.org].
 
 [vlevit.org]: https://github.com/vlevit/vlevit.org
-[этой заметке]: http://www.vlevit.org/ru/blog/tech/vlevit-org
+[этойзаметке]: http://www.vlevit.org/ru/blog/tech/vlevit-org
 
 ### Bash
 
@@ -38,7 +38,7 @@
   пока они закроются.
 
 [FLAC-Convert]: https://github.com/nijet99/FLAC-Convert/
-[писал]: http://www.vlevit.org/ru/blog/tech/flac-convert
+[писал]: /ru/blog/tech/flacconvert
 [unisync]: https://github.com/vlevit/unisync
 [Unison]: http://www.cis.upenn.edu/~bcpierce/unison/
 [здесь]: http://www.vlevit.org/ru/blog/tech/unisync#unisync

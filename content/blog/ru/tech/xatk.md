@@ -221,4 +221,4 @@ __Обновление__:
 
 [тут]: http://groups.google.com/group/xatk-discuss
 [баг-трекере]: http://code.google.com/p/xatk/issues/entry
-[xatk 0.1 — первая стабильная версия переключателя окон]: xatk-1
+[xatk 0.1 — первая стабильная версия переключателя окон]: /ru/blog/tech/xatk-1
