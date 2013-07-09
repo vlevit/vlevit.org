@@ -16,6 +16,7 @@ from django.utils.html import escape
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
 from django.views.decorators.http import require_GET
+from django.utils.translation import ugettext as _
 
 from threadedcomments.util import safe_markdown
 
@@ -133,3 +134,9 @@ def render_list(request, content_type, object_pk):
     tpl = Template("""{% load comments %} {% render_comment_list for object %}""")
     html = tpl.render(context)
     return HttpResponse(html)
+
+
+def enable_js(request):
+    return HttpResponse(
+        _('Enable JavaScript to post a comment. Or send me an email.'),
+        content_type="text/plain")

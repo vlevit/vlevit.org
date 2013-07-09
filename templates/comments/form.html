@@ -6,7 +6,7 @@
         <div id="preview-link"><a href="{% url threadedcomments.views.preview_comment %}">{% trans "Preview" %}</a></div>
         <div id="preview-cancel"><a href="">{% trans "Edit" %}</a></div>
         <div class="clear"></div>
-        <form id="comment-form" action="{% url threadedcomments.views.post_comment %}" method="post">{% csrf_token %}
+        <form id="comment-form" action="{% url threadedcomments.views.post_comment %}removethis" method="post">{% csrf_token %}
             {% if next %}<div><input type="hidden" name="next" value="{{ next }}" /></div>{% endif %}
             {% include "comments/form_fields.html" %}
             <div id="comment-error"></div>

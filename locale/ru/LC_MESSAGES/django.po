@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-08 00:34+0300\n"
-"PO-Revision-Date: 2013-07-08 01:01+0300\n"
+"POT-Creation-Date: 2013-07-09 17:32+0300\n"
+"PO-Revision-Date: 2013-07-09 17:34+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -263,6 +263,10 @@ msgstr "Древовидный комментарий"
 #: threadedcomments/models.py:58
 msgid "Threaded comments"
 msgstr "Древовидные комментарии"
+
+#: threadedcomments/views.py:141
+msgid "Enable JavaScript to post a comment. Or send me an email."
+msgstr "Включите JavaScript, чтобы отправить комментарий. Или напишите мне email."
 
 #: vlblog/feeds.py:24
 msgid "Vyacheslav Levit"

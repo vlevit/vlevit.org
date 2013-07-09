@@ -57,7 +57,7 @@ function cancel_preview(event) {
 
 function submit_comment(event) {
     $this = $(this);
-    $.post($this.attr('action'),
+    $.post($this.attr('action').replace("removethis", ""),
            $this.serialize(),
            function(data) {
                $data = $($.trim(data));
