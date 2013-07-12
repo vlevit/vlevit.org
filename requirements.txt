@@ -9,5 +9,5 @@ django-storages==1.1.8
 boto==2.9.2
 PyYAML==3.10
 django-debug-toolbar==0.9.4
-git+git://github.com/kylef/django-request.git@de1cd04
+git+git://github.com/kylef/django-request.git
 newrelic
