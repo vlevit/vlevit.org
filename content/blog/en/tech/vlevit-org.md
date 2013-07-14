@@ -92,7 +92,7 @@ readable. The source of this post can be viewed [here].
 
 [Markdown]: http://daringfireball.net/projects/markdown/syntax
 [python-markdown]: http://pythonhosted.org/Markdown/
-[here]:  https://github.com/vlevit/vlevit.org/blob/master/content/blog/en/tech/vlevit-org.md
+[here]: https://raw.github.com/vlevit/vlevit.org/master/content/blog/en/tech/vlevit-org.md
 
 ### Comments
 

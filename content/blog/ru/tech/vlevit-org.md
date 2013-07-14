@@ -101,7 +101,7 @@ JavaScript-модуля. Я не принадлежу к числу фанато
 
 [Markdown]: http://daringfireball.net/projects/markdown/syntax
 [Markdown-процессора]: http://pythonhosted.org/Markdown/
-[здесь]:  https://github.com/vlevit/vlevit.org/blob/master/content/blog/ru/tech/vlevit-org.md
+[здесь]: https://raw.github.com/vlevit/vlevit.org/master/content/blog/ru/tech/vlevit-org.md
 
 ### Комментарии
 
