@@ -20,7 +20,9 @@ def require_key(func):
     return wrapper
 
 
-def redirect_to_language(request, url, language=None):
+def redirect_to_language(request, url='/', language=None,
+                         permanent=True, query_string=False, **kwargs):
     if not language:
         language = request.LANGUAGE_CODE
-    return redirect_to(request, '/{}{}'.format(language, url))
+    return redirect_to(request, '/{}{}'.format(language, url),
+                       permanent, query_string, **kwargs)
