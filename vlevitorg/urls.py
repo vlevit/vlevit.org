@@ -1,13 +1,17 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.views.generic.simple import redirect_to
 
-from django.conf import settings
+from vlblog.views.utils import redirect_to_language
+
 
 admin.autodiscover()
 
+
 urlpatterns = patterns('',
+     url(r'^$', redirect_to_language, {'permanent': False}),
     # favicon for apps ignoring icon link in html
     url(r'^favicon.ico$', redirect_to,
         {'url': "{}/{}".format(settings.STATIC_URL, 'images/favicon.ico')}),
