@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponse, HttpRequest
-from django.views.generic.simple import redirect_to
+from django.views.generic.base import RedirectView
 
 
 def require_key(func):
@@ -20,9 +20,15 @@ def require_key(func):
     return wrapper
 
 
-def redirect_to_language(request, url='/', language=None,
-                         permanent=True, query_string=False, **kwargs):
-    if not language:
-        language = request.LANGUAGE_CODE
-    return redirect_to(request, '/{}{}'.format(language, url),
-                       permanent, query_string, **kwargs)
+class LanguageRedirectView(RedirectView):
+
+    permanent = False
+
+    def get_redirect_url(self, **kwargs):
+        if self.url:
+            language = (getattr(self, 'language', None) or
+                        self.request.LANGUAGE_CODE)
+            self.url = '/{}{}'.format(language, self.url)
+            return super(LanguageRedirectView, self).get_redirect_url(**kwargs)
+        else:
+            return None

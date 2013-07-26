@@ -2,26 +2,29 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
-from django.views.generic.simple import redirect_to
+# from django.views.generic.simple import redirect_to
+from django.views.generic.base import RedirectView
 
-from vlblog.views.utils import redirect_to_language
+# from vlblog.views.utils import redirect_to_language
+from vlblog.views.utils import LanguageRedirectView
 
 
 admin.autodiscover()
 
 
 urlpatterns = patterns('',
-     url(r'^$', redirect_to_language, {'permanent': False}),
+    url(r'^$', LanguageRedirectView.as_view(url='/')),
     # favicon for apps ignoring icon link in html
-    url(r'^favicon.ico$', redirect_to,
-        {'url': "{}/{}".format(settings.STATIC_URL, 'images/favicon.ico')}),
+    url(r'^favicon.ico$', RedirectView.as_view(
+        url="{}/{}".format(settings.STATIC_URL, 'images/favicon.ico'))),
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 
 for rediction in settings.ENVIRON_REDIRECTIONS:
     urlpatterns += patterns(
-        '', url(rediction[0], redirect_to, {'url': rediction[1]}))
+        '', url(rediction[0], RedirectView.as_view(url=rediction[1]))
+)
 
 if settings.DEBUG:
     urlpatterns += patterns('',
@@ -54,5 +57,4 @@ urlpatterns += patterns('',
     url(r'^comments/post/$', 'threadedcomments.views.post_comment'),
     url(r'^comments/post/removethis$', 'threadedcomments.views.enable_js'),
     url(r'^comments/', include('django.contrib.comments.urls')),
-
 )
