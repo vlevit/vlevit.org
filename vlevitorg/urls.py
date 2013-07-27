@@ -2,10 +2,8 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
-# from django.views.generic.simple import redirect_to
-from django.views.generic.base import RedirectView
+from django.views.generic.base import RedirectView, TemplateView
 
-# from vlblog.views.utils import redirect_to_language
 from vlblog.views.utils import LanguageRedirectView
 
 
@@ -29,8 +27,7 @@ for rediction in settings.ENVIRON_REDIRECTIONS:
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^500/$', 'django.views.defaults.server_error'),
-        (r'^404/$', 'django.views.generic.simple.direct_to_template',
-         {'template': '404.html'}),
+        (r'^404/$', TemplateView.as_view(template_name='404.html')),
     )
 
 urlpatterns += i18n_patterns('',
