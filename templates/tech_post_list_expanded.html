@@ -5,7 +5,7 @@
     {% for post in posts %}
          <div class="column-content">
              <div class="content">
-                 <h1><a href="{% url post post.blog.name post.name %}">{{ post.title|safe }}</a></h1>
+                 <h1><a href="{% url "post" post.blog.name post.name %}">{{ post.title|safe }}</a></h1>
                  {{ post.body|safe }}
                  <div class="footer-date">{{ post.created|date:"d E Y" }}</div>
              </div>

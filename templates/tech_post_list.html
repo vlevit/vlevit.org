@@ -4,19 +4,19 @@
 {% block title %}{{ blog.description }}{% endblock %}
 
 {% block feeds %}
-    <link rel="alternate" type="application/rss+xml" title="{{blog.description}}" href="{% url blog_feed blog.name %}">
-    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{blog.description}}" href="{% url blog_comments_feed blog.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{{blog.description}}" href="{% url "blog_feed" blog.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{blog.description}}" href="{% url "blog_comments_feed" blog.name %}">
     {{block.super}}
 {% endblock %}
 
 
-{% block url_ru %}{% url post_list blog.name %}{% endblock%}
-{% block url_en %}{% url post_list blog.name %}{% endblock%}
+{% block url_ru %}{% url "post_list" blog.name %}{% endblock%}
+{% block url_en %}{% url "post_list" blog.name %}{% endblock%}
 
 {% block blog_title %}{{blog.description}}{% endblock %}
 
 {% block headline_feed %}
-    <a href="{% url blog_feed blog.name %}" title="{% trans "Subscribe to " %} {{blog.description}}">
+    <a href="{% url "blog_feed" blog.name %}" title="{% trans "Subscribe to " %} {{blog.description}}">
         <img class="img-middle" src="{% static "images/rss18.png" %}">
     </a>
 {% endblock %}
@@ -25,11 +25,11 @@
     {% for post in posts %}
         <div class="entry">
             <div class="entry-header-wrapper">
-               <div class="entry-header"><h1><a href="{% url post post.blog.name post.name %}">{{ post.title|safe }}</a></h1></div>
+               <div class="entry-header"><h1><a href="{% url "post" post.blog.name post.name %}">{{ post.title|safe }}</a></h1></div>
                <div class="entry-date">{{post.created|date:"d M Y"}}</div>
            </div>
             {{ post.excerpt|safe }}
-           <div class="entry-tags">{% for tag in post.tags.all %}<a href="{% url post_list_tag post.blog.name tag.name %}">{{tag.name}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+           <div class="entry-tags">{% for tag in post.tags.all %}<a href="{% url "post_list_tag" post.blog.name tag.name %}">{{tag.name}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
         </div>
     {% endfor %}
 {% endblock %}

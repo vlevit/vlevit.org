@@ -10,8 +10,8 @@
         <title>{% block title %}{% endblock %} - Vyacheslav Levit</title>
         <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" />
         {% block feeds %}
-        <link rel="alternate" type="application/rss+xml" title="{% trans "All Posts In All Blogs" %}" href="{% url site_feed %}">
-        <link rel="alternate" type="application/rss+xml" title="{% trans "All Comments In All Blogs" %}" href="{% url site_comments_feed %}">
+        <link rel="alternate" type="application/rss+xml" title="{% trans "All Posts In All Blogs" %}" href="{% url "site_feed" %}">
+        <link rel="alternate" type="application/rss+xml" title="{% trans "All Comments In All Blogs" %}" href="{% url "site_comments_feed" %}">
         {% endblock %}
         <link rel="stylesheet" href="{% static "css/base.css" %}" type="text/css">
         {% block headlinks %}{% endblock %}
@@ -21,19 +21,19 @@
         <header>
             <ul class="sitenav">
                 {% if LANGUAGE_CODE == "en" %}
-                    <li><a class="{% block tech_active %}{% endblock %}" href="{% url post_list "tech" %}">Tech</a></li>
-                    {% language "ru" %}<li><a class="{% block life_active %}{% endblock %}" href="{% url post_list "life" %}">Life<sup>RU</sup></a></li>{% endlanguage %}
-                    {% language "en" %}<li><a class="{% block death_active %}{% endblock %}" href="{% url post_list "death" %}">Death</a></li>{% endlanguage %}
+                    <li><a class="{% block tech_active %}{% endblock %}" href="{% url "post_list" "tech" %}">Tech</a></li>
+                    {% language "ru" %}<li><a class="{% block life_active %}{% endblock %}" href="{% url "post_list" "life" %}">Life<sup>RU</sup></a></li>{% endlanguage %}
+                    {% language "en" %}<li><a class="{% block death_active %}{% endblock %}" href="{% url "post_list" "death" %}">Death</a></li>{% endlanguage %}
                     {% language "ru" %}
-                        <li><a class="{% block music_active %}{% endblock %}" href="{% url post_list "music" %}">Music<sup>RU</sup></a></li>
-                        <li><a class="{% block noise_active %}{% endblock %}" href="{% url post_list "noise" %}">Noise<sup>RU</sup></a></li>
+                        <li><a class="{% block music_active %}{% endblock %}" href="{% url "post_list" "music" %}">Music<sup>RU</sup></a></li>
+                        <li><a class="{% block noise_active %}{% endblock %}" href="{% url "post_list" "noise" %}">Noise<sup>RU</sup></a></li>
                     {% endlanguage %}
                 {% else %} {# "ru" #}
-                    <li><a class="{% block tech_active_ru %}{% endblock %}" href="{% url post_list "tech" %}">Тех</a></li>
-                    <li><a class="{% block life_active_ru %}{% endblock %}" href="{% url post_list "life" %}">Жизнь</a></li>
-                    <li><a class="{% block death_active_ru %}{% endblock %}" href="{% url post_list "death" %}">Смерть</a></li>
-                    <li><a class="{% block music_active_ru %}{% endblock %}" href="{% url post_list "music" %}">Музыка</a></li>
-                    <li><a class="{% block noise_active_ru %}{% endblock %}" href="{% url post_list "noise" %}">Шум<sup></sup></a></li>
+                    <li><a class="{% block tech_active_ru %}{% endblock %}" href="{% url "post_list" "tech" %}">Тех</a></li>
+                    <li><a class="{% block life_active_ru %}{% endblock %}" href="{% url "post_list" "life" %}">Жизнь</a></li>
+                    <li><a class="{% block death_active_ru %}{% endblock %}" href="{% url "post_list" "death" %}">Смерть</a></li>
+                    <li><a class="{% block music_active_ru %}{% endblock %}" href="{% url "post_list" "music" %}">Музыка</a></li>
+                    <li><a class="{% block noise_active_ru %}{% endblock %}" href="{% url "post_list" "noise" %}">Шум<sup></sup></a></li>
                 {% endif %}
             </ul>
             <div class="langbar">
@@ -53,7 +53,7 @@
             <div class="headline-wrapper">
                 <div class="blog-title"><h1>{% block blog_title %}{% trans "vlevit.org, my Org file on the Web" %}{% endblock %}</h1></div>
                 {% block headline_feed %}
-                    <a href="{% url site_feed %}" title="{% trans "Subscribe to all posts in all blogs" %}">
+                    <a href="{% url "site_feed" %}" title="{% trans "Subscribe to all posts in all blogs" %}">
                         <img class="img-middle" src="{% static "images/rss18.png" %}">
                     </a>
                 {% endblock %}
@@ -77,9 +77,9 @@
                 <div class="footer-column-content">
                     <h3>{% trans "Pages" %}</h3>
                     <ul>
-                        <li><a href="{% url page "about" %}">{% trans "About me" %}</a></li>
-                        <li><a href="{% url page "projects" %}">{% trans "Projects" %}</a></li>
-                        <li><a href="{% url page "wishlist" %}">{% trans "Wishlist" %}</a></li>
+                        <li><a href="{% url "page" "about" %}">{% trans "About me" %}</a></li>
+                        <li><a href="{% url "page" "projects" %}">{% trans "Projects" %}</a></li>
+                        <li><a href="{% url "page" "wishlist" %}">{% trans "Wishlist" %}</a></li>
                     </ul>
                 </div>
             </div>
@@ -87,17 +87,17 @@
                 <div class="footer-column-content">
                     <h3>{% trans "Feeds" %}</h3>
                     <ul>
-                        <li><a href="{% url blog_feed "tech" %}">{% trans "Tech" %}</a></li>
+                        <li><a href="{% url "blog_feed" "tech" %}">{% trans "Tech" %}</a></li>
                         {% if LANGUAGE_CODE == "en" %}
                             {% language "ru" %}
-                            <li><a href="{% url blog_feed "life" %}">Life<sup>RU</sup></a></li>
-                            <li><a href="{% url blog_feed "music" %}">Music<sup>RU</sup></a></li>
-                            <li><a href="{% url blog_feed "noise" %}">Noise<sup>RU</sup></a></li>
+                            <li><a href="{% url "blog_feed" "life" %}">Life<sup>RU</sup></a></li>
+                            <li><a href="{% url "blog_feed" "music" %}">Music<sup>RU</sup></a></li>
+                            <li><a href="{% url "blog_feed" "noise" %}">Noise<sup>RU</sup></a></li>
                             {% endlanguage %}
                         {% else %}
-                            <li><a href="{% url blog_feed "life" %}">{% trans "Life" %}</a></li>
-                            <li><a href="{% url blog_feed "music" %}">{% trans "Music" %}</a></li>
-                            <li><a href="{% url blog_feed "noise" %}">{% trans "Noise" %}</a></li>
+                            <li><a href="{% url "blog_feed" "life" %}">{% trans "Life" %}</a></li>
+                            <li><a href="{% url "blog_feed" "music" %}">{% trans "Music" %}</a></li>
+                            <li><a href="{% url "blog_feed" "noise" %}">{% trans "Noise" %}</a></li>
                         {% endif %}
                     </ul>
                 </div>

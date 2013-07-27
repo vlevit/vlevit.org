@@ -4,7 +4,7 @@
 {% block title %}{{ page.title }}{% endblock %}
 
 {% block feeds %}
-    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{page.title}}" href="{% url page_comments_feed page.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{page.title}}" href="{% url "page_comments_feed" page.name %}">
     {{block.super}}
 {% endblock %}
 
@@ -17,8 +17,8 @@
     <script src="{% static "js/comments.js" %}"></script>
 {% endblock %}
 
-{% block url_ru %}{% url page page.name %}{% endblock%}
-{% block url_en %}{% url page page.name %}{% endblock%}
+{% block url_ru %}{% url "page" page.name %}{% endblock%}
+{% block url_en %}{% url "page" page.name %}{% endblock%}
 
 {% block content %}
     <h1>{{ page.title|safe }}</h1>
@@ -26,7 +26,7 @@
 
     <div class="comment-header-wrapper">
         <h2 id="comment-header">{% trans "Comments" %}<sup id="fnref:comments"><a class="footnote-ref" href="#fn:comments"><small>†</small></a></sup></h2>
-        <a href="{% url page_comments_feed page.name %}" title="{% trans "Subscribe to comments on" %} {{page.title}}">
+        <a href="{% url "page_comments_feed" page.name %}" title="{% trans "Subscribe to comments on" %} {{page.title}}">
             <img class="img-middle" src="{% static "images/rss16.png" %}">
         </a>
     </div>

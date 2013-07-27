@@ -4,8 +4,8 @@
 {% block title %}{{ blog.description }}{% endblock %}
 
 {% block feeds %}
-    <link rel="alternate" type="application/rss+xml" title="{{blog.description}}" href="{% url blog_feed blog.name %}">
-    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{blog.description}}" href="{% url blog_comments_feed blog.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{{blog.description}}" href="{% url "blog_feed" blog.name %}">
+    <link rel="alternate" type="application/rss+xml" title="{% trans "Comments on" %} {{blog.description}}" href="{% url "blog_comments_feed" blog.name %}">
     {{block.super}}
 {% endblock %}
 
@@ -13,11 +13,11 @@
 
 {% block blog_title %}{{blog.description}}{% endblock %}
 
-{% block url_ru %}{% url post_list blog.name %}{% endblock%}
-{% block url_en %}{% url post_list blog.name %}{% endblock%}
+{% block url_ru %}{% url "post_list" blog.name %}{% endblock%}
+{% block url_en %}{% url "post_list" blog.name %}{% endblock%}
 
 {% block headline_feed %}
-    <a href="{% url blog_feed blog.name %}" title="{% trans "Subscribe to " %} {{blog.description}}">
+    <a href="{% url "blog_feed" blog.name %}" title="{% trans "Subscribe to " %} {{blog.description}}">
         <img class="img-middle" src="{% static "images/rss18.png" %}">
     </a>
 {% endblock %}
