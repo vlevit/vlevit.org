@@ -1,3 +1,4 @@
 *.pyc
 /static/images
 /static/images-full
+/vlevitorg/local_settings.py

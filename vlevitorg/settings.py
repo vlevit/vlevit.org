@@ -1,40 +1,10 @@
 # Django settings for vlevitorg project.
 
-import os
 import os.path as path
 import sys
 
 ugettext = lambda s: s
 proj_dir = path.dirname(path.dirname(__file__))
-
-DEBUG = bool(os.environ['DEBUG'])
-TEMPLATE_DEBUG = DEBUG
-
-ENVIRON_REDIRECTIONS = map(lambda s: s.split('=='),
-                           os.environ.get('ENVIRON_REDIRECTIONS', '').split())
-
-ADMINS = (
-    (os.environ['ADMIN_NAME'], os.environ['ADMIN_EMAIL']),
-)
-
-ALLOWED_HOSTS = [os.environ['ALLOWED_HOSTS']]
-
-SERVER_EMAIL = os.environ['SERVER_EMAIL']
-EMAIL_HOST = os.environ['EMAIL_HOST']
-EMAIL_PORT = os.environ['EMAIL_PORT']
-EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-EMAIL_USE_TLS = bool(os.environ['EMAIL_USE_TLS'])
-EMAIL_SUBJECT_PREFIX = os.environ['EMAIL_SUBJECT_PREFIX']
-
-SEND_BROKEN_LINK_EMAILS = True
-
-MANAGERS = ADMINS
-
-import dj_database_url
-DATABASES = {
-    'default': dj_database_url.config()
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -79,10 +49,6 @@ MEDIA_URL = ''
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = path.join(proj_dir, 'staticfiles/')
 
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = os.environ['STATIC_URL']
-
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
@@ -98,18 +64,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = os.environ['SECRET_KEY']
-
-SECRET_URL_KEY = os.environ['SECRET_URL_KEY']
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -127,7 +81,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'request.middleware.RequestMiddleware',
 )
 
@@ -180,10 +134,10 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.logger.LoggingPanel',
 )
 
-REQUEST_IGNORE_IP = (os.environ['REQUEST_IGNORE_IP'])
+
 REQUEST_IGNORE_PATHS = (r'^admin/', '^import/', '^export/', r'^pingme',
                         r'^error')
-REQUEST_BASE_URL = os.environ['REQUEST_BASE_URL']
+
 REQUEST_TRAFFIC_MODULES = (
     'request.traffic.Ajax',
     'request.traffic.NotAjax',
@@ -235,3 +189,5 @@ LOGGING = {
         }
     }
 }
+
+from .local_settings import *

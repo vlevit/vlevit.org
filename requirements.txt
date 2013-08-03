@@ -2,7 +2,6 @@ Django==1.5.1
 gunicorn==0.17.4
 Markdown==2.2.1
 Pygments==1.6
-dj-database-url==0.2.1
 wsgiref==0.1.2
 psycopg2==2.4.6
 django-storages==1.1.8
