@@ -83,7 +83,7 @@ class Tag(models.Model):
 
 class File(models.Model):
     # absolute path to file
-    path = models.CharField(max_length=256, unique=True)
+    path = models.CharField(max_length=255, unique=True)
     digest = models.CharField(max_length=40)
 
     def __unicode__(self):
