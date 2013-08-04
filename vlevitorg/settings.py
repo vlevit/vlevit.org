@@ -82,7 +82,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'request.middleware.RequestMiddleware',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -116,7 +115,6 @@ INSTALLED_APPS = (
     'storages',
     'vlblog',
     'debug_toolbar',
-    'request'
 )
 
 COMMENTS_APP = 'threadedcomments'
@@ -134,20 +132,6 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.logger.LoggingPanel',
 )
 
-
-REQUEST_IGNORE_PATHS = (r'^admin/', '^import/', '^export/', r'^pingme',
-                        r'^error')
-
-REQUEST_TRAFFIC_MODULES = (
-    'request.traffic.Ajax',
-    'request.traffic.NotAjax',
-    'request.traffic.Error',
-    'request.traffic.Error404',
-    'request.traffic.Hit',
-    'request.traffic.Search',
-    'request.traffic.UniqueVisitor',
-    'request.traffic.UniqueVisit',
-)
 
 LOGGING = {
     'version': 1,
