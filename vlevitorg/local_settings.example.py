@@ -12,7 +12,7 @@ ENVIRON_REDIRECTIONS = (
     ("^examlpe", "http://example.com"),
 )
 
-ADMINS = ("Jane Doe",)
+ADMINS = (("Jane Doe", "jane.doe@example.com"),)
 MANAGERS = ADMINS
 
 ALLOWED_HOSTS = ".example.com"
