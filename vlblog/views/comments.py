@@ -5,6 +5,8 @@ from os import path
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.http import HttpResponse
 from django.utils.dateparse import parse_datetime
 import yaml
@@ -129,12 +131,12 @@ def import_comments(request, blog_dir=settings.BLOG_DIR):
 
 
 @require_key
-def export_comments(request, blog_dir=settings.BLOG_DIR):
+def export_comments(request, dir='comments'):
     """
     Export all Post comments in database to readable yaml files.
 
     One yaml file is created per post with comments and is put under
-    [blog_dir]/[language]/[blog]/exported_comments directory.
+    [dir]/[language]/[blog]/comments directory in the default storage.
 
     """
 
@@ -188,18 +190,17 @@ def export_comments(request, blog_dir=settings.BLOG_DIR):
             comment_ref[comment.id] = comment_dict
 
         if comment_list:
-            comment_dir = path.join(blog_dir, post.blog.language,
-                                    post.blog.name, "exported_comments")
-            if not path.exists(comment_dir):
-                try:
-                    os.mkdir(comment_dir)
-                except OSError:
-                    logger.error('error while creating %s', comment_dir)
-                    continue
-            comment_file = path.join(comment_dir, post.name + '.yaml')
-            with open(comment_file, 'w') as f:
-                yaml.dump(comment_list, f, encoding='utf-8', width=80,
+            file_path = path.join(dir, post.blog.language,
+                                  post.blog.name, "comments",
+                                  post.name + '.yaml')
+            try:
+                file = ContentFile(file_path)
+                yaml.dump(comment_list, file,
+                          encoding='utf-8', width=80,
                           indent=4, default_flow_style=False,
                           allow_unicode=True)
+                file_path = default_storage.save(file_path, file)
+            except (IOError, OSError) as err:
+                logger.error('error creating file %s: %s', file_path, err)
 
     return HttpResponse('<html><body>See log</body></html>')
