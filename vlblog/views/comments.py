@@ -2,11 +2,12 @@ from collections import OrderedDict
 import logging
 import os
 from os import path
+from io import BytesIO
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
+from django.core.files.base import File
 from django.http import HttpResponse
 from django.utils.dateparse import parse_datetime
 import yaml
@@ -194,12 +195,12 @@ def export_comments(request, dir='comments'):
                                   post.blog.name, "comments",
                                   post.name + '.yaml')
             try:
-                file = ContentFile(file_path)
-                yaml.dump(comment_list, file,
+                bytesio = BytesIO()
+                yaml.dump(comment_list, bytesio,
                           encoding='utf-8', width=80,
                           indent=4, default_flow_style=False,
                           allow_unicode=True)
-                file_path = default_storage.save(file_path, file)
+                file_path = default_storage.save(file_path, File(bytesio))
             except (IOError, OSError) as err:
                 logger.error('error creating file %s: %s', file_path, err)
 
