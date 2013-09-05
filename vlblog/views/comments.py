@@ -173,7 +173,9 @@ def export_comments(request, dir='comments'):
 
         comments = ThreadedComment.objects.filter(
             content_type=ContentType.objects.get_for_model(models.Post),
-            object_pk=post.pk)
+            object_pk=post.pk,
+            is_public=True,
+            is_removed=False)
 
         comment_list = []       # hierarchical representation of comment dicts
         comment_ref = {}        # plain mapping between id and comment itself
