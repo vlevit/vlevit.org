@@ -3,7 +3,5 @@ Markdown==2.2.1
 Pygments==1.6
 wsgiref==0.1.2
 MySQL-python==1.2.4
-django-storages==1.1.8
-boto==2.9.2
 PyYAML==3.10
 django-debug-toolbar==0.9.4

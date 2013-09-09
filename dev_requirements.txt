@@ -4,6 +4,5 @@ Pygments==1.6
 distribute==0.6.31
 ipython==0.13.1
 wsgiref==0.1.2
-django-storages==1.1.8
 PyYAML==3.10
 django-debug-toolbar==0.9.4

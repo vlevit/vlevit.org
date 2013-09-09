@@ -111,7 +111,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'threadedcomments',
     'django.contrib.comments',
-    'storages',
     'vlblog',
     'debug_toolbar',
 )

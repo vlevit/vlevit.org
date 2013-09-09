@@ -30,14 +30,6 @@ SEND_BROKEN_LINK_EMAILS = True
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = "/static/"
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-AWS_ACCESS_KEY_ID = ""
-AWS_SECRET_ACCESS_KEY = ""
-AWS_STORAGE_BUCKET_NAME = ""
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ""
 
