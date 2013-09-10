@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-09 17:32+0300\n"
-"PO-Revision-Date: 2013-07-09 17:34+0300\n"
+"POT-Creation-Date: 2013-09-10 19:05+0000\n"
+"PO-Revision-Date: 2013-09-10 22:07+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -136,9 +136,13 @@ msgstr "Google Code"
 msgid "Libre.fm"
 msgstr "Libre.fm"
 
-#: templates/base.html:118
+#: templates/base.html:119
 msgid "Contacts"
 msgstr "Контакты"
+
+#: templates/base.html:121 templates/base.html.py:122
+msgid "at this domain"
+msgstr "на этом домене"
 
 #: templates/post.html:18 templates/post_list.html:20
 #: templates/tech_post.html:47 templates/tech_post_list.html:19
@@ -284,11 +288,11 @@ msgstr "Комментарии к \"{}\""
 msgid "Comments on blog \"{}\""
 msgstr "Комментарии к блогу \"{}\""
 
-#: vlevitorg/settings.py:48
+#: vlevitorg/settings.py:20
 msgid "English"
 msgstr "Английский"
 
-#: vlevitorg/settings.py:49
+#: vlevitorg/settings.py:21
 msgid "Russian"
 msgstr "Русский"
 
