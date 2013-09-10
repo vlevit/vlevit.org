@@ -135,7 +135,7 @@ Gravatar?.. Пока эта тайна мне не раскрыта, я ваши
 [рекомендуют]: https://docs.djangoproject.com/en/dev/ref/contrib/comments/
 [Pygments]: http://pygments.org/
 [огромная]: http://pygments.org/languages/
-[autoit]: http://www.vlevit.org/ru/blog/tech/xatk#c23
+[autoit]: http://vlevit.org/ru/blog/tech/xatk#c23
 
 #### Импорт и экспорт комментариев
 
@@ -251,19 +251,19 @@ Django 1.0 даже существовал специальный middleware, к
 заметки. Со временем, возможно, я установлю ограничение на их количество. Сейчас
 доступно два типа RSS-лент на посты: лента для постов на всех блогах
 
-    http://www.vlevit.org/ru/blog.rss
+    http://vlevit.org/ru/blog.rss
 
 и на определённом блоге (например, tech)
 
-    http://www.vlevit.org/ru/blog/tech.rss
+    http://vlevit.org/ru/blog/tech.rss
 
 Также есть три типа лент на комментарии: на все комментарии во всех блогах, на
 все комментарии в определённом блоге (например, tech) и комментариям к
 определённому посту (например, vlevit-org). Соответственно ленты будут такими:
 
-    http://www.vlevit.org/ru/blog/comments.rss
-    http://www.vlevit.org/ru/blog/tech/comments.rss
-    http://www.vlevit.org/ru/blog/tech/vlevit-org/comments.rss
+    http://vlevit.org/ru/blog/comments.rss
+    http://vlevit.org/ru/blog/tech/comments.rss
+    http://vlevit.org/ru/blog/tech/vlevit-org/comments.rss
 
 Если блог доступен на английском языке, то к нему можно подписаться, заменив в
 вышеприведенных ссылках `ru` на `en`.
@@ -273,12 +273,12 @@ Django 1.0 даже существовал специальный middleware, к
 Все содержимое технического блога до этого поста находилось на [zeuhl-mode].
 Полгода назад я перевёл zeuhl-mode на собственный домен [blog.vlevit.org].
 Через некоторое время я настрою перенаправление с blog.vlevit.org на
-[www.vlevit.org] и постараюсь сохранить все старые ссылки действительными.
+[vlevit.org] и постараюсь сохранить все старые ссылки действительными.
 Старый блог zeuhl-mode останется на Blogger'е — не люблю, когда люди всё своё
 забирают с собой.
 
 Читайте с удовольствием!<sup id="fnref:†">[†](#fn:†)</sup>
 
 [blog.vlevit.org]: http://blog.vlevit.org/
-[www.vlevit.org]: http://www.vlevit.org/
+[vlevit.org]: http://vlevit.org/
 [^†]: А без удовольствия не читайте!

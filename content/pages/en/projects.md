@@ -6,8 +6,8 @@
   [2], [3], [4].
 
 [xatk]: http://code.google.com/p/xatk/
-[1]: http://www.vlevit.org/ru/blog/tech/xatk
-[2]: http://www.vlevit.org/ru/blog/tech/xatk-1
+[1]: http://vlevit.org/ru/blog/tech/xatk
+[2]: http://vlevit.org/ru/blog/tech/xatk-1
 [3]: http://muhas.ru/?p=183
 [4]: http://proft.me/2011/09/18/xatk-udobnoe-pereklyuchenie-okon/
 
@@ -17,7 +17,7 @@
     [this post]. Code is available on [GitHub][vlevit.org].
 
 [vlevit.org]: https://github.com/vlevit/vlevit.org
-[this post]: http://www.vlevit.org/en/blog/tech/vlevit-org
+[this post]: http://vlevit.org/en/blog/tech/vlevit-org
 
 ### Bash
 

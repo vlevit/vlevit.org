@@ -5,8 +5,8 @@
   Есть несколько заметок о xatk: [1], [2], [3], [4].
 
 [xatk]: http://code.google.com/p/xatk/
-[1]: http://www.vlevit.org/ru/blog/tech/xatk
-[2]: http://www.vlevit.org/ru/blog/tech/xatk-1
+[1]: http://vlevit.org/ru/blog/tech/xatk
+[2]: http://vlevit.org/ru/blog/tech/xatk-1
 [3]: http://muhas.ru/?p=183
 [4]: http://proft.me/2011/09/18/xatk-udobnoe-pereklyuchenie-okon/
 
@@ -16,7 +16,7 @@
     находится на [GitHub][vlevit.org].
 
 [vlevit.org]: https://github.com/vlevit/vlevit.org
-[этой заметке]: http://www.vlevit.org/ru/blog/tech/vlevit-org
+[этой заметке]: http://vlevit.org/ru/blog/tech/vlevit-org
 
 ### Bash
 
@@ -41,9 +41,9 @@
 [писал]: /ru/blog/tech/flacconvert
 [unisync]: https://github.com/vlevit/unisync
 [Unison]: http://www.cis.upenn.edu/~bcpierce/unison/
-[здесь]: http://www.vlevit.org/ru/blog/tech/unisync#unisync
+[здесь]: http://vlevit.org/ru/blog/tech/unisync#unisync
 [mnuc]: https://gist.github.com/vlevit/4588882/
-[тут]: http://www.vlevit.org/ru/blog/tech/mnuc
+[тут]: http://vlevit.org/ru/blog/tech/mnuc
 [transmission-batch-move]: https://github.com/vlevit/transmission-batch-move
-[заметки]: http://www.vlevit.org/ru/blog/tech/transmission-batch-move
+[заметки]: http://vlevit.org/ru/blog/tech/transmission-batch-move
 [close-all-windows]: https://gist.github.com/vlevit/2877044

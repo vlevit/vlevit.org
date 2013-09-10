@@ -24,7 +24,7 @@ class FeedBase(Feed):
         return _("Vyacheslav Levit")
 
     def author_link(self):      # will not show up in RSS
-        return "http://www.vlevit.org/"
+        return "http://vlevit.org/"
 
     item_author_name = author_name
     item_author_link = author_link  # will not show up in RSS

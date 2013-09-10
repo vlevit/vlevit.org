@@ -125,7 +125,7 @@ it remains a mystery for me, I don't collect your emails!
 [рекомендуют]: https://docs.djangoproject.com/en/dev/ref/contrib/comments/
 [Pygments]: http://pygments.org/
 [languages]: http://pygments.org/languages/
-[autoit]: http://www.vlevit.org/ru/blog/tech/xatk#c23
+[autoit]: http://vlevit.org/ru/blog/tech/xatk#c46
 
 #### Importing and Exporting Comments
 
@@ -236,20 +236,20 @@ low, all posts are put to feeds. In the future I will probably set some
 limit. There are two types of RSS-feeds on posts: a feed for posts from all
 blogs:
 
-    http://www.vlevit.org/en/blog.rss
+    http://vlevit.org/en/blog.rss
 
 and from the specific blog (e.g. tech)
 
-    http://www.vlevit.org/en/blog/tech.rss
+    http://vlevit.org/en/blog/tech.rss
 
 Also there are three types of feeds for comments: a feed for all comments from
 all blogs, a feed for all comments from the specific blog (e.g. tech) and a feed
 for comments to the specific post (e.g. vlevit-org). Then feed urls will be as
 follows (in that order):
 
-    http://www.vlevit.org/en/blog/comments.rss
-    http://www.vlevit.org/en/blog/tech/comments.rss
-    http://www.vlevit.org/en/blog/tech/vlevit-org/comments.rss
+    http://vlevit.org/en/blog/comments.rss
+    http://vlevit.org/en/blog/tech/comments.rss
+    http://vlevit.org/en/blog/tech/vlevit-org/comments.rss
 
 To subscribe to a Russian version of a blog replace `en` with `ru` in the links
 above.
@@ -258,12 +258,12 @@ above.
 
 All the content of tech blog has been on [zeuhl-mode] up to this post. Half year
 ago I transferred zeuhl-mode to a new domain [blog.vlevit.org]. After a time I
-will setup a redirection from blog.vlevit.org to [www.vlevit.org] and I will try
+will setup a redirection from blog.vlevit.org to [vlevit.org] and I will try
 to keep all links valid. The old blog will stay on Blogger — I don't like when
 people take everything away along with them.
 
 Read and enjoy!<sup id="fnref:†">[†](#fn:†)</sup>
 
 [blog.vlevit.org]: http://blog.vlevit.org/
-[www.vlevit.org]: http://www.vlevit.org/
+[vlevit.org]: http://vlevit.org/
 [^†]: And don't read if you don't enjoy!
