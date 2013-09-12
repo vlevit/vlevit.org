@@ -30,6 +30,8 @@ EMAIL_USE_TLS = True
 EMAIL_SUBJECT_PREFIX = "[Django][example.com] "
 SEND_BROKEN_LINK_EMAILS = True
 
+DEFAULT_FILE_STORAGE = 'common.storage.OverwriteFileStorage'
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = path.join(proj_dir, 'media/')
