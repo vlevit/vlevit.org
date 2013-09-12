@@ -145,6 +145,10 @@ a.footnote-ref, a.footnote-backref {
   border-style: none;
 }
 
+a img {
+  border: 0;
+}
+
 .footnote {
   font-size: 13px;
 }
