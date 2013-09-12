@@ -1,0 +1,275 @@
+#!/bin/bash
+
+LOCAL_ADDRESS="http://127.0.0.1:8000"
+REMOTE_ADDRESS_PROD="http://vlevit.org"
+REMOTE_ADDRESS_DEV="http://vlevit.org:65023"
+LOCAL_SECRET_KEY="$LOCAL_SECRET_KEY"
+REMOTE_SECRET_KEY_PROD="$VLEVITORG_SECRET_KEY_PROD"
+REMOTE_SECRET_KEY_DEV="$VLEVITORG_SECRET_KEY_DEV"
+PROJECT_DIR=~/projects/vlevit.org
+STATIC_DIR="$PROJECT_DIR"/staticfiles
+REMOTE_STATIC_DIR=/srv/http/vlevit.org/static
+REMOTE_MEDIA_DIR=/srv/http/vlevit.org/media
+SSH_CMD=(ssh vlevitorg)
+REMOTE_DEPLOY_DIR_PROD=/srv/http/vlevit.org/vlevit.org
+REMOTE_DEPLOY_DIR_DEV=/srv/http/vlevit.org/test.vlevit.org
+VIRTUAL_ENV_DIR=~/virtualenvs/vlevit.org
+GIT_PUSH_REMOTES=(github)
+ORIG_IMAGE_DIR=~/Pictures/blog
+DEST_IMAGE_DIR="$PROJECT_DIR"/static/images
+DEST_LARGE_IMAGE_DIR="$PROJECT_DIR"/static/images-full
+SMALL_IMAGE_SCALE="512x350>"
+LARGE_IMAGE_SCALE="1024x700>"
+JPEG_QUALITY=90
+
+function run
+{
+    if vlblog active ; then
+        echo "server is already running"
+        exit 1
+    fi
+    cd "$PROJECT_DIR"
+    source "$VIRTUAL_ENV_DIR/bin/activate"
+    python manage.py runserver &
+    echo $! > /tmp/local-server.pid
+    deactivate
+    wait
+}
+
+function stop
+{
+    if [ -f /tmp/local-server.pid ] ; then
+        pid=$(cat /tmp/local-server.pid)
+        if pkill -P $pid ; then
+            rm /tmp/local-server.pid
+            echo "killed successfully" >&2
+        else
+            echo "error killing local server!" >&2
+            return 1
+        fi
+    elif vlblog active ; then
+        echo "kill yourself" >&2
+        return 1
+    else
+        echo "server is not running" >&2
+    fi
+}
+
+function virtualenv
+{
+    echo "cd \"$PROJECT_DIR\";"
+    echo "source \"$VIRTUAL_ENV_DIR/bin/activate\""
+}
+
+function push
+{
+    cd "$PROJECT_DIR"
+    for remote in "${GIT_PUSH_REMOTES[@]}" ; do
+        echo git push "$remote" master
+        git push "$remote" master
+    done
+}
+
+function collectstatic
+{
+    cd "$PROJECT_DIR"
+    source "$VIRTUAL_ENV_DIR/bin/activate"
+    echo python2 manage.py collectstatic --noinput
+    python2 manage.py collectstatic --noinput
+    deactivate
+    echo rsync -r "$STATIC_DIR"/ vlevitorg:"$REMOTE_STATIC_DIR"
+    rsync -r "$STATIC_DIR"/ vlevitorg:"$REMOTE_STATIC_DIR"
+}
+
+function download_comments
+{
+    echo rsync -r vlevitorg:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/blog/
+    rsync -r vlevitorg:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/blog/
+}
+
+function deploy
+{
+    case "$1" in
+        dev) DEPLOY_DIR="$REMOTE_DEPLOY_DIR_DEV";;
+        prod) DEPLOY_DIR="$REMOTE_DEPLOY_DIR_PROD";;
+        *) echo "usage: deploy [dev|prod]";
+            return 1;
+            ;;
+    esac
+    push
+    "${SSH_CMD[@]}" '
+function prerun
+{
+    code=$?
+    echo "$@"
+    if (( $code != 0 )) ; then
+        echo "$lastcmd exited with code $code. Aborting..."
+        exit $?
+    fi
+    lastcmd="$@"
+}
+
+function run { prerun "$@"; "$@"; }
+function runeval { prerun "$@"; eval "$@"; }
+
+run cd '"$DEPLOY_DIR"'/
+run git pull origin master
+runeval "python -m compileall -f . >/dev/null"
+run touch '"$DEPLOY_DIR"'/vlevitorg/wsgi.py
+'
+    update "$1"
+}
+
+function image_geometry
+{
+    image="$1"
+    echo "$(identify -verbose "$image" | awk -F : '$1 ~ /Geometry/ {print $2}')"
+}
+
+function convert_image
+{
+    src="$1"
+    dst="$2"
+    scale="$3"
+    args=()
+
+    if [[ ${src##*.} == jpg ]] || [[ ${src##*.} == JPG ]] ; then
+        if identify -verbose "$src" | awk -F : '$1 ~ /Quality/ {exit $2<='$JPEG_QUALITY'}'
+        then
+            args+=(-quality $JPEG_QUALITY)
+        fi
+    fi
+    echo convert "$src" -scale "$scale" "${args[@]}" "$dst" >&2
+    convert "$src" -scale "$scale" "${args[@]}" "$dst"
+}
+
+function scale_images
+{
+    echo scaling images...
+    find "$ORIG_IMAGE_DIR" -type f -iregex ".*\.\(jpg\|png\)" |  grep -v '/\.' |
+    while read f
+    do
+        relf="${f#$ORIG_IMAGE_DIR/}"
+        dest="$DEST_IMAGE_DIR/$relf"
+        if ! [[ -e "$dest" ]] ; then
+            mkdir -p "$DEST_IMAGE_DIR"/"${relf%/*}"
+            convert_image "$f" "$dest" "$SMALL_IMAGE_SCALE"
+        fi
+        dest2="$DEST_LARGE_IMAGE_DIR/$relf"
+        if ! [[ -e "$dest2" ]] && [[ $(image_geometry "$f") != $(image_geometry "$dest") ]]
+        then
+            mkdir -p "$DEST_LARGE_IMAGE_DIR"/"${relf%/*}"
+            convert_image "$f" "$dest2" "$LARGE_IMAGE_SCALE"
+        fi
+    done
+}
+
+function view
+{
+    file="$1"
+    line="$2"
+    [[ -z $line ]] && line=0
+
+    name="$(awk -F ": *" '{
+        if ($0 ~ "/name:") name=$2
+        else
+            if ($0 ~ /^-----/ && FNR >= '$line')
+                {print name; exit}
+    }' "$file")"
+
+    [[ -z "$name" ]] && { name="${file##*/}" ; name="${name%.md}"; }
+
+    link="$(sed 's,\(.*/\)blog/\([^/]*\)/\([^/]*\)/.*,\2/blog/\3/'$name'/,' <<< "$file")"
+    xdg-open "$LOCAL_ADDRESS/$link"
+}
+
+function reload
+{
+    case "$1" in
+        dev) dirs=("$REMOTE_DEPLOY_DIR_DEV");;
+        prod) dirs=("$REMOTE_DEPLOY_DIR_PROD");;
+        all) dirs=("$REMOTE_DEPLOY_DIR_DEV" "$REMOTE_DEPLOY_DIR_PROD");;
+        *) echo "usage: reload [dev|prod|all]";
+            return 1;
+            ;;
+    esac
+    for dir in "${dirs[@]}" ; do
+        echo "${SSH_CMD[@]}" 'touch '"$dir"'/vlevitorg/wsgi.py'
+        "${SSH_CMD[@]}" 'touch '"$dir"'/vlevitorg/wsgi.py'
+    done
+}
+
+function update
+{
+    case "$1" in
+        "local")
+            ADDRESS="$LOCAL_ADDRESS"
+            SECRET_KEY="$LOCAL_SECRET_KEY"
+            ;;
+        "dev")
+            ADDRESS="$REMOTE_ADDRESS_DEV"
+            SECRET_KEY="$REMOTE_SECRET_KEY_DEV"
+            ;;
+        "prod")
+            ADDRESS="$REMOTE_ADDRESS_PROD"
+            SECRET_KEY="$REMOTE_SECRET_KEY_PROD"
+            ;;
+        *) echo usage: "update local|dev|prod" ; return 2 ;;
+    esac
+    echo curl "${ADDRESS}/import/all/?key=${SECRET_KEY}"
+    curl "${ADDRESS}/import/all/?key=${SECRET_KEY}" 2>/dev/null
+}
+
+case "$1" in
+    active)
+        curl --head "$LOCAL_ADDRESS/" &>/dev/null
+        exit $(($? != 0))
+        ;;
+    run|start)
+        run
+        ;;
+    stop)
+        stop
+        ;;
+    virtualenv)
+        virtualenv
+        ;;
+    view)
+        view "$2" "$3"
+        ;;
+    reload)
+        reload "$2"
+        ;;
+    update)
+        update "$2"
+        ;;
+    collectstatic)
+        collectstatic
+        ;;
+    download_comments)
+        download_comments
+        ;;
+    publish)
+        case "$2" in
+            prod|dev) DEPLOY=($2) ;;
+            all) DEPLOY=(dev prod);;
+            *) echo "usage: publish dev|prod|all"; exit 2 ;;
+        esac
+        scale_images
+        collectstatic
+        for dep in "${DEPLOY[@]}"; do
+            echo "Deploying to $dep..."
+            deploy "$dep"
+        done
+        ;;
+    deploy)
+        deploy "$2"
+        ;;
+    scale_images)
+        scale_images
+        ;;
+    *)
+        echo "Usage: ${0##*/} help|active|run|stop|update|deploy"
+        exit 2
+        ;;
+esac
