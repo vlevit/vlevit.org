@@ -168,6 +168,12 @@ code {
   background-color: rgb(231, 232, 222);
 }
 
+blockquote {
+  padding-left: 10px;
+  margin: 10px 0px 10px 20px;
+  border-left: 2px solid rgb(200, 195, 183);
+}
+
 pre.codehilite code {
   background: none;
   font-family: monospace; 
