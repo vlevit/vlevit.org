@@ -67,6 +67,12 @@ p, ul {
   text-align: left;
 }
 
+blockquote {
+  padding-left: 10px;
+  margin: 10px 0px 10px 10px;
+  border-left: 2px solid rgb(200, 195, 183);
+}
+
 .entry-header {
   margin: 0em 1em;
   float: right;
