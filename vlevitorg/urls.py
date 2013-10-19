@@ -55,3 +55,7 @@ urlpatterns += patterns('',
     url(r'^comments/post/removethis$', 'threadedcomments.views.enable_js'),
     url(r'^comments/', include('django.contrib.comments.urls')),
 )
+
+urlpatterns += patterns('',
+    url('', include('vlblog.legacy_urls')),
+)

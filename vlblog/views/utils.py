@@ -1,6 +1,8 @@
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import HttpResponse, HttpRequest
 from django.views.generic.base import RedirectView
+from django.utils.translation import activate
 
 
 def require_key(func):
@@ -23,12 +25,25 @@ def require_key(func):
 class LanguageRedirectView(RedirectView):
 
     permanent = False
+    language = None
 
     def get_redirect_url(self, **kwargs):
         if self.url:
-            language = (getattr(self, 'language', None) or
-                        self.request.LANGUAGE_CODE)
+            language = self.language or self.request.LANGUAGE_CODE
             self.url = '/{}{}'.format(language, self.url)
             return super(LanguageRedirectView, self).get_redirect_url(**kwargs)
         else:
             return None
+
+
+class LegacyRedirectView(RedirectView):
+
+    permanent = True
+    language = None
+    view = None
+
+    def get_redirect_url(self, **kwargs):
+        if self.language:
+            activate(self.language)
+        self.url = reverse(self.view, kwargs=kwargs).replace('%', '%%')
+        return super(LegacyRedirectView, self).get_redirect_url(**kwargs)
