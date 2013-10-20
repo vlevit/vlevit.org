@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+Sitemap: http://vlevit.org/sitemap.xml
+Host: vlevit.org
