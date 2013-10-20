@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.views.generic.base import RedirectView, TemplateView
 
 from vlblog.views.utils import LanguageRedirectView
+from vlblog.sitemaps import sitemaps
 
 
 admin.autodiscover()
@@ -17,6 +18,8 @@ urlpatterns = patterns('',
         url="{}/{}".format(settings.STATIC_URL, 'images/favicon.ico'))),
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
+        {'sitemaps': sitemaps})
 )
 
 for rediction in settings.ENVIRON_REDIRECTIONS:
