@@ -73,8 +73,6 @@ function submit_comment(event) {
                    // update comment list
                    $('div.comments').html($data.html());
 
-                   // rebind events for links in comment list
-                   register_comment_list_events();
                } else if ( $data.is('div.comment-error') ) {
                    // form validation failed, display errors
                    var $error = $('#comment-error');
@@ -85,14 +83,10 @@ function submit_comment(event) {
     return false;
 }
 
-function register_comment_list_events() {
-    $('.comment_reply_link').click(show_reply_form);
-    $('.cancel_reply').click(cancel_reply_form);
-    $('#preview-link').click(load_preview);
-    $('#preview-cancel').click(cancel_preview);
-}
-
 $.fn.ready(function() {
-    register_comment_list_events();
-    $('#comment-form').submit(submit_comment);
+    $(document).on('click', '.comment_reply_link', show_reply_form);
+    $(document).on('click', '.cancel_reply', cancel_reply_form);
+    $(document).on('click', '#preview-link', load_preview);
+    $(document).on('click', '#preview-cancel', cancel_preview);
+    $(document).on('submit', '#comment-form', submit_comment);
 });
