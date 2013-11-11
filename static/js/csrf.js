@@ -1,3 +1,5 @@
+/*global jQuery, $*/
+
 /* csrf token cookie setup for AJAX requests
  * from Django docs: https://docs.djangoproject.com/en/1.4/ref/contrib/csrf/#csrf-ajax
  */

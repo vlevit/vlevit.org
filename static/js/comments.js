@@ -1,3 +1,5 @@
+/*global $*/
+
 function ensure_preview_visible() {
     $('#comment-comment').hide();
     $('#comment-preview').show();
@@ -38,7 +40,7 @@ function cancel_reply_form(event) {
 }
 
 function load_preview(event) {
-    comment = $('#id_comment').val();
+    var comment = $('#id_comment').val();
     if (comment.trim() !== "") {
         $.get($('#preview-link a:first').attr('href'),
               { comment: comment },
@@ -56,11 +58,11 @@ function cancel_preview(event) {
 }
 
 function submit_comment(event) {
-    $this = $(this);
+    var $this = $(this);
     $.post($this.attr('action').replace("removethis", ""),
            $this.serialize(),
            function(data) {
-               $data = $($.trim(data));
+               var $data = $($.trim(data));
                if ( $data.is('div.comments') ) {
                    // restore comment form initial state
                    $('#form-comment').appendTo($('#wrap_write_comment'));
@@ -75,7 +77,7 @@ function submit_comment(event) {
                    register_comment_list_events();
                } else if ( $data.is('div.comment-error') ) {
                    // form validation failed, display errors
-                   $error = $('#comment-error');
+                   var $error = $('#comment-error');
                    $error.html($data.html());
                    $error.show();
                }
@@ -93,4 +95,4 @@ function register_comment_list_events() {
 $.fn.ready(function() {
     register_comment_list_events();
     $('#comment-form').submit(submit_comment);
-})
+});
