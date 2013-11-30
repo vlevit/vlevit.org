@@ -77,14 +77,14 @@ function collectstatic
     echo python2 manage.py collectstatic --noinput
     python2 manage.py collectstatic --noinput
     deactivate
-    echo rsync -r "$STATIC_DIR"/ vlevitorg:"$REMOTE_STATIC_DIR"
-    rsync -r "$STATIC_DIR"/ vlevitorg:"$REMOTE_STATIC_DIR"
+    echo rsync -rt "$STATIC_DIR"/ vlevitorg:"$REMOTE_STATIC_DIR"
+    rsync -rt "$STATIC_DIR"/ vlevitorg:"$REMOTE_STATIC_DIR"
 }
 
 function download_comments
 {
-    echo rsync -r vlevitorg:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/blog/
-    rsync -r vlevitorg:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/blog/
+    echo rsync -rt vlevitorg:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/blog/
+    rsync -rt vlevitorg:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/blog/
 }
 
 function deploy
