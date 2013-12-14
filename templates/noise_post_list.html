@@ -1,5 +1,5 @@
 {% extends "post_list.html" %}
-{% load static %}
+{% load static endless %}
 
 {% block headlinks %}
     <link rel="stylesheet" href="{% static "css/noise_post.css" %}" type="text/css">
@@ -9,3 +9,21 @@
 
 {% block noise_active %}active{% endblock %}
 {% block noise_active_ru %}active{% endblock %}
+
+{% block content %}
+    {% lazy_paginate 15 posts starting from page page %}
+    {% for post in posts %}
+        {% include "post_block.html" %}
+    {% endfor %}
+
+    {% get_pages %}
+    <div class="navigation">
+        {% if pages.previous %}
+            <a href="{% url "post_list_page" "noise" pages.previous.number %}"> ← предыдущая</a>
+        {% endif %}
+        {% if pages.next %}
+            <a href="{% url "post_list_page" "noise" pages.next.number %}"> следующая страница →</a>
+        {% endif %}
+
+    </div>
+{% endblock %}

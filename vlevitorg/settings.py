@@ -2,6 +2,7 @@
 
 import os.path as path
 import sys
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 ugettext = lambda s: s
 proj_dir = path.dirname(path.dirname(__file__))
@@ -68,6 +69,10 @@ MIDDLEWARE_CLASSES = (
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+)
+
 INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'vlevitorg.urls'
@@ -96,6 +101,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'django.contrib.sitemaps',
     'threadedcomments',
+    'endless_pagination',
     'django.contrib.comments',
     'vlblog',
     'debug_toolbar',

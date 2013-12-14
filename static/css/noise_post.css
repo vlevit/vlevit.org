@@ -112,6 +112,24 @@ a {
   margin: 1.5em auto;
 }
 
+.navigation {
+  text-align: right;
+  margin-bottom: 40px;
+}
+
+.navigation a {
+  text-align: right;
+  background-color: rgb(234, 234, 234);
+  color:  rgb(59, 98, 126);
+  padding: 7px 10px;
+  margin-left: 25px;
+  font-size: 16px;
+}
+
+.navigation a:hover {
+  opacity: 0.90;
+}
+
 footer {
   margin: 0px auto 0px 10%;
   width: 100%;

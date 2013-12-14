@@ -21,7 +21,7 @@ def post(request, blog, post):
         raise Http404
 
 
-def post_list(request, blog, tag=None):
+def post_list(request, blog, tag=None, page=1):
     if tag:
         posts = models.Post.objects.filter(
             blog__name=blog, blog__language=request.LANGUAGE_CODE,
@@ -36,7 +36,8 @@ def post_list(request, blog, tag=None):
         tags = models.Tag.objects.filter(
             blog=blog_obj, n_posts__gt=1).select_related()
         return render(request, blog_obj.list_template,
-                      {'blog': blog_obj, 'posts': posts, 'tags': tags})
+                      {'blog': blog_obj, 'posts': posts,
+                       'tags': tags, 'page': page})
     else:
         raise Http404
 

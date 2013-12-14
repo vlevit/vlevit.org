@@ -5,3 +5,4 @@ wsgiref==0.1.2
 MySQL-python==1.2.4
 PyYAML==3.10
 django-debug-toolbar==0.9.4
+django-endless-pagination==2.0

@@ -2,6 +2,7 @@ Django==1.5.1
 Markdown==2.2.1
 Pygments==1.6
 distribute==0.6.31
+django-endless-pagination==2.0
 ipython==0.13.1
 wsgiref==0.1.2
 PyYAML==3.10
