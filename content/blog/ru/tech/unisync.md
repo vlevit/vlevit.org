@@ -180,9 +180,9 @@ Unison каждый раз будет запрашивать пользоват�
      файл с последней датой модификации, но другая версия файла потеряется.
 
 
-     [unison-merge]: https://github.com/vlevit/unisync/blob/master/helpers/unison-merge
-     [конфликт]: http://www.cis.upenn.edu/~bcpierce/unison/download/releases/stable/unison-manual.html#conflicts
-     [Обновлённым]: http://www.cis.upenn.edu/~bcpierce/unison/download/releases/stable/unison-manual.html#updates
+[unison-merge]: https://github.com/vlevit/unisync/blob/master/helpers/unison-merge
+[конфликт]: http://www.cis.upenn.edu/~bcpierce/unison/download/releases/stable/unison-manual.html#conflicts
+[Обновлённым]: http://www.cis.upenn.edu/~bcpierce/unison/download/releases/stable/unison-manual.html#updates
 
 
 ### Синхронизация всех файлов
