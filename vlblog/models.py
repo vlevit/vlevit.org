@@ -1,4 +1,6 @@
+from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils import translation
 
 
 class Blog(models.Model):
@@ -15,9 +17,10 @@ class Blog(models.Model):
     def __unicode__(self):
         return "{}: {}".format(self.language, self.name)
 
-    @models.permalink
     def get_absolute_url(self):
-        return 'post_list', (self.name,)
+        with translation.override(self.language):
+            permalink = reverse('post_list', args=(self.name,))
+        return permalink
 
     @classmethod
     def get_or_create(cls, **kwargs):
@@ -61,9 +64,11 @@ class Tag(models.Model):
     def __unicode__(self):
         return self.name
 
-    @models.permalink
     def get_absolute_url(self):
-        return 'post_list_tag', (self.blog.name, self.name)
+        with translation.override(self.blog.language):
+            permalink = reverse('post_list_tag',
+                                args=(self.blog.name, self.name))
+        return permalink
 
     @classmethod
     def get_or_create(cls, tagname, blog):
@@ -110,9 +115,10 @@ class Post(models.Model):
     def __unicode__(self):
         return "{}: {}".format(self.blog, self.name)
 
-    @models.permalink
     def get_absolute_url(self):
-        return 'post', (self.blog.name, self.name)
+        with translation.override(self.blog.language):
+            permalink = reverse('post', args=(self.blog.name, self.name))
+        return permalink
 
     @classmethod
     def insert_or_update(cls, data, file, blog):
@@ -182,6 +188,7 @@ class Page(models.Model):
     def __unicode__(self):
         return "{}: {}".format(self.language, self.name)
 
-    @models.permalink
     def get_absolute_url(self):
-        return 'page', (self.name,)
+        with translation.override(self.language):
+            permalink = reverse('page', args=(self.name,))
+        return permalink
