@@ -266,4 +266,4 @@ Read and enjoy!<sup id="fnref:†">[†](#fn:†)</sup>
 
 [blog.vlevit.org]: http://blog.vlevit.org/
 [vlevit.org]: http://vlevit.org/
-[^†]: And don't read if you don't enjoy!
+[^†]: And please don't read if you don't enjoy!
