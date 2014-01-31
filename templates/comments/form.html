@@ -3,16 +3,14 @@
 <div id="wrap_write_comment">
     <div id="form-comment">
         <div id="markdown-info">{% trans "You can write here in "%} <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Markdown</a></div>
-        <div id="preview-link"><a href="{% url "threadedcomments.views.preview_comment" %}">{% trans "Preview" %}</a></div>
-        <div id="preview-cancel"><a href="">{% trans "Edit" %}</a></div>
-        <div class="clear"></div>
-        <form id="comment-form" action="{% url "threadedcomments.views.post_comment" %}removethis" method="post">{% csrf_token %}
+        <form id="comment-form" action="{% url "threadedcomments.views.post_comment" %}removethis" method="post"
+              data-preview="{% url "threadedcomments.views.preview_comment" %}">
+            {% csrf_token %}
             {% if next %}<div><input type="hidden" name="next" value="{{ next }}" /></div>{% endif %}
             {% include "comments/form_fields.html" %}
             <div id="comment-error"></div>
             <div id="comment-submit">
                 <input type="submit" name="post" class="submit-post" value="{% trans "Submit" %}" />
-                <!-- <input type="submit" name="preview" class="submit-preview" value="{% trans "Preview" %}" /> -->
             </div>
         </form>
         <div class="clear"></div>

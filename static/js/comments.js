@@ -1,19 +1,5 @@
 /*global $*/
 
-function ensure_preview_visible() {
-    $('#comment-comment').hide();
-    $('#comment-preview').show();
-    $('#preview-link').hide();
-    $('#preview-cancel').show();
-}
-
-function ensure_comment_form_visible() {
-    $('#comment-preview').hide();
-    $('#comment-comment').show();
-    $('#preview-cancel').hide();
-    $('#preview-link').show();
-}
-
 function hide_last_cancel_reply() {
     var last_parent_id = $('#id_parent').val();
     if ( last_parent_id !== '' ) {
@@ -28,7 +14,6 @@ function show_reply_form(event) {
     hide_last_cancel_reply();
     $('#id_parent').val(comment_id);
     $('#form-comment').insertAfter($this.closest('.comment'));
-    ensure_comment_form_visible();
     $this.parent().next('.comment_cancel').show();
 }
 
@@ -36,25 +21,34 @@ function cancel_reply_form(event) {
     $(this).parent().hide();
     $('#id_parent').val('');
     $('#form-comment').appendTo($('#wrap_write_comment'));
-    ensure_comment_form_visible();
 }
 
-function load_preview(event) {
+var last_comment;
+
+function load_preview() {
     var comment = $('#id_comment').val();
+    if (last_comment === comment)
+        return;
     if (comment.trim() !== "") {
-        $.get($('#preview-link a:first').attr('href'),
+        $.get($('#comment-form').data('preview'),
               { comment: comment },
               function(data) {
-                  $('#comment-preview').html(data);
-                  ensure_preview_visible();
+                  $('#comment-preview').fadeIn().html(data);
               });
+    } else {
+        $('#comment-preview').fadeOut(function(){
+            $('#comment-preview').html("");
+        });
     }
-    return false;
 }
 
-function cancel_preview(event) {
-    ensure_comment_form_visible();
-    return false;
+
+var preview_timeout_id;
+
+function delayed_load_preview() {
+    if (preview_timeout_id)
+        window.clearTimeout(preview_timeout_id);
+    preview_timeout_id = window.setTimeout(load_preview, 1500);
 }
 
 function submit_comment(event) {
@@ -66,8 +60,8 @@ function submit_comment(event) {
                if ( $data.is('div.comments') ) {
                    // restore comment form initial state
                    $('#form-comment').appendTo($('#wrap_write_comment'));
-                   ensure_comment_form_visible();
                    $('#id_comment').val('');
+                   $('#comment-preview').html('').hide();
                    $('#comment-error').hide();
 
                    // update comment list
@@ -86,7 +80,6 @@ function submit_comment(event) {
 $.fn.ready(function() {
     $(document).on('click', '.comment_reply_link', show_reply_form);
     $(document).on('click', '.cancel_reply', cancel_reply_form);
-    $(document).on('click', '#preview-link', load_preview);
-    $(document).on('click', '#preview-cancel', cancel_preview);
+    $(document).on('input', '#id_comment', delayed_load_preview);
     $(document).on('submit', '#comment-form', submit_comment);
 });
