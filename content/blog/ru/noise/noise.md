@@ -1,3 +1,25 @@
+/title: looking for emacs?
+/name: python-org
+/created: 2014-02-20 22:59:18+02:00
+
+<br>
+
+    open http://www.python.org
+    click "Lauch Interactive Shell"
+    
+    In [1]: import subprocess
+    
+    In [2]: subprocess.call("emacs")
+    
+    Welcome to GNU Emacs, one component of the GNU/Linux
+    operating system.
+    ....
+
+    -UUU:%%--F1 *GNU Emacs* Top L1 (Fundamental)--------
+    For information about GNU Emacs, type C-h C-a.
+
+-------------------------------------------------------------------------------
+
 /title: фэнтези
 /name: fantasy2
 /created: 2014-02-17 19:29:57+02:00
