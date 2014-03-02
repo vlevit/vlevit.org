@@ -17,7 +17,9 @@
         {% block headlinks %}{% endblock %}
     </head>
     <body>
-
+        {% with links="http://podrobnosti.ua/ http://www.unian.net/ http://unn.com.ua/" %}
+            <a href={{ links.split | random }} target="_blank"> <img style="position: absolute; top: 0; right: 0; border: 0;" src="{% static "images/ukr_flag_ribbon.png" %}" alt="Ukrainian Flag"> </a>
+        {% endwith %}
         <header>
             <ul class="sitenav">
                 {% if LANGUAGE_CODE == "en" %}

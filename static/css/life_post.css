@@ -9,7 +9,7 @@ header {
 }
 
 #container {
-  background-color: rgb(232, 228, 209);
+  /* background-color: rgb(232, 228, 209); */
   border: none;
   margin: 0px auto 0px 10%;
   width: 100%;
@@ -32,9 +32,10 @@ header {
 .entry {
   background-color: white;
   background-color: rgb(243, 244, 234);
-  border: 1px solid rgb(200, 195, 183);
+  background-color: rgb(232, 228, 209);
+  background-color: #333;
   margin-bottom: 40px;
-  box-shadow: 0px 15px 5px -10px  rgb(200, 195, 183);
+  /* box-shadow: 0px 15px 5px -10px  rgb(200, 195, 183); */
   padding: 1em 2em;
 }
 
