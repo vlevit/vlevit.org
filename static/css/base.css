@@ -231,6 +231,10 @@ ul.tag_list li {
   text-align: center;
 }
 
+.news p, ul {
+  text-align: left;
+}
+
 .about p, ul {
   text-align: left;
   margin: 6px auto;
