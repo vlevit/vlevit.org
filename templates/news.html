@@ -1,0 +1,11 @@
+{% load vlblog_tags %}
+
+<div class="news">
+    <h4>Новости в Украине и мире</h4>
+    {% load_feed newsfeed "http://podrobnosti.ua/rss/hot.rss/" %}
+    {% for entry in newsfeed.entries %}
+        <p>
+            <a href="{{ entry.link }}" target="_blank"> {{ entry.title }} </a>
+        </p>
+    {% endfor %}
+</div>
