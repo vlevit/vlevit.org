@@ -1,3 +1,26 @@
+/title: виртуальное окружение
+/name: virtual-environment
+/created: 2014-05-17 23:17:35+03:00
+
+>> chroot ~/dev
+>>> (chroot) . virtualenv/bin/activate
+>>>> (chroot)(virtualenv) pip install nodeenv
+>>>>> (chroot)(virtualenv) npm install bower ^C ^D
+
+>>> (chroot) ^D  
+
+>> ^D  
+>> exiting from docker virtual container
+
+> ^D  
+> disconecting ssh from amazon virtual machine  
+
+Welcome to virtual terminal emulator!
+
+[virtual@home]$ _
+
+-------------------------------------------------------------------------------
+
 /title: looking for emacs?
 /name: python-org
 /created: 2014-02-20 22:59:18+02:00
