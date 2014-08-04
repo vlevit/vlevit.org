@@ -25,7 +25,7 @@
     десятилетия Arch Linux.
 
 [xatk]: http://code.google.com/p/xatk/
-[своей первой заметке]: xatk-1
+[своей первой заметке]: /ru/blog/tech/xatk
 
 
 ## Что нового?
