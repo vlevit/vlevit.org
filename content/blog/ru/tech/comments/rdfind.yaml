@@ -1,0 +1,18 @@
+-   author: no_name
+    published: 2014-01-21 23:01:23+00:00
+    content: |-
+
+        Здравствуйте Вячеслав! Было бы здорово если бы Вы помогли мне найти
+        такую утилиту как "dfind", это такой tcp-port scanner не очень популярный,
+        хотя лучший на мой взгляд инструмент такого рода. К сожалению проект давно
+        не поддерживается и с трудом можно найти даже версию по windows.. есть нечто
+        похожее называется vnc_bypauth, но я ищу именно dfind_scanner для Linux.
+
+        а про rdfind предположил что - remote_desktop_finder )) оказалось нет.
+
+    replies:
+    -   author: Vyacheslav Levit
+        website: http://vlevit.org/
+        published: 2014-01-22 12:38:27+00:00
+        content: |-
+            Да, это совсем другое. rdfind = redundant data find.
