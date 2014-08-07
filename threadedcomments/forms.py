@@ -42,6 +42,13 @@ class ThreadedCommentForm(CommentForm):
     def get_comment_model(self):
         return ThreadedComment
 
+    def clean_comment(self):
+        """
+        Replace \r\n with \n
+        """
+        comment = super(ThreadedCommentForm, self).clean_comment()
+        return comment.replace('\r\n', '\n')
+
     def get_comment_create_data(self):
         d = super(ThreadedCommentForm, self).get_comment_create_data()
         d['parent_id'] = self.cleaned_data['parent']
