@@ -1,11 +1,9 @@
 import logging
-import re
 
 from django import template
 from django.conf import settings
 from django.template.defaultfilters import stringfilter
 from django.utils.dateparse import parse_datetime
-import feedparser
 
 import utils
 
@@ -179,28 +177,3 @@ def image_full(parser, token):
 @stringfilter
 def upto(value, delimiter=None):
     return value.split(delimiter)[0]
-
-
-class FeedNode(template.Node):
-
-    def __init__(self, variable, feed):
-        self.variable = variable
-        self.feed = feed[1:-1]
-
-    def render(self, context):
-        context.dicts[0][self.variable] = \
-            feedparser.parse(self.feed)
-        return u''
-
-
-@register.tag
-def load_feed(parser, token):
-    try:
-        tag, variable, feed = token.split_contents()
-    except ValueError:
-        raise template.TemplateSyntaxError(
-            "Tag usage: {% load_feed variable feed %}")
-    if not re.match(r'[a-zA-Z_]+$', variable):
-        raise template.TemplateSyntaxError(
-            "{} is not a valid variable name".format(variable))
-    return FeedNode(variable, feed)

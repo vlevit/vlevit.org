@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static  %}
+{% load static %}
 
 {% block headlinks %}
     <link rel="stylesheet" href="{% static "css/tech_post.css" %}" type="text/css">
@@ -10,8 +10,6 @@
 
 {% block sidebar %}
     {% include "tag_list.html"%}
-    <hr>
-    {% include "news.html"%}
     <hr>
     {% include "about.html" %}
 {% endblock %}
