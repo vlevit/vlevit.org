@@ -22,6 +22,65 @@ SMALL_IMAGE_SCALE="512x350>"
 LARGE_IMAGE_SCALE="1024x700>"
 JPEG_QUALITY=90
 
+function usage
+{
+    cat <<EOF
+Usage:
+
+    ${0##*/} help
+
+        print this help message
+
+    ${0##*/} active
+
+        return 0 if dev server is running
+
+    ${0##*/} start
+
+        start dev server
+
+    ${0##*/} stop
+
+        stop dev server
+
+    ${0##*/} reload dev|prod|all
+
+        reload python code by touching wsgi.py
+
+    ${0##*/} update local|dev|prod
+
+        import new and re-import changed posts and pages
+
+    ${0##*/} deploy dev|prod|all
+
+        deploy master branch to development or production or both
+
+    ${0##*/} publish dev|prod|all
+
+        scale images, collect assets and deploy to development or production or both
+
+    ${0##*/} collectstatic
+
+        collect assets and sync them to the server
+
+    ${0##*/} scale_images
+
+        scale down images from $ORIG_IMAGE_DIR and save them to $DEST_IMAGE_DIR and $DEST_LARGE_IMAGE_DIR
+
+    ${0##*/} download_comments
+
+        sync previously exported comments from the server to the local machine
+
+    ${0##*/} view FILE LINE
+
+        open locally the post of the specified file/line in the browser
+
+    ${0##*/} virtualenv
+
+        run eval \`${0##*/} virtualenv\` to activate virtualenv
+EOF
+}
+
 function run
 {
     if vlblog active ; then
@@ -268,62 +327,11 @@ case "$1" in
     scale_images)
         scale_images
         ;;
+    help)
+        usage
+        ;;
     *)
-        cat <<EOF
-Usage:
-
-    ${0##*/} help
-
-        print this help message
-
-    ${0##*/} active
-
-        return 0 if dev server is running
-
-    ${0##*/} start
-
-        start dev server
-
-    ${0##*/} stop
-
-        stop dev server
-
-    ${0##*/} reload local|dev|prod
-
-        reload python code by touching wsgi.py
-
-    ${0##*/} update local|dev|prod
-
-        import new and re-import changed posts and pages
-
-    ${0##*/} deploy dev|prod|all
-
-        deploy master branch to development or production or both
-
-    ${0##*/} publish dev|prod|all
-
-        scale images, collect assets and deploy to development or production or both
-
-    ${0##*/} collectstatic
-
-        collect assets and sync them to the server
-
-    ${0##*/} scale_images
-
-        scale down images from $ORIG_IMAGE_DIR and save them to $DEST_IMAGE_DIR and $DEST_LARGE_IMAGE_DIR
-
-    ${0##*/} download_comments
-
-        sync previously exported comments from the server to the local machine
-
-    ${0##*/} view FILE LINE
-
-        open locally the post of the specified file/line in the browser
-
-    ${0##*/} virtualenv
-
-        run eval \`${0##*/} virtualenv\` to activate virtualenv
-EOF
+        usage
         exit 2
         ;;
 esac
