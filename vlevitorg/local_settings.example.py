@@ -12,6 +12,8 @@ DATABASES = {
     }
 }
 
+GEODB = "/path/to/GeoLite2-Country.mmdb"
+
 ENVIRON_REDIRECTIONS = (
     ("^examlpe", "http://example.com"),
 )

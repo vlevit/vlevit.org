@@ -11,5 +11,9 @@
 {% block sidebar %}
     {% include "tag_list.html"%}
     <hr>
+    {% if country == 'RU' %}
+        {% include "russian_media.html" %}
+        <hr>
+      {% endif %}
     {% include "about.html" %}
 {% endblock %}

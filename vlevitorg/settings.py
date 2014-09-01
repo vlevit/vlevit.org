@@ -71,6 +71,7 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
+    'vlblog.vlblog_processor',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
