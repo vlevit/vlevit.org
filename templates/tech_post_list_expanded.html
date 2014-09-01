@@ -15,6 +15,10 @@
                  {% include "tag_list.html" with tags=post.tags.all %}
                  {% if forloop.first %}
                     <hr>
+                    {% if country == 'RU' %}
+                        {% include "russian_media.html" %}
+                        <hr>
+                    {% endif %}
                     {% include "about.html" %}
                  {% endif %}
              </div>
