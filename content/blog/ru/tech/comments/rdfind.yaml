@@ -1,6 +1,6 @@
 -   author: no_name
     published: 2014-01-21 23:01:23+00:00
-    content: |-
+    content: |4-
 
         Здравствуйте Вячеслав! Было бы здорово если бы Вы помогли мне найти
         такую утилиту как "dfind", это такой tcp-port scanner не очень популярный,
@@ -9,7 +9,6 @@
         похожее называется vnc_bypauth, но я ищу именно dfind_scanner для Linux.
 
         а про rdfind предположил что - remote_desktop_finder )) оказалось нет.
-
     replies:
     -   author: Vyacheslav Levit
         website: http://vlevit.org/
