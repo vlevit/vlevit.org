@@ -176,7 +176,7 @@ run git pull origin master
 runeval "python -m compileall -f . >/dev/null"
 run touch '"$DEPLOY_DIR"'/vlevitorg/wsgi.py
 '
-    update "$1"
+    curl_command update "$1"
 }
 
 function image_geometry
