@@ -80,6 +80,7 @@ def import_comments(request):
 
     def import_comments_list(comments, obj, parent=None):
         # import comments to a database
+        count = 0
         for c in comments:
             # consider comments with equal date to be the same
             # this makes possible to update all other comment fields
@@ -109,8 +110,13 @@ def import_comments(request):
                 parent=parent,
                 comment_html=safe_markdown(c['content']))
             comment.save()
+            count += 1
             if 'replies' in c:
-                import_comments_list(c['replies'], obj, comment)
+                count += import_comments_list(c['replies'], obj, comment)
+        return count
+
+    comments_count = 0
+    comment_files_count = 0
 
     for root, dirs, files in os.walk(settings.BLOG_DIR):
 
@@ -142,9 +148,10 @@ def import_comments(request):
             except models.Post.DoesNotExist:
                 logger.error("post '%s' doesn't exist", name)
                 continue
+            comment_files_count += 1
 
             comments = load_comments(comment_file)
-            import_comments_list(comments, post)
+            comments_count += import_comments_list(comments, post)
 
     for root, dirs, files in os.walk(settings.PAGES_DIR):
 
@@ -166,11 +173,13 @@ def import_comments(request):
             except models.Page.DoesNotExist:
                 logger.error("page '%s' (%s) doesn't exist", name, language)
                 continue
+            comment_files_count += 1
 
             comments = load_comments(comment_file)
-            import_comments_list(comments, page)
+            comments_count += import_comments_list(comments, page)
 
-    return HttpResponse('<html><body>See log</body></html>')
+    return HttpResponse("{0} comments imported from {1} files".format(
+        comments_count, comment_files_count))
 
 
 @require_key
@@ -254,6 +263,9 @@ def export_comments(request, folder='comments'):
         except (IOError, OSError) as err:
             logger.error('error creating file %s: %s', path, err)
 
+    comments_count = 0
+    comment_files_count = 0
+
     for post in models.Post.objects.all():
 
         comments = ThreadedComment.objects.filter(
@@ -262,10 +274,13 @@ def export_comments(request, folder='comments'):
             is_public=True,
             is_removed=False)
 
+        comments_count += len(comments)
+
         comments_tree = get_comments_tree(comments)
         if comments_tree:
             path = get_post_path(post)
             dump_yaml(path, comments_tree)
+            comment_files_count += 1
 
     for page in models.Page.objects.all():
 
@@ -275,9 +290,13 @@ def export_comments(request, folder='comments'):
             is_public=True,
             is_removed=False)
 
+        comments_count += len(comments)
+
         comments_tree = get_comments_tree(comments)
         if comments_tree:
             path = get_page_path(page)
             dump_yaml(path, comments_tree)
+            comment_files_count += 1
 
-    return HttpResponse('<html><body>See log</body></html>')
+    return HttpResponse("{0} comments exported to {1} files".format(
+        comments_count, comment_files_count))
