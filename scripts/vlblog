@@ -258,25 +258,39 @@ function reload
     done
 }
 
-function update
+function curl_command
 {
-    case "$1" in
+    case "$2" in
         "local")
-            ADDRESS="$LOCAL_ADDRESS"
-            SECRET_KEY="$LOCAL_SECRET_KEY"
+            address="$LOCAL_ADDRESS"
+            secret_key="$LOCAL_SECRET_KEY"
             ;;
         "dev")
-            ADDRESS="$REMOTE_ADDRESS_DEV"
-            SECRET_KEY="$REMOTE_SECRET_KEY_DEV"
+            address="$REMOTE_ADDRESS_DEV"
+            secret_key="$REMOTE_SECRET_KEY_DEV"
             ;;
         "prod")
-            ADDRESS="$REMOTE_ADDRESS_PROD"
-            SECRET_KEY="$REMOTE_SECRET_KEY_PROD"
+            address="$REMOTE_ADDRESS_PROD"
+            secret_key="$REMOTE_SECRET_KEY_PROD"
             ;;
-        *) echo usage: "update local|dev|prod" ; return 2 ;;
+        *) echo usage: "$1 local|dev|prod" ; return 2 ;;
     esac
-    echo curl "${ADDRESS}/import/all/?key=${SECRET_KEY}"
-    curl "${ADDRESS}/import/all/?key=${SECRET_KEY}" 2>/dev/null
+
+    case "$1" in
+        "update")
+            url="${address}/import/all/?key=${secret_key}"
+            ;;
+        "import_comments")
+            url="${address}/import/comments/?key=${secret_key}"
+            ;;
+        "export_comments")
+            url="${address}/export/comments/?key=${secret_key}"
+            ;;
+        *) echo usage: "update|import_comments|export_comments local|dev|prod" ; return 2 ;;
+    esac
+
+    echo curl "$url"
+    curl "$url" 2>/dev/null
 }
 
 case "$1" in
@@ -300,10 +314,16 @@ case "$1" in
         reload "$2"
         ;;
     update)
-        update "$2"
+        curl_command update "$2"
         ;;
     collectstatic)
         collectstatic
+        ;;
+    import_comments)
+        curl_command import_comments "$2"
+        ;;
+    export_comments)
+        curl_command export_comments "$2"
         ;;
     download_comments)
         download_comments
