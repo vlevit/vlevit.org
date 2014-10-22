@@ -8,7 +8,7 @@
         <meta name="author" content="Vyacheslav Levit">
         <meta name="description" content="{% block description %}Personal website about everything and nothing{% endblock %}">
         <title>{% block title %}{% endblock %} - Vyacheslav Levit</title>
-        <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" />
+        <link rel="shortcut icon" href="{% static "images/favicon.ico" %}?v2" />
         {% block feeds %}
         <link rel="alternate" type="application/rss+xml" title="{% trans "All Posts In All Blogs" %}" href="{% url "site_feed" %}">
         <link rel="alternate" type="application/rss+xml" title="{% trans "All Comments In All Blogs" %}" href="{% url "site_comments_feed" %}">
