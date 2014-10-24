@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import redirect, render
 
 from utils import require_key
 from vlblog import importers
@@ -19,6 +20,15 @@ def import_entries(request, what):
         pages_importer = importers.PagesImporter(settings.PAGES_DIR)
         pages_importer.import_all(force_reimport=force_reimport)
     return HttpResponse('See log', content_type="text/plain")
+
+
+def gplus_callback(request):
+    if request.GET:
+        request.session['gplus'] = request.GET
+        return redirect(gplus_callback)
+    else:
+        response = request.session.pop('gplus', {})
+        return render(request, 'gplus.html', dict(response=response))
 
 
 def pingme(request):

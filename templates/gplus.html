@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Google+ response{% endblock %}
+
+{% block content %}
+    <h1>Google+ response</h1>
+    {% if response.error %}
+        <p> Error: {{ response.error }} </p>
+    {% elif response.code %}
+        <label>Code: <input type="text" value="{{ response.code }}" size="30" readonly><label>
+    {% else %}
+        <p> Neither code, nor error found in the response. </p>
+    {% endif %}
+    <h4>Response</h4>
+    <pre> {{ response.items | pprint }} </pre>
+{% endblock %}
