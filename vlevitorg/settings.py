@@ -110,6 +110,9 @@ INSTALLED_APPS = (
 
 COMMENTS_APP = 'threadedcomments'
 
+GPLUS_EXPORT = False
+GPLUS_CREDENTIALS_FILE = path.join(proj_dir, 'credentials.json')
+
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
     'debug_toolbar.panels.timer.TimerDebugPanel',

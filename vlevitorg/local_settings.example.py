@@ -65,3 +65,7 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+GPLUS_EXPORT = True
+GPLUS_CLIENT_ID = ''
+GPLUS_CLIENT_SECRET = ''
