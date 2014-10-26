@@ -30,7 +30,10 @@ class GPlusExporter(object):
         while request is not None:
             response = request.execute()
             for item in response.get('items', []):
-                moments[item['url']] = item
+                try:
+                    moments[item['target']['url']] = item
+                except KeyError:
+                    pass
             request = plus.moments().list_next(request, response)
 
         posts = Post.objects.filter(blog__export_gplus=True)
