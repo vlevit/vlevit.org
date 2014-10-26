@@ -42,6 +42,7 @@ urlpatterns += i18n_patterns('',
 
 urlpatterns += patterns('vlblog.views.tools',
     url(r'^import/(?P<what>blog|pages|all)/', 'import_entries'),
+    url(r'^export/gplus', 'export_gplus'),
     url(r'^pingme', 'pingme'),
     url(r'^error', 'internal_error'),
     url(r'^gpluscallback', 'gplus_callback'),

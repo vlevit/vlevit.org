@@ -1,3 +1,5 @@
+from optparse import make_option
+
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 import httplib2
@@ -10,20 +12,30 @@ class Command(BaseCommand):
     help = "Authorize Google Plus user and save credentials " \
            "(access and refresh tokens) on disk."
 
+    option_list = BaseCommand.option_list + (
+        make_option('--force',
+            action='store_true',
+            dest='force',
+            default=False,
+            help="Force Google+ authorization flow even if access token "
+                 "is valid."),
+        )
+
     def handle(self, *args, **options):
 
         flow = OAuth2WebServerFlow(
             client_id=settings.GPLUS_CLIENT_ID,
             client_secret=settings.GPLUS_CLIENT_SECRET,
-            redirect_uri='http://vlevit.org/oauth2callback',
+            redirect_uri=settings.GPLUS_REDIRECT_URL,
             scope='https://www.googleapis.com/auth/plus.login',
+            request_visible_actions='http://schema.org/CreateAction',
             access_type='offline',
             approval_prompt='force')
 
         storage = Storage(settings.GPLUS_CREDENTIALS_FILE)
         credentials = storage.get()
 
-        if credentials is None or credentials.invalid:
+        if credentials is None or credentials.invalid or options['force']:
             if credentials is None:
                 self.stdout.write("no credentials found")
             elif credentials.invalid:

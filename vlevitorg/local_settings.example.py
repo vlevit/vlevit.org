@@ -69,3 +69,4 @@ CACHES = {
 GPLUS_EXPORT = True
 GPLUS_CLIENT_ID = ''
 GPLUS_CLIENT_SECRET = ''
+GPLUS_REDIRECT_URL = 'https://example.com/gpluscallback'

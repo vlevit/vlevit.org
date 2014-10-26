@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
 
 from utils import require_key
-from vlblog import importers
+from vlblog import exporters, importers
 
 
 @csrf_exempt
@@ -20,6 +20,17 @@ def import_entries(request, what):
         pages_importer = importers.PagesImporter(settings.PAGES_DIR)
         pages_importer.import_all(force_reimport=force_reimport)
     return HttpResponse('See log', content_type="text/plain")
+
+
+@csrf_exempt
+@require_key
+def export_gplus(request):
+    if not settings.GPLUS_CREDENTIALS_FILE:
+        return HttpResponse("Google+ export is disabled in the config",
+                            content_type="text/plain")
+    exporter = exporters.GPlusExporter(settings.GPLUS_CREDENTIALS_FILE)
+    inserted = exporter.export()
+    return HttpResponse("Exported %d entries to Google+" % inserted)
 
 
 def gplus_callback(request):
