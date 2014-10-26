@@ -33,7 +33,7 @@ class GPlusExporter(object):
                 moments[item['url']] = item
             request = plus.moments().list_next(request, response)
 
-        posts = Post.objects.filter(blog__export_gplus='tech')
+        posts = Post.objects.filter(blog__export_gplus=True)
         inserted = 0
         for post in posts:
             url = 'http://{domain}{path}'.format(
