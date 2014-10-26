@@ -60,6 +60,14 @@ Usage:
 
         scale images, collect assets and deploy to development or production or both
 
+    ${0##*/} authorize_gplus
+
+        authorize vlevit.org in Google+
+
+    ${0##*/} export_gplus
+
+        export marked blog posts to Google+ as moments
+
     ${0##*/} collectstatic
 
         collect assets and sync them to the server
@@ -178,6 +186,7 @@ runeval "python -m compileall -f . >/dev/null"
 run touch '"$DEPLOY_DIR"'/vlevitorg/wsgi.py
 '
     curl_command update "$1"
+    curl_command export_gplus "$1"
 }
 
 function image_geometry
@@ -287,11 +296,25 @@ function curl_command
         "export_comments")
             url="${address}/export/comments/?key=${secret_key}"
             ;;
-        *) echo usage: "update|import_comments|export_comments local|dev|prod" ; return 2 ;;
+        "export_gplus")
+            url="${address}/export/gplus/?key=${secret_key}"
+            ;;
+        *) echo usage: "update|import_comments|export_comments|export_gplus local|dev|prod" ; return 2 ;;
     esac
 
     echo curl "$url"
     curl "$url" 2>/dev/null
+}
+
+function authorize_gplus
+{
+    ssh -t "$SSH_DEST" "
+echo cd "$REMOTE_DEPLOY_DIR_PROD"
+cd "$REMOTE_DEPLOY_DIR_PROD"
+echo . ../virtualenv/bin/activate
+. ../virtualenv/bin/activate
+echo python manage.py authorize_gplus --force
+python manage.py authorize_gplus --force"
 }
 
 case "$1" in
@@ -325,6 +348,12 @@ case "$1" in
         ;;
     export_comments)
         curl_command export_comments "$2"
+        ;;
+    authorize_gplus)
+        authorize_gplus
+        ;;
+    export_gplus)
+        curl_command export_gplus "$2"
         ;;
     download_comments)
         download_comments
