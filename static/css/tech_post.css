@@ -20,12 +20,29 @@ footer a {
   color: rgb(160, 160, 160);
 }
 
+.article-footer {
+  margin: 2em;
+  font-size: 13px;
+}
+
 .share-links {
-  font-size: 12px;
+  float: left;
 }
 
 .share-links a {
   color: #777;
+  border-style: none;
+}
+
+.footer-permalink, .footer-permalink:hover {
+  display: block;
+  float: right;
+  color: rgb(130, 133, 135);
+  border-style: none;
+}
+
+
+.entry-date abbr, .footer-permalink abbr {
   border-style: none;
 }
 
@@ -61,20 +78,6 @@ article.entry {
   font-weight: bold;
   color:rgb(200, 195, 183);
   white-space: nowrap;
-}
-
-.footer-permalink, .footer-permalink:hover {
-  display: block;
-  float: right;
-  font-size: 13px;
-  color: rgb(130, 133, 135);
-  border-style: none;
-  margin: 0.8em 3em;
-}
-
-
-.entry-date abbr, .footer-permalink abbr {
-  border-style: none;
 }
 
 .entry-tags {
