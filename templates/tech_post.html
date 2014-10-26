@@ -50,12 +50,22 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ post.title|safe }}</h1>
-    {{ post.body|safe }}
-    <div class="footer-date">{{ post.created|date:"d E Y" }}</div>
+    <article itemscope itemtype="http://schema.org/BlogPosting" class="clearfix">
+        <h1 itemprop="name">{{ post.title|safe }}</h1>
+        <div itemprop="text articleBody">
+            {{ post.body|safe }}
+        </div>
+            <a itemprop="url" class="footer-permalink" href="{{ post.get_absolute_url }}">
+                {% with post.created.isoformat as isodate %}
+                    <time datetime="{{ isodate }}">
+                        <abbr itemprop="dateCreated" title="{{ isodate }}">{{ post.created| date:"d E Y" }}</abbr>
+                    </time>
+                {% endwith %}
+            </a>
+    </article>
     <div class="comment-header-wrapper">
         <h2 id="comment-header">{% trans "Comments" %}</h2>
-        <a href="{% url "post_comments_feed" blog.name post.name %}" title="{% trans "Subscribe to comments on" %} {{post.title}}">
+        <a href="{% url "post_comments_feed" blog.name post.name %}" title="{% trans "Subscribe to comments on" %} {{ post.title }}">
             <img class="img-middle" src="{% static "images/rss16.png" %}">
         </a>
     </div>

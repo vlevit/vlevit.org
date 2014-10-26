@@ -22,38 +22,50 @@ footer a {
 
 /* post list */
 
-.entry {
+article.entry {
   margin-bottom: 0em;
 }
 
 
-.entry-header-wrapper {
+.entry-header {
+  margin: 0px;
   display: table;
   width: 100%
 }
 
-.entry-header {
+.entry-header  h1 {
+  margin: 12px 0px;
+}
+
+.entry-title {
   display: table-cell;
 }
 
-.entry-header h1 {
+.entry-title h1 {
   font-size: 15px;
 }
 
 .entry-date {
   display: table-cell;
+  float: right;
   font-size: 10px;
   font-weight: bold;
-  text-align: right;
   color:rgb(200, 195, 183);
   white-space: nowrap;
 }
 
-.footer-date {
+.footer-permalink, .footer-permalink:hover {
+  display: block;
+  float: right;
   font-size: 13px;
-  text-align: right;
   color: rgb(130, 133, 135);
-  margin: 2em 3em;
+  border-style: none;
+  margin: 0.8em 3em;
+}
+
+
+.entry-date abbr, .footer-permalink abbr {
+  border-style: none;
 }
 
 .entry-tags {

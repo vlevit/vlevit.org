@@ -291,6 +291,13 @@ footer {
   clear: both;
 }
 
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
 .devnull {
   display: none;
 }
