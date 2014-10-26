@@ -10,6 +10,7 @@ class Blog(models.Model):
     description = models.CharField(max_length=200, blank=True)
     template = models.CharField(max_length=50)
     list_template = models.CharField(max_length=50)
+    export_gplus = models.BooleanField()
 
     class Meta:
         unique_together = ('name', 'language')

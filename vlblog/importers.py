@@ -104,8 +104,9 @@ class BaseConfLoader(object):
 class BlogConfLoader(BaseConfLoader):
 
     required = ('blog', 'language', 'description', 'template', 'list_template')
-    optional = {'file_as_name': False, 'multi_entries': False}
-    types = {'file_as_name': bool, 'multi_entries': bool}
+    optional = {'file_as_name': False, 'multi_entries': False,
+                'export_gplus': False}
+    types = {'file_as_name': bool, 'multi_entries': bool, 'export_gplus': bool}
 
     filename = 'blog.conf'
 
@@ -364,6 +365,7 @@ class BlogImporter(BaseImporter):
                 'description': conf['description'],
                 'template': conf['template'],
                 'list_template': conf['list_template'],
+                'export_gplus': conf['export_gplus'],
             }
             blog = models.Blog.get_or_create(**data)
             # keep only the last blog in cache
