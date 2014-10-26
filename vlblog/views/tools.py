@@ -25,7 +25,7 @@ def import_entries(request, what):
 @csrf_exempt
 @require_key
 def export_gplus(request):
-    if not settings.GPLUS_CREDENTIALS_FILE:
+    if not settings.GPLUS_EXPORT:
         return HttpResponse("Google+ export is disabled in the config",
                             content_type="text/plain")
     exporter = exporters.GPlusExporter(settings.GPLUS_CREDENTIALS_FILE)
