@@ -86,5 +86,6 @@ article.entry {
   border-bottom: 1px solid rgb(200, 195, 183);
   padding: 1em 0em;
   font-size: 14px;
+  text-align: center;
   color: #555;
 }
