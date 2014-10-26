@@ -5,20 +5,24 @@
     <div class="about-image">
         <img src="{% static "images/me.png" %}">
     </div>
-    <p>
+    <p itemscope itemtype="http://schema.org/Person">
     {% if LANGUAGE_CODE == "en" %}
 
-        My name is Vyacheslav Levit and I am a programmer from Odessa, Ukraine.
-        I write here mostly on Linux, Shell (Bash), and Python tools I have
-        developed or I discovered and felt like they worth more
-        attention. <a href="{% url "page" "about" %}">More...</a>
+        My name is <span itemprop="name">Vyacheslav Levit</span> and
+        I'm a <span itemprop="jobTitle">developer</span>
+        from <span itemprop="homeLocation">Odessa, Ukraine</span>.
+        This blog is mostly on Linux, Python & Bash tools and web
+        development.
+        <a itemprop="url" href="{% url "page" "about" %}">More...</a>
 
     {% else %} {# "ru" #}
 
-        Меня зовут Вячеслав Левит. Я программист из Одессы. В этом блоге я пишу
-        в основном об инструментах для Linux, написанных мной чаще всего на
-        Python или Shell (Bash), и о не самых популярных, но заслуживающих
-        внимания, программах. <a href="{% url "page" "about" %}">Подробнее...</a>
+        Мое имя <span itemprop="name">Вячеслав Левит</span>. Я
+        <span itemprop="jobTitle">разаботчик</span>
+        из <span itemprop="homeLocation">Одессы</span>. Здесь я пишу в
+        основном о Python и Bash инструментах для Linux,
+        программировании и веб-разработке.
+        <a itemprop="url" href="{% url "page" "about" %}">Подробнее...</a>
 
     {% endif %}
     </p>
