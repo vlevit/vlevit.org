@@ -10,7 +10,8 @@ PROJECT_DIR=~/projects/vlevit.org
 STATIC_DIR="$PROJECT_DIR"/staticfiles
 REMOTE_STATIC_DIR=/srv/http/vlevit.org/static
 REMOTE_MEDIA_DIR=/srv/http/vlevit.org/media
-SSH_CMD=(ssh vlevitorg)
+SSH_DEST=vlevitorg@vlevit.org
+SSH_CMD=(ssh "$SSH_DEST")
 REMOTE_DEPLOY_DIR_PROD=/srv/http/vlevit.org/vlevit.org
 REMOTE_DEPLOY_DIR_DEV=/srv/http/vlevit.org/test.vlevit.org
 VIRTUAL_ENV_DIR=~/virtualenvs/vlevit.org
@@ -51,7 +52,7 @@ Usage:
 
         import new and re-import changed posts and pages
 
-    ${0##*/} deploy dev|prod|all
+    ${0##*/} deploy dev|prod
 
         deploy master branch to development or production or both
 
@@ -136,8 +137,8 @@ function collectstatic
     echo python2 manage.py collectstatic --noinput
     python2 manage.py collectstatic --noinput
     deactivate
-    echo rsync -rt "$STATIC_DIR"/ vlevitorg:"$REMOTE_STATIC_DIR"
-    rsync -rt "$STATIC_DIR"/ vlevitorg:"$REMOTE_STATIC_DIR"
+    echo rsync -rt "$STATIC_DIR"/ "$SSH_DEST":"$REMOTE_STATIC_DIR"
+    rsync -rt "$STATIC_DIR"/ "$SSH_DEST":"$REMOTE_STATIC_DIR"
 }
 
 function download_comments
