@@ -26,9 +26,14 @@ def post_list(request, blog, tag=None, page=1):
         posts = models.Post.objects.filter(
             blog__name=blog, blog__language=request.LANGUAGE_CODE,
             tags__name=tag)
+        foreign_posts = models.Post.objects.filter(
+            blog__name=blog, tags__name=tag).exclude(
+                blog__language=request.LANGUAGE_CODE)
     else:
         posts = models.Post.objects.filter(
             blog__name=blog, blog__language=request.LANGUAGE_CODE)
+        foreign_posts = models.Post.objects.filter(blog__name=blog).exclude(
+            blog__language=request.LANGUAGE_CODE)
     posts = posts.select_related().prefetch_related('tags')
     if posts:
         post_obj = posts[0]
@@ -37,6 +42,7 @@ def post_list(request, blog, tag=None, page=1):
             blog=blog_obj, n_posts__gt=1).select_related()
         return render(request, blog_obj.list_template,
                       {'blog': blog_obj, 'posts': posts,
+                       'foreign_posts': foreign_posts,
                        'tags': tags, 'page': page})
     else:
         raise Http404

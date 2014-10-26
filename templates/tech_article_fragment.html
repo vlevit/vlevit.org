@@ -1,0 +1,18 @@
+<article class="entry" itemscope itemtype="http://schema.org/BlogPosting">
+    <header class="entry-header">
+        <div class="entry-title">
+            <h1 itemprop="name">
+                <a itemprop="url" href="{{ post.get_absolute_url }}">{{ post.title|safe }}</a>
+            </h1>
+        </div>
+        {% with post.created.isoformat as isodate %}
+            <time datetime="{{ isodate }}" class="entry-date">
+                <abbr itemprop="dateCreated" title="{{ isodate }}">{{ post.created| date:"d M Y" }}</abbr>
+            </time>
+        {% endwith %}
+    </header>
+    <div itemprop="description">
+        {{ post.excerpt|safe }}
+    </div>
+    <div class="entry-tags">{% for tag in post.tags.all %}<a href="{{ tag.get_absolute_url }}">{{tag.name}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+</article>

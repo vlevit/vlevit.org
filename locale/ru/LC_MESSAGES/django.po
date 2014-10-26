@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-10 19:05+0000\n"
-"PO-Revision-Date: 2013-09-10 22:07+0300\n"
+"POT-Creation-Date: 2014-10-26 20:01+0000\n"
+"PO-Revision-Date: 2014-10-26 22:00+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -20,25 +20,27 @@ msgstr ""
 
 #: templates/404.html:4 templates/404.html.py:8
 msgid "Page not found"
-msgstr ""
+msgstr "Страница не найдена"
 
 #: templates/404.html:10
 msgid "We're sorry, but the requested page could not be found."
-msgstr ""
+msgstr "Мы приносим извинения, но запрошенная страница не найдена."
 
 #: templates/500.html:5
 msgid "Server error (500)"
-msgstr "Ответить"
+msgstr "Ошибка Сервера (500)"
 
 #: templates/500.html:8
 msgid "Server Error <em>(500)</em>"
-msgstr ""
+msgstr "Ошибка сервера <em>(500)</em>"
 
 #: templates/500.html:9
 msgid ""
 "There's been an error. It's been reported to the site administrators via e-"
 "mail and should be fixed shortly. Thanks for your patience."
 msgstr ""
+"Произошла ошибка. Отчет об ошибке был отправлен администраторам, при\n"
+"первой возможности ошибка будет исправлена. Спасибо за терпение."
 
 #: templates/about.html:4
 msgid "About me:"
@@ -50,12 +52,12 @@ msgstr "Обо мне"
 msgid "Comments on"
 msgstr "Комментарии к"
 
-#: templates/about_page.html:28 templates/tech_post.html:57
+#: templates/about_page.html:28 templates/tech_post.html:67
 #: templates/comments/comment_block.html:4
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/about_page.html:29 templates/tech_post.html:58
+#: templates/about_page.html:29 templates/tech_post.html:68
 #: templates/comments/comment_block.html:5
 msgid "Subscribe to comments on"
 msgstr "Подписаться на комментарии к"
@@ -72,75 +74,75 @@ msgstr "Все записи во всех блогах"
 msgid "All Comments In All Blogs"
 msgstr "Все комментарии во всех блогах"
 
-#: templates/base.html:54
+#: templates/base.html:53
 msgid "vlevit.org, my Org file on the Web"
 msgstr "vlevit.org, мой Org-файл в Интернете"
 
-#: templates/base.html:56
+#: templates/base.html:55
 msgid "Subscribe to all posts in all blogs"
 msgstr "Подписаться на все записи во всех блогах"
 
-#: templates/base.html:78
+#: templates/base.html:77
 msgid "Pages"
 msgstr "Страницы"
 
-#: templates/base.html:80
+#: templates/base.html:79
 msgid "About me"
 msgstr "Обо мне"
 
-#: templates/base.html:81
+#: templates/base.html:80
 msgid "Projects"
 msgstr "Проекты"
 
-#: templates/base.html:82
+#: templates/base.html:81
 msgid "Wishlist"
 msgstr "Хотелки"
 
-#: templates/base.html:88
+#: templates/base.html:87
 msgid "Feeds"
 msgstr "Ленты"
 
-#: templates/base.html:90
+#: templates/base.html:89
 msgid "Tech"
 msgstr "Тех"
 
-#: templates/base.html:98
+#: templates/base.html:97
 msgid "Life"
 msgstr "Жизнь"
 
-#: templates/base.html:99
+#: templates/base.html:98
 msgid "Music"
 msgstr "Музыка"
 
-#: templates/base.html:100
+#: templates/base.html:99
 msgid "Noise"
 msgstr "Шум"
 
-#: templates/base.html:107
+#: templates/base.html:106
 msgid "Profiles"
 msgstr "Профили"
 
-#: templates/base.html:109
+#: templates/base.html:108
 msgid "Google+"
 msgstr "Google+"
 
-#: templates/base.html:110
+#: templates/base.html:109
 msgid "GitHub"
 msgstr "GitHub"
 
-#: templates/base.html:111
+#: templates/base.html:110
 msgid "Google Code"
 msgstr "Google Code"
 
-#: templates/base.html:112
+#: templates/base.html:111
 msgid "Libre.fm"
 msgstr "Libre.fm"
 
-#: templates/base.html:119
+#: templates/base.html:118
 msgid "Contacts"
 msgstr "Контакты"
 
-#: templates/base.html:121 templates/base.html.py:122
+#: templates/base.html:120 templates/base.html.py:121
 msgid "at this domain"
 msgstr "на этом домене"
 
@@ -161,20 +163,15 @@ msgstr "назад"
 msgid "Tags:"
 msgstr "Метки:"
 
+#: templates/tech_post_list.html:33
+msgid "Blog Posts in Russian"
+msgstr "Заметки на английском"
+
 #: templates/comments/form.html:5
 msgid "You can write here in "
 msgstr "Здесь можно "
 
-#: templates/comments/form.html:6 templates/comments/form.html.py:15
-#: templates/comments/preview.html:22
-msgid "Preview"
-msgstr "Предпросмотр"
-
-#: templates/comments/form.html:7
-msgid "Edit"
-msgstr "Редактировать"
-
-#: templates/comments/form.html:14 templates/comments/preview.html:21
+#: templates/comments/form.html:13 templates/comments/preview.html:21
 msgid "Submit"
 msgstr "Отправить"
 
@@ -207,6 +204,10 @@ msgstr "Отправьте комментарий"
 #: templates/comments/preview.html:16
 msgid "or make changes"
 msgstr "или внесите изменения"
+
+#: templates/comments/preview.html:22
+msgid "Preview"
+msgstr "Предпросмотр"
 
 #: threadedcomments/admin.py:12
 msgid "Content"
@@ -270,7 +271,8 @@ msgstr "Древовидные комментарии"
 
 #: threadedcomments/views.py:141
 msgid "Enable JavaScript to post a comment. Or send me an email."
-msgstr "Включите JavaScript, чтобы отправить комментарий. Или напишите мне email."
+msgstr ""
+"Включите JavaScript, чтобы отправить комментарий. Или напишите мне email."
 
 #: vlblog/feeds.py:24
 msgid "Vyacheslav Levit"
@@ -288,13 +290,16 @@ msgstr "Комментарии к \"{}\""
 msgid "Comments on blog \"{}\""
 msgstr "Комментарии к блогу \"{}\""
 
-#: vlevitorg/settings.py:20
+#: vlevitorg/settings.py:21
 msgid "English"
 msgstr "Английский"
 
-#: vlevitorg/settings.py:21
+#: vlevitorg/settings.py:22
 msgid "Russian"
 msgstr "Русский"
+
+#~ msgid "Edit"
+#~ msgstr "Редактировать"
 
 #~ msgid "Post"
 #~ msgstr "Отправить"

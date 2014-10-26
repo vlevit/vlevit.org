@@ -80,3 +80,11 @@ article.entry {
   margin-top: 0px;
   margin-bottom: 0px;
 }
+
+.foreign-language > h1 {
+  border-top: 1px solid rgb(200, 195, 183);
+  border-bottom: 1px solid rgb(200, 195, 183);
+  padding: 1em 0em;
+  font-size: 14px;
+  color: #555;
+}
