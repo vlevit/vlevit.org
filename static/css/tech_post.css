@@ -20,6 +20,15 @@ footer a {
   color: rgb(160, 160, 160);
 }
 
+.share-links {
+  font-size: 12px;
+}
+
+.share-links a {
+  color: #777;
+  border-style: none;
+}
+
 /* post list */
 
 article.entry {
