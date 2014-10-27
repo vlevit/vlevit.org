@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-26 20:01+0000\n"
-"PO-Revision-Date: 2014-10-26 22:00+0200\n"
+"POT-Creation-Date: 2014-10-27 12:40+0000\n"
+"PO-Revision-Date: 2014-10-27 14:42+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -52,12 +52,12 @@ msgstr "Обо мне"
 msgid "Comments on"
 msgstr "Комментарии к"
 
-#: templates/about_page.html:28 templates/tech_post.html:67
+#: templates/about_page.html:28 templates/tech_post.html:77
 #: templates/comments/comment_block.html:4
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/about_page.html:29 templates/tech_post.html:68
+#: templates/about_page.html:29 templates/tech_post.html:78
 #: templates/comments/comment_block.html:5
 msgid "Subscribe to comments on"
 msgstr "Подписаться на комментарии к"
@@ -162,6 +162,14 @@ msgstr "назад"
 #: templates/tag_list.html:5
 msgid "Tags:"
 msgstr "Метки:"
+
+#: templates/tech_post.html:68
+msgid "Share on"
+msgstr "Поделиться на"
+
+#: templates/tech_post.html:69 templates/tech_post.html.py:70
+msgid "or"
+msgstr "или"
 
 #: templates/tech_post_list.html:33
 msgid "Blog Posts in Russian"
