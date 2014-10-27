@@ -56,6 +56,14 @@
             {{ post.body|safe }}
         </div>
         <div class="article-footer clearfix">
+            {% with shareurl=request.build_absolute_uri %}
+                <div class="share-links">
+                    {% trans "Share on" %}
+                    <a target="_blank" href="https://plus.google.com/share?url={{ shareurl | urlencode }}&hl={{ LANGUAGE_CODE }}">Google+</a> {% trans "or" %}
+                    <a target="_blank" href="https://twitter.com/share?url={{ shareurl | urlencode }}&text={{ post.title | urlencode }}">Twitter</a> {% trans "or" %}
+                    <a target="_blank" href="//www.reddit.com/submit?url={{ shareurl | urlencode }}&title={{ post.title | urlencode }}">reddit</a>
+                </div>
+            {% endwith %}
             <a itemprop="url" class="footer-permalink" href="{{ post.get_absolute_url }}">
                 {% with post.created.isoformat as isodate %}
                     <time datetime="{{ isodate }}">
@@ -63,14 +71,6 @@
                     </time>
                 {% endwith %}
             </a>
-            {% with shareurl=request.build_absolute_uri %}
-                <div class="share-links">
-                    Share on
-                    <a target="_blank" href="https://plus.google.com/share?url={{ shareurl | urlencode }}&hl={{ LANGUAGE_CODE }}">Google+</a> or
-                    <a target="_blank" href="https://twitter.com/share?url={{ shareurl | urlencode }}&text={{ post.title | urlencode }}">Twitter</a> or
-                    <a target="_blank" href="//www.reddit.com/submit?url={{ shareurl | urlencode }}&title={{ post.title | urlencode }}">reddit</a>
-                </div>
-            {% endwith %}
         </div>
     </article>
     <div class="comment-header-wrapper">

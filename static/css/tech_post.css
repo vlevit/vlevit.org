@@ -21,7 +21,8 @@ footer a {
 }
 
 .article-footer {
-  margin: 2em;
+  margin: 3em;
+  margin-bottom: 1em;
   font-size: 13px;
 }
 
