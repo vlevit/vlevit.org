@@ -149,5 +149,5 @@ PPS Новый год что ли? Хотелось бы, чтобы в ново
 [resume.c]: https://trac.transmissionbt.com/browser/trunk/libtransmission/resume.c
 [аккаунт]: https://github.com/vlevit
 [единственный]: https://github.com/vlevit/transmission-batch-move
-[xatk]: xatk-1
+[xatk]: /ru/blog/tech/xatk-1
 [Google Code]: http://code.google.com/p/xatk/
