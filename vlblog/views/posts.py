@@ -35,6 +35,7 @@ def post_list(request, blog, tag=None, page=1):
         foreign_posts = models.Post.objects.filter(blog__name=blog).exclude(
             blog__language=request.LANGUAGE_CODE)
     posts = posts.select_related().prefetch_related('tags')
+    foreign_posts = foreign_posts.select_related().prefetch_related('tags')
     if posts:
         post_obj = posts[0]
         blog_obj = post_obj.blog
