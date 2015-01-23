@@ -220,12 +220,12 @@ function scale_images
     do
         relf="${f#$ORIG_IMAGE_DIR/}"
         dest="$DEST_IMAGE_DIR/$relf"
-        if ! [[ -e "$dest" ]] ; then
+        if [[ "$dest" -ot "$f" ]] ; then
             mkdir -p "$DEST_IMAGE_DIR"/"${relf%/*}"
             convert_image "$f" "$dest" "$SMALL_IMAGE_SCALE"
         fi
         dest2="$DEST_LARGE_IMAGE_DIR/$relf"
-        if ! [[ -e "$dest2" ]] && [[ $(image_geometry "$f") != $(image_geometry "$dest") ]]
+        if [[ "$dest2" -ot "$f" ]] && [[ $(image_geometry "$f") != $(image_geometry "$dest") ]]
         then
             mkdir -p "$DEST_LARGE_IMAGE_DIR"/"${relf%/*}"
             convert_image "$f" "$dest2" "$LARGE_IMAGE_SCALE"
