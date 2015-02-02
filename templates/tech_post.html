@@ -16,9 +16,6 @@
     {{block.super}}
     <link rel="stylesheet" href="{% static "css/pygments.css" %}" type="text/css">
     <link rel="stylesheet" href="{% static "css/comments.css" %}" type="text/css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="{% static "js/csrf.js" %}"></script>
-    <script src="{% static "js/comments.js" %}"></script>
 {% endblock %}
 
 {% block langbar %}
@@ -81,4 +78,12 @@
     </div>
     {% render_comment_list for post %}
     {% render_comment_form for post %}
+{% endblock %}
+
+{% block bodytail %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="{% static "js/csrf.js" %}"></script>
+    <script src="{% static "js/comments.js" %}"></script>
+    {# not so many images in tech blog yet #}
+    {# {% include "lightbox.html" %} #}
 {% endblock %}

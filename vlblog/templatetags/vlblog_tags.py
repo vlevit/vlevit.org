@@ -116,60 +116,85 @@ def excerpt(parser, token):
     return ExcerptNode(nodelist, show)
 
 
-IMAGE_BLOCK = u"""
-<div class="image-block">
-    {block}
-</div>"""
+class ImageNode(template.Node):
+
+    html = u"""<img src="{static}images/{src}" alt="{alt}">"""
+
+    def __init__(self, src, alt):
+        self.src = src
+        self.alt = alt
+
+    def render(self, context):
+        return self.html.format(static=settings.STATIC_URL, src=self.src,
+                                alt=self.alt)
 
 
-IMAGE_HTML = u"""<img src="{static}images/{src}" alt="{alt}">"""
+class ImageFullNode(ImageNode):
 
-
-IMAGE_FULL_HTML = u"""
-<a href="{static}images-full/{src}">
+    html = u"""
+<a href="{static}images-full/{src}" data-lightbox="{name}" data-title="{title}">
     <img src="{static}images/{src}" alt="{alt}">
 </a>
 """
 
+    def render(self, context):
+        try:
+            name = context.dicts[0]['vars']['name']
+        except KeyError:  # post.name can be unavailable if file_as_name is set
+            name = context.dicts[0]['vars']['title']
+        return self.html.format(static=settings.STATIC_URL, src=self.src,
+                                alt=self.alt, name=name, title=self.alt)
 
-class ImageNode(template.Node):
 
-    def __init__(self, image_html):
-        self.image_html = image_html
+class ImageBlockNode(template.Node):
+
+    html = u"""
+<div class="image-block">
+    {block}
+</div>"""
+
+    def __init__(self, *image_nodes):
+        self.image_nodes = image_nodes
 
     def render(self, context):
-        return self.image_html
+        block = "\n".join(n.render(context) for n in self.image_nodes)
+        return self.html.format(block=block)
 
 
-def image_wrap(parser, token, html):
+class ConstNode(template.Node):
+
+    def __init__(self, conststr):
+        self.conststr = conststr
+
+    def render(self, context):
+        return self.conststr
+
+
+def image_wrap(parser, token, image_node):
     cont = token.split_contents()
-    output = []
+    nodes = []
     alt = src = None
     for val in cont[1:]:
         val = utils.unquote_string(val)
         if val == '|':
-            output.append("<br>")
+            nodes.append(ConstNode("<br>"))
         elif not alt and not src:
             alt = val
         elif alt and not src:
             src = val
-            static = settings.STATIC_URL
-            img = html.format(static=static, alt=alt, src=src)
-            output.append(img)
+            nodes.append(image_node(alt=alt, src=src))
             alt = src = None
-    image_html = '\n'.join(output)
-    image_html = IMAGE_BLOCK.format(block=image_html)
-    return ImageNode(image_html)
+    return ImageBlockNode(*nodes)
 
 
 @register.tag
 def image(parser, token):
-    return image_wrap(parser, token, IMAGE_HTML)
+    return image_wrap(parser, token, ImageNode)
 
 
 @register.tag
 def image_full(parser, token):
-    return image_wrap(parser, token, IMAGE_FULL_HTML)
+    return image_wrap(parser, token, ImageFullNode)
 
 
 # useful in conjunction with timesince tag: http://stackoverflow.com/a/6481920
