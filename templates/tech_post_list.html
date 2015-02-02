@@ -17,7 +17,7 @@
 
 {% block headline_feed %}
     <a href="{% url "blog_feed" blog.name %}" title="{% trans "Subscribe to " %} {{blog.description}}">
-        <img class="img-middle" src="{% static "images/rss18.png" %}">
+        <img class="img-middle" src="{% static "images/rss18.png" %}" alt="RSS">
     </a>
 {% endblock %}
 

@@ -581,7 +581,7 @@ Wood", для меня был вдвойне интересен. И вот по�
 Внизу: когда пытаешь понять, для чего эта штука нужна, и подходишь
 ближе, она начинает "дышать".
 
-<div video-block style="text-align:center;">
+<div class="video-block" style="text-align:center;">
     <video controls>
         <source src="/static/video/bam.webm" type='video/webm'>
         <source src="/static/video/bam.mp4" type='video/mp4'>
