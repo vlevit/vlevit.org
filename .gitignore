@@ -1,5 +1,6 @@
 *.pyc
 /static/images
 /static/images-full
+/static/video/
 /vlevitorg/local_settings.py
 /media/
