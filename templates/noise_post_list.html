@@ -11,7 +11,7 @@
 {% block noise_active_ru %}active{% endblock %}
 
 {% block content %}
-    {% lazy_paginate 15 posts starting from page page %}
+    {% lazy_paginate 1 posts starting from page page %}
     {% for post in posts %}
         {% include "post_block.html" %}
     {% endfor %}
