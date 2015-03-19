@@ -98,7 +98,7 @@ function run
     fi
     cd "$PROJECT_DIR"
     source "$VIRTUAL_ENV_DIR/bin/activate"
-    python manage.py runserver &
+    python manage.py runserver "$@" &
     echo $! > /tmp/local-server.pid
     deactivate
     wait
@@ -323,7 +323,8 @@ case "$1" in
         exit $(($? != 0))
         ;;
     run|start)
-        run
+        shift
+        run "$@"
         ;;
     stop)
         stop
