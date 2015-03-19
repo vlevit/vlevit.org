@@ -53,7 +53,7 @@ header {
 ul.sitenav {
   list-style-type: none;
   padding-left: 0px;
-  display: block;
+  display: inline;
 }
 
 ul.sitenav li {
@@ -350,6 +350,7 @@ footer, footer h3 {
 
 @media screen and (max-width: 375px) {
   ul.sitenav {
+    display: block;
     text-align: center;
     line-height: 3;
   }
