@@ -151,8 +151,8 @@ function collectstatic
 
 function download_comments
 {
-    echo rsync -rt vlevitorg:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/
-    rsync -rt vlevitorg:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/
+    echo rsync -rt vlevitorg@vlevit.org:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/
+    rsync -rt vlevitorg@vlevit.org:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/
 }
 
 function deploy
