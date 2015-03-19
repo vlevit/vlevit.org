@@ -52,11 +52,13 @@
 
             <div class="headline-wrapper">
                 <div class="blog-title"><h1>{% block blog_title %}{% trans "vlevit.org, my Org file on the Web" %}{% endblock %}</h1></div>
-                {% block headline_feed %}
-                    <a href="{% url "site_feed" %}" title="{% trans "Subscribe to all posts in all blogs" %}">
-                        <img class="img-middle" src="{% static "images/rss18.png" %}" alt="RSS">
-                    </a>
-                {% endblock %}
+                <div class="blog-feed">
+                    {% block headline_feed %}
+                        <a href="{% url "site_feed" %}" title="{% trans "Subscribe to all posts in all blogs" %}">
+                            <img src="{% static "images/rss18.png" %}" alt="RSS">
+                        </a>
+                    {% endblock %}
+                </div>
             </div>
         </header>
 
