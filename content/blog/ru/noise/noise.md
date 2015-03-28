@@ -1,3 +1,11 @@
+/title: насыщенность
+/name: saturation
+/created: 2015-03-28 22:39:00+02:00
+
+> <span style="font-family: monospace;">н а <span style="display: inline-block; transform: rotate(45deg);">с</span> ы щ е н н о с т ь</span>
+
+-------------------------------------------------------------------------------
+
 /title: говорят на разных
 /name: peacekeeping
 /created: 2015-02-18 01:25:57+02:00
