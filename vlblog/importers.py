@@ -443,4 +443,7 @@ class PagesImporter(BaseImporter):
 
     def remove_entries(self, path):
         # delete file and all its pages along with it
-        models.Page.objects.get(path=path).delete()
+        file = models.File.objects.get(path=path)
+        models.Page.objects.get(file=file).delete()
+        file.delete()
+
