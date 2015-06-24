@@ -4,7 +4,7 @@ from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
-from vlblog.models import Blog, Post, Page
+from vlblog.models import Blog, Page, Post, Tag
 
 
 class FeedBase(Feed):
@@ -64,6 +64,26 @@ class BlogFeed(FeedBase):
 
     def items(self, blog):
         return Post.objects.filter(blog=blog).prefetch_related('tags')
+
+
+class TagFeed(FeedBase):
+
+    def get_object(self, request, blog, tag):
+        return get_object_or_404(Tag, name=tag, blog__name=blog,
+                                 blog__language=request.LANGUAGE_CODE)
+
+    def link(self, tag):
+        return tag.get_absolute_url()
+
+    def title(self, tag):
+        return u"{} - {}".format(tag.blog.description, tag.name)
+
+    description = title
+
+    def items(self, tag):
+        return Post.objects.filter(tags=tag) \
+                           .select_related('blog') \
+                           .prefetch_related('tags')
 
 
 class CommentsFeedBase(Feed):
