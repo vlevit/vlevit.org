@@ -231,16 +231,20 @@ don't like authors' blogs which have their posts cut in feeds. I usually don't
 subscribe to them. If you are an author of a such blog, please think twice, how
 much you win (or lose) forcing your readers to visit your site.
 
-While there is a rather small amount of posts on the site and traffic is quite
-low, all posts are put to feeds. In the future I will probably set some
-limit. There are two types of RSS-feeds on posts: a feed for posts from all
-blogs:
+While there is a rather small amount of posts on the site and traffic
+is quite low, all posts are put to feeds. In the future I will
+probably set some limit. There are three types of RSS-feeds on posts:
+a feed for posts from all blogs
 
     http://vlevit.org/en/blog.rss
 
-and from the specific blog (e.g. tech)
+from the specific blog (e.g. tech)
 
     http://vlevit.org/en/blog/tech.rss
+
+and from the specific tag (e.g. Python)
+
+    http://vlevit.org/en/blog/tech/tag/Python.rss
 
 Also there are three types of feeds for comments: a feed for all comments from
 all blogs, a feed for all comments from the specific blog (e.g. tech) and a feed
