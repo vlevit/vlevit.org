@@ -8,11 +8,11 @@ similar to key-chord but unlike key-chord key-seq considers the order
 of keys, so potentially there are much more "safe" key combinations.
 /endexcerpt
 
-So, finally, I'm blogging on Emacs. For years I've collected quite a
-few Emacs tips worth to share with others. I hope blogging will make
-me improve my [.emacs.d] and I'll end up creating a few packages, so
-hopefully Emacs community will benefit too. First my post is dedicated
-to keybindings, precisely the package called [key-seq].
+So, finally, I'm blogging on Emacs. Over the years I've collected
+quite a few Emacs tips worth to share with others. I hope blogging
+will make me improve my [.emacs.d] and I'll end up creating a few
+packages, so hopefully Emacs community will benefit too. First my post
+is dedicated to keybindings, precisely the package called [key-seq].
 
 If you have been interested in ability to run commands inside Emacs
 with fewer keys than traditionally long Emacs keybindings require you
