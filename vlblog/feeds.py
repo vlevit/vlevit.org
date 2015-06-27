@@ -69,7 +69,7 @@ class BlogFeed(FeedBase):
 class TagFeed(FeedBase):
 
     def get_object(self, request, blog, tag):
-        return get_object_or_404(Tag, name=tag, blog__name=blog,
+        return get_object_or_404(Tag, name__iexact=tag, blog__name=blog,
                                  blog__language=request.LANGUAGE_CODE)
 
     def link(self, tag):
@@ -81,7 +81,7 @@ class TagFeed(FeedBase):
     description = title
 
     def items(self, tag):
-        return Post.objects.filter(tags=tag) \
+        return Post.objects.filter(tags__pk=tag.pk) \
                            .select_related('blog') \
                            .prefetch_related('tags')
 

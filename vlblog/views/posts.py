@@ -25,9 +25,9 @@ def post_list(request, blog, tag=None, page=1):
     if tag:
         posts = models.Post.objects.filter(
             blog__name=blog, blog__language=request.LANGUAGE_CODE,
-            tags__name=tag)
+            tags__name__iexact=tag)
         foreign_posts = models.Post.objects.filter(
-            blog__name=blog, tags__name=tag).exclude(
+            blog__name=blog, tags__name__iexact=tag).exclude(
                 blog__language=request.LANGUAGE_CODE)
     else:
         posts = models.Post.objects.filter(
