@@ -1,15 +1,18 @@
 /title: My projects
 
 ### Python
-* **[xatk]** is a window switcher for X11 which activates windows by keybindings.
-  There are a few blog posts about xatk in Russian (by me and few others): [1],
-  [2], [3], [4].
+* **[xatk]** is a window switcher for X11 which activates windows by
+  keybindings. There are a few blog posts about xatk in Russian (by me
+  and few others): [1], [2], [3], [4] and blog post on [xatk 0.2] in
+  English. Also there is a documentation on [Read the Docs].
 
-[xatk]: http://code.google.com/p/xatk/
+[xatk]: https://github.com/vlevit/xatk
 [1]: http://vlevit.org/ru/blog/tech/xatk
 [2]: http://vlevit.org/ru/blog/tech/xatk-1
 [3]: http://muhas.ru/?p=183
 [4]: http://proft.me/2011/09/18/xatk-udobnoe-pereklyuchenie-okon/
+[xatk 0.2]: http://vlevit.org/en/blog/tech/xatk-2
+[Read the Docs]: http://xatk.readthedocs.org/en/latest/
 
 ### Django
 

@@ -1,14 +1,18 @@
 /title: Мои проекты
 
 ### Python
-* **[xatk]** — переключатель окон для X11, активирующий окна по сочетаниям клавиш.
-  Есть несколько заметок о xatk: [1], [2], [3], [4].
+* **[xatk]** — переключатель окон для X11, активирующий окна по
+  сочетаниям клавиш. Есть несколько заметок о xatk: [1], [2], [3], [4]
+  и о [xatk 0.2] на английском. Также есть документация на
+  [Read the Docs].
 
-[xatk]: http://code.google.com/p/xatk/
+[xatk]: https://github.com/vlevit/xatk
 [1]: http://vlevit.org/ru/blog/tech/xatk
 [2]: http://vlevit.org/ru/blog/tech/xatk-1
 [3]: http://muhas.ru/?p=183
 [4]: http://proft.me/2011/09/18/xatk-udobnoe-pereklyuchenie-okon/
+[xatk 0.2]: http://vlevit.org/en/blog/tech/xatk-2
+[Read the Docs]: http://xatk.readthedocs.org/en/latest/
 
 ### Django
 
