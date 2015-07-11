@@ -1,4 +1,4 @@
-/title: My projects
+/title: My Personal Projects
 
 ### Python
 * **[xatk]** is a window switcher for X11 which activates windows by
@@ -22,7 +22,19 @@
 [vlevit.org]: https://github.com/vlevit/vlevit.org
 [this post]: http://vlevit.org/en/blog/tech/vlevit-org
 
+### Flask
+
+* **[q10r]** is a very simple questionnaire app. There is a
+  questionnaire [demo] and [results].
+
+[q10r]: https://github.com/vlevit/q10r
+[demo]: http://vlevit.org/q10r/texteditor
+[results]: http://demo:demo@vlevit.org/q10r/texteditor/results
+
 ### Bash
+
+* **[notify-send.sh]** is a compatible notify-send replacement with
+  ability to change and close existing notifications.
 
 * **[FLAC-Convert]** is a script which converts FLAC audio to lossy formats
   incrementally utilizing several CPU cores. I'm a contributor, not the author.
@@ -40,6 +52,7 @@
 * **[close-all-windows]** is a simple script which closes all open windows and
   optionally waits until they are closed.
 
+[notify-send.sh]: https://github.com/vlevit/notify-send.sh
 [FLAC-Convert]: https://github.com/nijet99/FLAC-Convert/
 [unisync]: https://github.com/vlevit/unisync
 [Unison]: http://www.cis.upenn.edu/~bcpierce/unison/

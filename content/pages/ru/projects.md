@@ -1,4 +1,4 @@
-/title: Мои проекты
+/title: Мои личные проекты
 
 ### Python
 * **[xatk]** — переключатель окон для X11, активирующий окна по
@@ -22,7 +22,20 @@
 [vlevit.org]: https://github.com/vlevit/vlevit.org
 [этой заметке]: http://vlevit.org/ru/blog/tech/vlevit-org
 
+### Flask
+
+* **[q10r]** — простое приложение для проведения опросов. Можно
+  посмотреть [демо] и [результаты опроса].
+
+[q10r]: https://github.com/vlevit/q10r
+[демо]: http://vlevit.org/q10r/texteditor
+[результаты опроса]: http://demo:demo@vlevit.org/q10r/texteditor/results
+
 ### Bash
+
+* **[notify-send.sh]** — совместимая замена notify-send с
+  дополнительной возможностью изменять и закрывать существующие
+  уведомления.
 
 * **[FLAC-Convert]** — скрипт, инкрементально конвертирующий FLAC-аудио в
   аудиоформаты с потерями, работающий в несколько потоков. Я — не
@@ -41,6 +54,7 @@
 * **[close-all-windows]** — закрывает все открытые окна и при необходимости ждёт,
   пока они закроются.
 
+[notify-send.sh]: https://github.com/vlevit/notify-send.sh
 [FLAC-Convert]: https://github.com/nijet99/FLAC-Convert/
 [писал]: /ru/blog/tech/flacconvert
 [unisync]: https://github.com/vlevit/unisync
