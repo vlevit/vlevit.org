@@ -44,6 +44,10 @@ Usage:
 
         stop dev server
 
+    ${0##*/} restart
+
+        restart dev server
+
     ${0##*/} reload dev|prod|all
 
         reload python code by touching wsgi.py
@@ -337,6 +341,11 @@ case "$1" in
         ;;
     stop)
         stop
+        ;;
+    restart)
+        stop
+        shift
+        run "$@"
         ;;
     virtualenv)
         virtualenv
