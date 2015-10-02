@@ -210,6 +210,15 @@ function convert_image
     fi
     echo convert "$src" -scale "$scale" "${args[@]}" "$dst" >&2
     convert "$src" -scale "$scale" "${args[@]}" "$dst"
+    if [[ ${src##*.} == png ]] || [[ ${src##*.} == PNG ]] ; then
+        which pngcrush &>/dev/null && {
+            echo pngcrush "$dst" "$dst.1" >&2
+            pngcrush "$dst" "$dst.1" &>/dev/null && {
+                echo mv "$dst.1" "$dst" >&2
+                mv "$dst.1" "$dst"
+            }
+        }
+    fi
 }
 
 function scale_images
