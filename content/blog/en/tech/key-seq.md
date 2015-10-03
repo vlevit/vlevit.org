@@ -41,22 +41,26 @@ If you installed key-chord and key-seq manually than you need load
 them first (you can skip this step if you installed both from MELPA or
 different package archive):
 
+    :::elisp
     (require 'key-chord)
     (require 'key-seq)
 
 key-seq requires active `key-chord-mode` to work. So first load the
 mode globally:
 
+    :::elisp
     (key-chord-mode 1)
 
 Now you can define key pairs as follows:
 
+    :::elisp
     (key-seq-define-global "qd" 'dired)
     (key-seq-define-local "qc" 'compile)
     (key-seq-define text-mode-map "qf" 'flyspell-buffer)
 
 Unset key sequences as follows:
 
+    :::elisp
     (key-seq-unset-global "qd")
     (key-seq-unset-local "qc")
     (key-seq-define text-mode-map "qf" nil)
@@ -64,6 +68,7 @@ Unset key sequences as follows:
 For customizations use `key-chord-*` variables. For example, you can
 slightly increase delays:
 
+    :::elisp
     (setq key-chord-two-keys-delay 0.2)
     (setq key-chord-one-key-delay 0.3)
 
