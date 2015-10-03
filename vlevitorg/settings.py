@@ -2,7 +2,6 @@
 
 import os.path as path
 import sys
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 ugettext = lambda s: s
 proj_dir = path.dirname(path.dirname(__file__))
@@ -51,14 +50,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )),
-)
-
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -66,14 +57,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS += (
-    'django.core.context_processors.request',
-    'vlblog.vlblog_processor',
-)
+ATOMIC_REQUESTS = True
 
 INTERNAL_IPS = ('127.0.0.1',)
 
@@ -84,9 +71,24 @@ WSGI_APPLICATION = 'vlevitorg.wsgi.application'
 
 LOCALE_PATHS = (path.join(proj_dir, 'locale'),)
 
-TEMPLATE_DIRS = (
-    path.join(proj_dir, 'templates')
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # 'APP_DIRS': True,
+        'DIRS': [path.join(proj_dir, 'templates')],
+        'OPTIONS': {
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ]),
+            ],
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth'
+            ]
+        }
+    }
+]
 
 CONTENT_DIR = path.join(proj_dir, 'content')
 BLOG_DIR = path.join(CONTENT_DIR, 'blog')
@@ -104,9 +106,9 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'threadedcomments',
     'endless_pagination',
-    'django.contrib.comments',
+    'django_comments',
     'vlblog',
-    'debug_toolbar',
+    # 'debug_toolbar',
 )
 
 COMMENTS_APP = 'threadedcomments'
@@ -114,18 +116,18 @@ COMMENTS_APP = 'threadedcomments'
 GPLUS_EXPORT = False
 GPLUS_CREDENTIALS_FILE = path.join(proj_dir, 'credentials.json')
 
-DEBUG_TOOLBAR_PANELS = (
-    'debug_toolbar.panels.version.VersionDebugPanel',
-    'debug_toolbar.panels.timer.TimerDebugPanel',
-    'debug_toolbar.panels.profiling.ProfilingDebugPanel',
-    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
-    'debug_toolbar.panels.headers.HeaderDebugPanel',
-    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-    'debug_toolbar.panels.sql.SQLDebugPanel',
-    'debug_toolbar.panels.template.TemplateDebugPanel',
-    'debug_toolbar.panels.signals.SignalDebugPanel',
-    'debug_toolbar.panels.logger.LoggingPanel',
-)
+# DEBUG_TOOLBAR_PANELS = (
+#     'debug_toolbar.panels.version.VersionDebugPanel',
+#     'debug_toolbar.panels.timer.TimerDebugPanel',
+#     'debug_toolbar.panels.profiling.ProfilingDebugPanel',
+#     # 'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+#     'debug_toolbar.panels.headers.HeaderDebugPanel',
+#     'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+#     'debug_toolbar.panels.sql.SQLDebugPanel',
+#     'debug_toolbar.panels.template.TemplateDebugPanel',
+#     'debug_toolbar.panels.signals.SignalDebugPanel',
+#     # 'debug_toolbar.panels.logger.LoggingPanel',
+# )
 
 
 LOGGING = {
@@ -171,7 +173,11 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': True,
-        }
+        },
+        # 'django.db': {
+        #     'handlers': ['console'],
+        #     'level': 'DEBUG'
+        # },
     }
 }
 
