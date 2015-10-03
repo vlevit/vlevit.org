@@ -2,9 +2,7 @@ from __future__ import absolute_import
 
 from django import http
 from django.conf import settings
-from django.contrib import comments
-from django.contrib.comments import signals
-from django.contrib.comments.views.utils import next_redirect, confirmation_view
+from django_comments import signals
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
@@ -18,6 +16,7 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.http import require_GET
 from django.utils.translation import ugettext as _
 
+import django_comments as comments
 from threadedcomments.util import safe_markdown
 
 

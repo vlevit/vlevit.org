@@ -1,4 +1,4 @@
-from django.contrib import comments
+import django_comments as comments
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404

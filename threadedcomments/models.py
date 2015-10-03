@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.comments.models import Comment
-from django.contrib.comments.managers import CommentManager
+from django_comments.models import Comment
+from django_comments.managers import CommentManager
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 

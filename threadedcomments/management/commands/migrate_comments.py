@@ -21,7 +21,7 @@ FROM django_comments;
 """ % ''.zfill(PATH_DIGITS)
 
 class Command(NoArgsCommand):
-    help = "Migrates from django.contrib.comments to django-threadedcomments"
+    help = "Migrates from django_comments to django-threadedcomments"
 
     def handle(self, *args, **options):
         transaction.commit_unless_managed()

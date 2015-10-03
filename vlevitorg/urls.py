@@ -58,7 +58,7 @@ urlpatterns += patterns('',
     url(r'^comments/preview/$', 'threadedcomments.views.preview_comment'),
     url(r'^comments/post/$', 'threadedcomments.views.post_comment'),
     url(r'^comments/post/removethis$', 'threadedcomments.views.enable_js'),
-    url(r'^comments/', include('django.contrib.comments.urls')),
+    url(r'^comments/', include('django_comments.urls')),
 )
 
 urlpatterns += patterns('',

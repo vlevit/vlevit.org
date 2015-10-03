@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.comments.forms import CommentForm
+from django_comments.forms import CommentForm
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
@@ -29,10 +29,7 @@ class ThreadedCommentForm(CommentForm):
                                       'placeholder': _url_title}))
 
     def __init__(self, target_object, parent=None, data=None, initial=None):
-        self.base_fields.insert(
-            self.base_fields.keyOrder.index('comment'), 'title',
-            forms.CharField(label=_('Title'), required=False, max_length=getattr(settings, 'COMMENTS_TITLE_MAX_LENGTH', 255))
-        )
+
         self.parent = parent
         if initial is None:
             initial = {}

@@ -1,8 +1,10 @@
 from django import template
 from django.template.loader import render_to_string
-from django.contrib.comments.templatetags.comments import BaseCommentNode
-from django.contrib import comments
+
+import django_comments as comments
+from django_comments.templatetags.comments import BaseCommentNode
 from threadedcomments.util import annotate_tree_properties, fill_tree as real_fill_tree
+
 
 register = template.Library()
 
@@ -48,8 +50,8 @@ class BaseThreadedCommentNode(BaseCommentNode):
         else:
             raise template.TemplateSyntaxError("%r tag takes either 5 or 6 arguments" % (tokens[0],))
 
-    def get_query_set(self, context):
-        qs = super(BaseThreadedCommentNode, self).get_query_set(context)
+    def get_queryset(self, context):
+        qs = super(BaseThreadedCommentNode, self).get_queryset(context)
         if self.flat:
             qs = qs.order_by('-submit_date')
         elif self.root_only:
@@ -231,7 +233,7 @@ class RenderCommentListNode(CommentListNode):
                 "comments/%s/list.html" % ctype.app_label,
                 "comments/list.html"
             ]
-            qs = self.get_query_set(context)
+            qs = self.get_queryset(context)
             context.push()
             liststr = render_to_string(template_search_list, {
                 "comment_list" : self.get_context_value_from_queryset(context, qs)
