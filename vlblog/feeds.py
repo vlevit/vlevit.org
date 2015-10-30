@@ -121,13 +121,16 @@ class SiteCommentsFeed(CommentsFeedBase):
 
     description = title
 
-    def items(self):
+    def items(self, request):
         CommentModel = comments.get_model()
-        qs = CommentModel.objects.filter(is_public=True, is_removed=False)
-        qs = qs.filter(content_type=ContentType.objects.get_for_model(Post))
-        qs = qs.order_by('-submit_date')
-        qs = qs.prefetch_related('content_object')
-        return qs
+        post_ids = Post.objects.filter(
+            blog__language=request.LANGUAGE_CODE).values_list('id', flat=True)
+        return (CommentModel.objects.filter(
+            is_public=True, is_removed=False,
+            content_type=ContentType.objects.get_for_model(Post),
+            object_pk__in=map(str, post_ids))
+                .order_by('-submit_date')
+                .prefetch_related('content_object'))
 
 
 class BlogCommentsFeed(CommentsFeedBase):
