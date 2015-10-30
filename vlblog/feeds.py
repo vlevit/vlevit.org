@@ -150,12 +150,12 @@ class BlogCommentsFeed(CommentsFeedBase):
     def items(self, blog):
         CommentModel = comments.get_model()
         post_ids = Post.objects.filter(blog=blog).values_list('id', flat=True)
-        qs = CommentModel.objects.filter(is_public=True, is_removed=False)
-        qs = qs.filter(content_type=ContentType.objects.get_for_model(Post))
-        qs = qs.filter(object_pk__in=map(str, post_ids))
-        qs = qs.order_by('-submit_date')
-        qs = qs.prefetch_related('content_object')
-        return qs
+        return (CommentModel.objects.filter(
+            is_public=True, is_removed=False,
+            content_type=ContentType.objects.get_for_model(Post),
+            object_pk__in=map(str, post_ids))
+                .order_by('-submit_date')
+                .prefetch_related('content_object'))
 
 
 class PostCommentsFeed(CommentsFeedBase):
@@ -174,12 +174,12 @@ class PostCommentsFeed(CommentsFeedBase):
 
     def items(self, post):
         CommentModel = comments.get_model()
-        qs = CommentModel.objects.filter(is_public=True, is_removed=False)
-        qs = qs.filter(content_type=ContentType.objects.get_for_model(Post))
-        qs = qs.filter(object_pk=post.id)
-        qs = qs.order_by('-submit_date')
-        qs = qs.prefetch_related('content_object')
-        return qs
+        return (CommentModel.objects.filter(
+            is_public=True, is_removed=False,
+            content_type=ContentType.objects.get_for_model(Post),
+            object_pk=post.id)
+              .order_by('-submit_date')
+              .prefetch_related('content_object'))
 
 
 class PageCommentsFeed(CommentsFeedBase):
@@ -198,9 +198,9 @@ class PageCommentsFeed(CommentsFeedBase):
 
     def items(self, page):
         CommentModel = comments.get_model()
-        qs = CommentModel.objects.filter(is_public=True, is_removed=False)
-        qs = qs.filter(content_type=ContentType.objects.get_for_model(Page))
-        qs = qs.filter(object_pk=page.id)
-        qs = qs.order_by('-submit_date')
-        qs = qs.prefetch_related('content_object')
-        return qs
+        return (CommentModel.objects.filter(
+            is_public=True, is_removed=False,
+            content_type=ContentType.objects.get_for_model(Page),
+            object_pk=page.id)
+                .order_by('-submit_date')
+                .prefetch_related('content_object'))
