@@ -49,7 +49,6 @@ class ThreadedCommentForm(CommentForm):
     def get_comment_create_data(self):
         d = super(ThreadedCommentForm, self).get_comment_create_data()
         d['parent_id'] = self.cleaned_data['parent']
-        d['title'] = self.cleaned_data['title']
         d['comment_html'] = safe_markdown(self.cleaned_data['comment'])
         return d
 
