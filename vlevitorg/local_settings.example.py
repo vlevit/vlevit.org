@@ -3,7 +3,6 @@ import os.path as path
 proj_dir = path.dirname(path.dirname(__file__))
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
