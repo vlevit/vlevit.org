@@ -104,7 +104,7 @@ class Post(models.Model):
     # also used to link posts of different languages
     name = models.SlugField(max_length=100)
     created = models.DateTimeField()
-    tags = models.ManyToManyField(Tag, null=True)
+    tags = models.ManyToManyField(Tag)
     title = models.CharField(max_length=200, blank=True)
     body = models.TextField()
     excerpt = models.TextField(blank=True)
