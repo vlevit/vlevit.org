@@ -1,7 +1,7 @@
-Django==1.5.1
+Django==1.8.4
 Markdown==2.2.1
 PyYAML==3.10
-Pygments==1.6
+Pygments==2.1a0dev-20151003
 argparse==1.2.1
 certifi==14.05.14
 distribute==0.7.3

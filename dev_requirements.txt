@@ -1,6 +1,7 @@
-Django==1.5.1
+Django==1.8.4
 Markdown==2.2.1
 Pygments==1.6
+Pygments==2.1a0dev-20151003
 distribute==0.6.31
 django-endless-pagination==2.0
 ipython==0.13.1
