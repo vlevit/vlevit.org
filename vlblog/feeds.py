@@ -15,7 +15,7 @@ class FeedBase(Feed):
         return post.title
 
     def item_pubdate(self, post):
-        return post.created
+        return post.published
 
     def item_categories(self, post):
         return post.tags.all()
