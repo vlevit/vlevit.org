@@ -11,6 +11,7 @@ class Blog(models.Model):
     template = models.CharField(max_length=50)
     list_template = models.CharField(max_length=50)
     export_gplus = models.BooleanField()
+    per_page = models.IntegerField(default=1024)
 
     class Meta:
         unique_together = ('name', 'language')
