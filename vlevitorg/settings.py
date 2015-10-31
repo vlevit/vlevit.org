@@ -104,9 +104,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # 'django.contrib.admindocs',
     'django.contrib.sitemaps',
+    'django_comments',
     'threadedcomments',
     'endless_pagination',
-    'django_comments',
     'vlblog',
     # 'debug_toolbar',
 )
