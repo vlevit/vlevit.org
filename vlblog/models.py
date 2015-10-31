@@ -153,6 +153,11 @@ class Post(models.Model):
         post.save()
         post.tags.add(*tags)
 
+    def save(self, *args, **kwargs):
+        if not self.published:
+            self.published = self.created
+        return super(Post, self).save(*args, **kwargs)
+
     def delete(self, *args, **kwargs):
         """
         Delete post cleanly.
