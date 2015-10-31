@@ -168,7 +168,7 @@ class BaseLoader(object):
 class PostLoader(BaseLoader):
 
     required = ('created', 'name')
-    optional = {'title': '', 'excerpt': '', 'tags': []}
+    optional = {'title': '', 'published': None, 'excerpt': '', 'tags': []}
 
     def make_data(self, template, path, conf):
         data = super(PostLoader, self).make_data(template, path, conf)

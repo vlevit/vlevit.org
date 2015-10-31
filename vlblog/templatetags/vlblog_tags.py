@@ -49,8 +49,7 @@ def title(context, value):
     return u''
 
 
-@unquoted_tag
-def created(context, value):
+def datetag(context, value, var):
     try:
         dt = parse_datetime(value)
     except ValueError:
@@ -60,8 +59,18 @@ def created(context, value):
         return u''
     if 'vars' not in context.dicts[0]:
         context.dicts[0]['vars'] = {}
-    context.dicts[0]['vars']['created'] = dt
+    context.dicts[0]['vars'][var] = dt
     return u''
+
+
+@unquoted_tag
+def created(context, value):
+    return datetag(context, value, 'created')
+
+
+@unquoted_tag
+def published(context, value):
+    return datetag(context, value, 'published')
 
 
 @unquoted_tag
