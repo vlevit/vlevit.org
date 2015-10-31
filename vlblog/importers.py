@@ -74,6 +74,8 @@ class BaseConfLoader(object):
                 return raw_value.lower() in ('true', 'yes', '1')
             else:
                 raise ValueError("type {} is not supported".format(kind))
+        elif option in self.optional:
+            return type(self.optional[option])(raw_value)
         else:
             return raw_value
 
@@ -105,7 +107,7 @@ class BlogConfLoader(BaseConfLoader):
 
     required = ('blog', 'language', 'description', 'template', 'list_template')
     optional = {'file_as_name': False, 'multi_entries': False,
-                'export_gplus': False}
+                'export_gplus': False, 'per_page': 1024}
     types = {'file_as_name': bool, 'multi_entries': bool, 'export_gplus': bool}
 
     filename = 'blog.conf'
@@ -366,6 +368,7 @@ class BlogImporter(BaseImporter):
                 'template': conf['template'],
                 'list_template': conf['list_template'],
                 'export_gplus': conf['export_gplus'],
+                'per_page': conf['per_page']
             }
             blog = models.Blog.get_or_create(**data)
             # keep only the last blog in cache
