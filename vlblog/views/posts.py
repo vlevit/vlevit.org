@@ -2,6 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
 from vlblog import models
+from vlblog.utils import LastPagePaginator
 
 
 def post(request, blog, post):
@@ -22,20 +23,23 @@ def post(request, blog, post):
 
 
 def post_list(request, blog, tag=None, page=1):
+    blog_obj = get_object_or_404(
+        models.Blog, name=blog, language=request.LANGUAGE_CODE)
+    foreign_blog_obj = models.Blog.objects.filter(name=blog).exclude(
+        language=request.LANGUAGE_CODE).first()
+    posts = models.Post.objects.filter(blog=blog_obj)
     if tag:
-        posts = models.Post.objects.filter(
-            blog__name=blog, blog__language=request.LANGUAGE_CODE,
-            tags__name__iexact=tag)
+        posts = posts.filter(tags__name__iexact=tag)
         foreign_posts = models.Post.objects.filter(
-            blog__name=blog, tags__name__iexact=tag).exclude(
-                blog__language=request.LANGUAGE_CODE)
+            blog=foreign_blog_obj, tags__name__iexact=tag)
     else:
-        posts = models.Post.objects.filter(
-            blog__name=blog, blog__language=request.LANGUAGE_CODE)
-        foreign_posts = models.Post.objects.filter(blog__name=blog).exclude(
-            blog__language=request.LANGUAGE_CODE)
+        foreign_posts = models.Post.objects.filter(blog=foreign_blog_obj)
     posts = posts.select_related().prefetch_related('tags')
     foreign_posts = foreign_posts.select_related().prefetch_related('tags')
+    posts = LastPagePaginator(posts, blog_obj.per_page).page(page)
+    if foreign_blog_obj:
+        foreign_posts = LastPagePaginator(foreign_posts,
+                                          foreign_blog_obj.per_page).page(page)
     if posts:
         post_obj = posts[0]
         blog_obj = post_obj.blog

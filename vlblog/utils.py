@@ -1,3 +1,5 @@
+from django.core.paginator import Paginator, EmptyPage
+
 from markdown import Markdown
 import hashlib
 import re
@@ -84,3 +86,12 @@ def markdown_convert(source):
                         extensions=['footnotes', 'toc', 'abbr', 'tables',
                                     'codehilite', _attr_list_strict()])
     return markdown.convert(source)
+
+
+class LastPagePaginator(Paginator):
+
+    def page(self, number):
+        try:
+            return super(LastPagePaginator, self).page(number)
+        except EmptyPage:
+            return super(LastPagePaginator, self).page(self.num_pages)
