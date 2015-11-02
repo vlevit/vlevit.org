@@ -159,6 +159,13 @@ function download_comments
     rsync -rt vlevitorg@vlevit.org:"$REMOTE_MEDIA_DIR"/comments/ "$PROJECT_DIR"/content/
 }
 
+function expand_published
+{
+    for f in "$@"; do
+        sed -i 's|/published: *$|/published: '"$(date --rfc-3339=seconds)"'|g' "$f"
+    done
+}
+
 function deploy
 {
     case "$1" in
@@ -376,6 +383,10 @@ case "$1" in
         ;;
     download_comments)
         download_comments
+        ;;
+    expand_published)
+        shift
+        expand_published "$@"
         ;;
     publish)
         case "$2" in
