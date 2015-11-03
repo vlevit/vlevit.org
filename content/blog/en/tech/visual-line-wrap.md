@@ -1,4 +1,4 @@
-/title: Visual Line Wrapping in Emacs
+/title: Soft Wrapping in Emacs
 /created: 2015-09-29 01:37:36+03:00
 /published: 2015-11-03 00:37:54+02:00
 /tags: Emacs, mu4e
