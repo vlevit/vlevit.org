@@ -15,27 +15,25 @@ If you are using plain text regularly probably you prefer wrapping
 text with hard breaks. Hard wrapping ensures that text remains
 readable regardless how large the window size is. But there are cases
 when soft wrapping is desirable. For example, you may want it when
-viewing text with no hard breaks (say, in emails you received). Other
+viewing text with no hard breaks (say, in incoming emails). Other
 examples are services like GitHub which expect emails to be softly
 wrapped and web forms which usually don't work well with hard-wrapped
-input. The issue here is that in the text editor to keep the text
-readable we probably need to soft-wrap at fixed column instead of
-window edge. This way we would be able to edit text as it were
-hard-wrapped.
+input. The ideal solution would be if we were able to work with
+soft-wrapped text like if it was hard-wrapped.
 
-To achieve this in Emacs there is a built-in mode called
-`visual-line-mode`. It redefines the commands so they apply to visual
-lines instead of hard lines. But the mode doesn't provide a way to
-wrap text on the specific column. That is what [visual-fill-column] is
-for. `visual-fill-column-mode` wraps text softly and considers the
-`fill-column` variable. So with both these modes activated we can work
-with softly wrapped text the same way as with hard-wrapped one.
+To achieve this goal in Emacs we will need two modes. The first one is
+`visual-line-mode`. It's a built-in mode which redefines the commands
+so they apply to visual lines instead of hard lines. The second one is
+called `visual-fill-column-mode`. When active the mode softly wraps
+text on the specific column (`fill-column` by default). When both
+modes enabled it should feel like you're working with hard-wrapped
+text with enabled `auto-fill-mode`.
 
 [visual-fill-column]: https://github.com/joostkremers/visual-fill-column
 
 Now you would probably like to see some indication of whether
 paragraph is hard- or soft-wrapped. You can show fringes for visual
-lines as such
+lines as follows:
 
     :::elisp
     (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
