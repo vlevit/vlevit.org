@@ -19,7 +19,7 @@
     <li class="comment_li" id="c{{ comment.id }}">{# c## is used by the absolute URL of the Comment model, so keep that as it is. #}
         <div class="comment">
             <div class="comment_info">
-                <div class="comment_user">{% if comment.user_url %}<a href="{{ comment.user_url }}">{{ comment.user_name }}</a>{% else %}{{ comment.user_name }}{% endif %}</div>
+                <div class="comment_user">{% if comment.user_url %}<a href="{{ comment.user_url }}" rel="nofollow">{{ comment.user_name }}</a>{% else %}{{ comment.user_name }}{% endif %}</div>
                 <div class="comment_date">
                     {{ comment.submit_date|date:"d M Y, H:i" }}
                 </div>
