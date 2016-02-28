@@ -9,19 +9,19 @@
     {% if LANGUAGE_CODE == "en" %}
 
         My name is <span itemprop="name">Vyacheslav Levit</span> and
-        I'm a <span itemprop="jobTitle">developer</span>
-        from <span itemprop="homeLocation">Odessa, Ukraine</span>.
-        This blog is mostly on Linux, Python & Bash tools and web
-        development.
+        I'm a <span itemprop="jobTitle">software developer</span>
+        from <span itemprop="homeLocation">Odessa, Ukraine</span>. On
+        this blog I write mostly on Linux, Emacs, Python & Bash tools
+        and web development.
         <a itemprop="url" href="{% url "page" "about" %}">More...</a>
 
     {% else %} {# "ru" #}
 
-        Мое имя <span itemprop="name">Вячеслав Левит</span>. Я
+        Меня зовут <span itemprop="name">Вячеслав Левит</span>. Я
         <span itemprop="jobTitle">разаботчик</span>
         из <span itemprop="homeLocation">Одессы</span>. Здесь я пишу в
-        основном о Python и Bash инструментах для Linux,
-        программировании и веб-разработке.
+        основном о Python и Bash инструментах для Linux, Emacs'е и
+        веб-разработке.
         <a itemprop="url" href="{% url "page" "about" %}">Подробнее...</a>
 
     {% endif %}
