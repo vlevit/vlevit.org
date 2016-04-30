@@ -197,7 +197,8 @@ runeval "python -m compileall -f . >/dev/null"
 run touch '"$DEPLOY_DIR"'/vlevitorg/wsgi.py
 '
     curl_command update "$1"
-    curl_command export_gplus "$1"
+    # Google+ moments seems broken/deprecated? Disable for now
+    # curl_command export_gplus "$1"
 }
 
 function image_geometry
