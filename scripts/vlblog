@@ -1,6 +1,7 @@
 #!/bin/bash
 
-LOCAL_ADDRESS="http://127.0.0.1:8000"
+LOCAL_PORT=8765
+LOCAL_ADDRESS="http://127.0.0.1:$LOCAL_PORT"
 REMOTE_ADDRESS_PROD="https://vlevit.org"
 REMOTE_ADDRESS_DEV="http://vlevit.org:3205"
 LOCAL_SECRET_KEY="$LOCAL_SECRET_KEY"
@@ -102,7 +103,7 @@ function run
     fi
     cd "$PROJECT_DIR"
     source "$VIRTUAL_ENV_DIR/bin/activate"
-    python manage.py runserver "$@" &
+    python manage.py runserver "$LOCAL_PORT" &
     echo $! > /tmp/local-server.pid
     deactivate
     wait
@@ -345,7 +346,7 @@ case "$1" in
         ;;
     run|start)
         shift
-        run "$@"
+        run
         ;;
     stop)
         stop
