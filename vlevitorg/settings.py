@@ -91,9 +91,9 @@ TEMPLATES = [
     }
 ]
 
-CONTENT_DIR = path.join(proj_dir, 'content')
-BLOG_DIR = path.join(CONTENT_DIR, 'blog')
-PAGES_DIR = path.join(CONTENT_DIR, 'pages')
+CONTENT_DIR = path.join(proj_dir, u'content')
+BLOG_DIR = path.join(CONTENT_DIR, u'blog')
+PAGES_DIR = path.join(CONTENT_DIR, u'pages')
 
 INSTALLED_APPS = (
     'django.contrib.auth',

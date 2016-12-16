@@ -23,7 +23,7 @@ def name_from_file(relpath):
 
     """
     basename = path.basename(relpath)
-    return re.sub('[^\w-]', '-', basename[:basename.rfind('.')])
+    return re.sub('[^\w-]', '-', basename[:basename.rfind('.')], flags=re.U)
 
 
 TAG_RE = re.compile(r'^/(?P<tag>\w+)(:\s*(?P<value>.*(\n[ \t]+\S.*)*))?',
