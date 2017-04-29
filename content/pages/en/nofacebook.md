@@ -17,6 +17,6 @@
   (in case of vk.com it definitely is) accessible by the local
   intelligence organizations. You might think it's not a big deal for
   you. Though you might be wrong. Watch this video:
-  [Glenn Greenwald: Why privacy matters](privacy).
+  [Glenn Greenwald: Why privacy matters][privacy].
 
-[privacy]: http://www.ted.com/talks/glenn_greenwald_why_privacy_matters
+[privacy]: https://www.ted.com/talks/glenn_greenwald_why_privacy_matters
