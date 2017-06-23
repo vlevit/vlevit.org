@@ -108,6 +108,7 @@ INSTALLED_APPS = (
     'django_comments',
     'threadedcomments',
     'endless_pagination',
+    'raven.contrib.django.raven_compat',
     'vlblog',
     # 'debug_toolbar',
 )

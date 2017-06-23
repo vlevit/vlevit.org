@@ -1,4 +1,7 @@
+import os
 import os.path as path
+
+import raven
 
 proj_dir = path.dirname(path.dirname(__file__))
 
@@ -69,3 +72,8 @@ GPLUS_EXPORT = True
 GPLUS_CLIENT_ID = ''
 GPLUS_CLIENT_SECRET = ''
 GPLUS_REDIRECT_URL = 'https://example.com/gpluscallback'
+
+RAVEN_CONFIG = {
+    'dsn': 'url',
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}
