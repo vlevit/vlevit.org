@@ -1,0 +1,93 @@
+- hosts: prod
+  gather_facts: no
+  become: yes
+  vars_files:
+    - secrets
+
+  tasks:
+
+  - name: install packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - python3
+      - python3-pip
+      - python3-virtualenv
+      - nginx
+      - ntp
+      - uwsgi
+      - uwsgi-plugin-python
+      - uwsgi-plugin-python3
+
+  - name: add xandikos group
+    group: name=xandikos gid=1002 state=present
+
+  - name: add xandikos user
+    user: name=xandikos uid=1002 group=xandikos append=yes home=/srv/http/xandikos
+
+  - name: xandikos home dir permissions
+    file:
+      path: /srv/http/xandikos
+      state: directory
+      mode: 0775
+
+  - name: xandikos virtualenv
+    pip:
+      name: xandikos
+      virtualenv_command: /usr/bin/virtualenv
+      virtualenv: /srv/http/xandikos/venv
+      virtualenv_python: python3
+    become_user: xandikos
+
+  - name: xandikos uwsgi
+    copy:
+      src: configs/xandikos-uwsgi.ini
+      dest: /etc/uwsgi/apps-available/xandikos.ini
+      owner: root
+      group: root
+      mode: 0644
+    register: xandikos_uwsgi_config
+
+  - name: xandikos enable uwsgi
+    file:
+      src: /etc/uwsgi/apps-available/xandikos.ini
+      dest: /etc/uwsgi/apps-enabled/xandikos.ini
+      state: link
+
+  - name: xandikos uwsgi reload configuration
+    service:
+      name: uwsgi
+      state: restarted
+    when: xandikos_uwsgi_config.changed
+
+  - name: Install latest passlib with pip (for ansible)
+    pip: name=passlib
+
+  - name: setup nginx authentication for xandikos
+    htpasswd:
+      path: /etc/nginx/davpasswd
+      name: "{{ dav_user }}"
+      password: "{{ dav_password }}"
+      owner: root
+      group: www-data
+      mode: 0640
+
+  - name: xandikos nginx configuraiton
+    copy:
+      src: configs/xandikos-nginx.conf
+      dest: /etc/nginx/sites-available/xandikos
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: xandikos enable nginx
+    file:
+      src: /etc/nginx/sites-available/xandikos
+      dest: /etc/nginx/sites-enabled/xandikos
+      state: link
+
+  - name: xandikos nginx reload configuration
+    service:
+      name: nginx
+      state: reloaded

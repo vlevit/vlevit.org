@@ -1,0 +1,86 @@
+- hosts: prod
+  gather_facts: no
+  become: yes
+  become_user: admin
+  vars_files:
+    - secrets
+
+  tasks:
+
+  - name: fetch repository
+    git:
+      repo: 'https://github.com/lukas2511/dehydrated.git'
+      dest: /home/admin/dehydrated/
+      version: v0.6.2
+
+  - name: domains.txt
+    copy:
+      content: |
+        # vlevit.org www.vlevit.org
+        # conference.vlevit.org
+        # mail.vlevit.org read.now.im
+        # pirates.suka.se
+        dav.vlevit.org
+      dest: /home/admin/dehydrated/domains.txt
+      owner: admin
+      group: admin
+      mode: 0644
+
+  - name: config
+    copy:
+      content: |
+        WELLKNOWN="/srv/http/letsencrypt"
+      dest: /home/admin/dehydrated/config
+      owner: admin
+      group: admin
+      mode: 0644
+
+  - name: letsencrypt challenge directory
+    file:
+      dest: /srv/http/letsencrypt
+      state: directory
+      owner: admin
+      group: admin
+      mode: 0755
+    become_user: root
+
+  - name: copy installcertkeys script
+    copy:
+      src: scripts/installcertkeys
+      dest: /home/admin/bin/installcertkeys
+      owner: admin
+      group: admin
+      mode: 0700
+
+  - name: certificates update cron job
+    cron:
+      name: certificates update
+      hour: 19
+      minute: 45
+      day: 13,27
+      job: "/home/admin/dehydrated/dehydrated -c"
+      user: admin
+
+  - name: certificates installation cron job
+    cron:
+      name: certificates installation
+      hour: 19
+      minute: 46
+      day: 13,27
+      job: "/home/admin/bin/installcertkeys"
+      user: root
+    become_user: root
+
+  - name: maybe register letsencrypt account
+    shell: '[[ -d accounts]] || ./dehydrated --register --accept-terms'
+    args:
+      chdir: /home/admin/dehydrated/
+
+  - name: update new certificates if any
+    shell: ./dehydrated -c
+    args:
+      chdir: /home/admin/dehydrated/
+
+  - name: install certificates
+    shell: /home/admin/bin/installcertkeys
+    become_user: root

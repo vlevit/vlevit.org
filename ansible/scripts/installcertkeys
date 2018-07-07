@@ -1,0 +1,48 @@
+#!/bin/bash
+
+if [[ "$UID" != 0 ]] ; then
+    echo "must be root" >&2
+    exit 2
+fi
+
+create_nginx_cert_sections() {
+
+    mkdir -p /etc/nginx/includes/ssl-certs
+
+    for site in /etc/ssl/letsetncrypt/* ; do
+        cat > "/etc/nginx/includes/ssl-certs/$(basename "$site")" <<EOF
+ssl_certificate $site/fullchain.pem;
+ssl_certificate_key $site/privkey.pem;
+ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
+EOF
+    done
+
+}
+
+copy_certs() {
+    [[ -d /home/admin/dehydrated/certs/ ]] || return 1;
+    for site in /home/admin/dehydrated/certs/*; do
+        local dir="/etc/ssl/letsetncrypt/$(basename "$site")"
+        mkdir -p "$dir"
+        chmod 0700 "$dir" &&
+            cp -t "$dir" "$site"/{fullchain.pem,privkey.pem}  &&
+            chmod 0600 "$site"/{fullchain.pem,privkey.pem}
+    done &&
+        copy_prosody_certs
+}
+
+copy_prosody_certs() {
+    install -b -o prosody -g prosody -m 0600 /etc/ssl/letsetncrypt/vlevit.org/fullchain.pem /etc/prosody/certs/fullchain.pem &&
+        install -b -o prosody -g prosody -m 0600 /etc/ssl/letsetncrypt/vlevit.org/privkey.pem /etc/prosody/certs/privkey.pem
+}
+
+reload_services() {
+    service nginx reload
+    service dovecot reload
+    service postfix reload
+    service prosody restart
+}
+
+copy_certs &&
+    create_nginx_cert_sections &&
+    reload_services
