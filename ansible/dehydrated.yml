@@ -21,6 +21,7 @@
         # mail.vlevit.org read.now.im
         # pirates.suka.se
         dav.vlevit.org
+        ip.vlevit.org
       dest: /home/admin/dehydrated/domains.txt
       owner: admin
       group: admin

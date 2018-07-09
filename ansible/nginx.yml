@@ -1,0 +1,18 @@
+- hosts: prod
+  gather_facts: no
+  become: yes
+  vars_files:
+    - secrets
+
+  tasks:
+
+  - name: acme location
+    copy:
+      content: |
+        location /.well-known/acme-challenge {
+            alias /srv/http/letsencrypt;
+        }
+      dest: /etc/nginx/includes/acme-challenge
+      owner: root
+      group: root
+      mode: 0644
