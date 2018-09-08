@@ -37,22 +37,7 @@
       owner: root
       group: root
       mode: 0644
-    register: headers_supervisor_config
-
-  - name: supervisor reload config
-    shell: supervisorctl reload
-    when: headers_supervisor_config.changed
-
-  - name: wait
-    wait_for:
-      path: /var/run/supervisor.sock
-    when: headers_supervisor_config.changed
-
-  - name: start with supervisor
-    supervisorctl:
-      name: headers
-      state: started
-    when: headers_supervisor_config.changed
+    notify: reload supervisor
 
   - name: ip.vlevit.org nginx configuraiton
     copy:
@@ -61,14 +46,23 @@
       owner: root
       group: root
       mode: 0644
+    notify: reload nginx
 
   - name: ip.vlevit.org enable nginx
     file:
       src: /etc/nginx/sites-available/ip.vlevit.org
       dest: /etc/nginx/sites-enabled/ip.vlevit.org
       state: link
+    notify: reload nginx
 
-  - name: ip.vlevit.org nginx reload configuration
-    service:
-      name: nginx
-      state: reloaded
+  handlers:
+
+    - name: reload supervisor
+      supervisorctl:
+        name: headers
+        state: restarted
+
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded
