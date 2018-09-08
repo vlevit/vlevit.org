@@ -2,8 +2,6 @@
   gather_facts: no
   become: yes
   become_user: admin
-  vars_files:
-    - secrets
 
   tasks:
 

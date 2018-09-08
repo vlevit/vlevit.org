@@ -1,8 +1,6 @@
 - hosts: prod
   gather_facts: no
   become: yes
-  vars_files:
-    - secrets
 
   tasks:
 
