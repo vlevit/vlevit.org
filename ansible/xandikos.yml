@@ -40,7 +40,7 @@
 
   - name: xandikos uwsgi
     copy:
-      src: configs/xandikos-uwsgi.ini
+      src: etc/uwsgi/apps-available/xandikos.ini
       dest: /etc/uwsgi/apps-available/xandikos.ini
       owner: root
       group: root
@@ -71,9 +71,9 @@
       group: www-data
       mode: 0640
 
-  - name: xandikos nginx configuraiton
+  - name: xandikos nginx configuration
     copy:
-      src: configs/xandikos-nginx.conf
+      src: etc/nginx/sites-available/xandikos
       dest: /etc/nginx/sites-available/xandikos
       owner: root
       group: root

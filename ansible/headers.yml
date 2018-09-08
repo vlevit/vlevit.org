@@ -41,7 +41,7 @@
 
   - name: ip.vlevit.org nginx configuraiton
     copy:
-      src: configs/ip.vlevit.org-nginx.conf
+      src: etc/nginx/sites-available/ip.vlevit.org
       dest: /etc/nginx/sites-available/ip.vlevit.org
       owner: root
       group: root
