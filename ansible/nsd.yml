@@ -1,0 +1,51 @@
+- hosts: prod
+  gather_facts: yes
+  become: yes
+
+  tasks:
+
+  - name: install packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - nsd
+
+  - name: nsd.conf
+    template:
+      src: etc/nsd/nsd.conf
+      dest: /etc/nsd/nsd.conf
+      owner: root
+      group: root
+      mode: 0640
+    vars:
+      ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    notify: reload nsd
+
+  - name: /etc/nsd3
+    file:
+      state: directory
+      path: /etc/nsd3
+      owner: nsd
+      group: nsd
+      mode: 0700
+
+  - name: vlevit.org.zone
+    copy:
+      src: etc/nsd3/vlevit.org.zone
+      dest: /etc/nsd3/vlevit.org.zone
+      owner: nsd
+      group: nsd
+      mode: 0600
+    notify: reload nsd
+
+  - name: nsd service
+    service:
+      name: nsd
+      state: started
+
+  handlers:
+    - name: reload nsd
+      service:
+        name: nsd
+        state: reloaded
