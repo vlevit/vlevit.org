@@ -1,0 +1,6 @@
+# -*- mode: nginx; -*-
+server {
+    listen 80;
+    server_name mail.vlevit.org read.now.im;
+    include includes/acme-challenge;
+}

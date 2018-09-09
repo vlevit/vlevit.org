@@ -14,3 +14,18 @@
       owner: root
       group: root
       mode: 0644
+
+  - name: acme configuraiton
+    copy:
+      src: etc/nginx/sites-available/acme
+      dest: /etc/nginx/sites-available/acme
+      owner: root
+      group: root
+      mode: 0644
+    notify: reload nginx
+
+  handlers:
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded

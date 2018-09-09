@@ -49,7 +49,7 @@
         directory=/home/maildir-feed
         user=maildir-feed
         group=vmail
-        umask=027
+        umask=007
         environment=HOME=/home/maildir-feed
       dest: /etc/supervisor/conf.d/maildir-feed.conf
       owner: root
