@@ -39,7 +39,7 @@
       mode: 0644
     notify: reload supervisor
 
-  - name: ip.vlevit.org nginx configuraiton
+  - name: ip.vlevit.org nginx configuration
     copy:
       src: etc/nginx/sites-available/ip.vlevit.org
       dest: /etc/nginx/sites-available/ip.vlevit.org
