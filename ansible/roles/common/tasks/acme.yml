@@ -1,0 +1,17 @@
+- name: acme configuraiton
+  copy:
+    src: etc/nginx/sites-available/acme
+    dest: /etc/nginx/sites-available/acme
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload nginx
+  become: yes
+
+- name: acme enable nginx
+  file:
+    src: /etc/nginx/sites-available/acme
+    dest: /etc/nginx/sites-enabled/acme
+    state: link
+  notify: reload nginx
+  become: yes

@@ -1,0 +1,38 @@
+# -*- mode: nginx; -*-
+
+server {
+    listen 443 ssl http2;
+    server_name photo.vlevit.org;
+    include includes/ssl-certs/photo[.]vlevit.org;
+    include includes/nginx-ssl-options;
+
+    location = / {
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/photopasswd;
+        root   /srv/http/sigal/photo/_build;
+        index  index.html;
+    }
+
+    location = /index.html {
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/photopasswd;
+        root   /srv/http/sigal/photo/_build;
+        index  index.html;
+    }
+
+    location / {
+        root   /srv/http/sigal/photo/_build;
+        index  index.html;
+    }
+
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name photo.vlevit.org;
+
+    # Redirect all HTTP requests to HTTPS with a 301 Moved Permanently response.
+    return 301 https://$host$request_uri;
+}

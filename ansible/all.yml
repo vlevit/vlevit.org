@@ -1,0 +1,17 @@
+- hosts: all
+  any_errors_fatal: true
+  roles:
+    - common
+  become: yes
+
+- hosts: do-ams-server
+  any_errors_fatal: true
+  roles:
+    - do-ams-server
+  become: yes
+
+
+- hosts: zbox
+  roles:
+    - zbox
+  become: yes

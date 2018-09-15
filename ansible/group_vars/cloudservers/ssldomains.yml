@@ -1,0 +1,7 @@
+  ssl_domains: |
+    # vlevit.org www.vlevit.org
+    # conference.vlevit.org
+    # mail.vlevit.org read.now.im
+    # pirates.suka.se
+    dav.vlevit.org
+    ip.vlevit.org

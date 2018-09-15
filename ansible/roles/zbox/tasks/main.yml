@@ -1,0 +1,3 @@
+- import_tasks: sigal.yml
+- import_tasks: nginx-gallery.yml
+- import_tasks: sigal-sync.yml

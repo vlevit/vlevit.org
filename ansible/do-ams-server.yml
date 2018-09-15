@@ -1,0 +1,6 @@
+- hosts: do-ams-server
+  any_errors_fatal: true
+  roles:
+    # - common
+    - do-ams-server
+  become: yes

@@ -1,0 +1,12 @@
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+- name: rebuild gallery
+  shell: /srv/http/sigal/venv/bin/sigal build
+  args:
+    chdir: "/srv/http/sigal/{{ item }}"
+  with_items:
+    - photo
+    - gallery

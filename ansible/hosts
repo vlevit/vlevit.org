@@ -1,2 +1,9 @@
-[prod]
-vlevit.org
+# -*- mode: yaml; -*-
+all:
+  children:
+    cloudservers:
+      hosts:
+        do-ams-server
+    homeservers:
+      hosts:
+        zbox

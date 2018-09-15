@@ -1,0 +1,32 @@
+- block:
+
+  - name: sync sigal config
+    copy:
+      src: "srv/http/sigal/{{ item }}/sigal.conf.py"
+      dest: "/srv/http/sigal/{{ item }}/sigal.conf.py"
+    with_items:
+      - photo
+      - gallery
+    notify: rebuild gallery
+
+  - name: sync photo
+    shell: rsync -rt --exclude='#*' --exclude='*~' --delete "/home/vlevit/{{ item }}/" zbox:"/srv/http/sigal/{{ item }}/source"
+    delegate_to: localhost
+
+    # synchronize:
+    #   src: /home/vlevit/photo/
+    #   dest: /srv/http/sigal/{{ item }}/source
+    #   delete: yes
+    #   archive: no
+    #   times: yes
+    #   recursive: yes
+
+    with_items:
+      - photo
+      - gallery
+    notify: rebuild gallery
+
+  become: yes
+  become_user: "{{ adminuser }}"
+  tags:
+    photo

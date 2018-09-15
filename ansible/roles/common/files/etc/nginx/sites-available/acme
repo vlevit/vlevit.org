@@ -1,0 +1,19 @@
+# -*- mode: nginx; -*-
+server {
+    # listen for all domains
+    listen 80 default_server;
+    server_name acme;
+
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+
+    location /.well-known/acme-challenge {
+        alias /srv/http/letsencrypt;
+    }
+
+    location / {
+        # special nginx response
+        return 444;
+    }
+
+}

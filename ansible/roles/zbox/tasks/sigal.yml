@@ -1,0 +1,52 @@
+- block:
+
+  - name: install python packages
+    pacman:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - python
+      - python-pip
+      - python-virtualenv
+
+  - name: /srv/http/sigal/ directories
+    file:
+      path: "{{ item }}"
+      state: directory
+      recurse: yes
+      mode: 0755
+      owner: "{{ adminuser }}"
+      group: "{{ admingroup }}"
+    with_items:
+      - /srv/http/sigal/
+      - /srv/http/sigal/photo
+      - /srv/http/sigal/gallery
+
+  - name: sigal virtualenv
+    pip:
+      name: sigal
+      version: 1.4.0
+      virtualenv: /srv/http/sigal/venv
+      virtualenv_command: /usr/bin/virtualenv
+      virtualenv_python: python3
+
+  - name: setup nginx auth for gallery
+    htpasswd:
+      path: "/etc/nginx/{{ item.name }}passwd"
+      name: "{{ item.user }}"
+      password: "{{ item.password }}"
+      owner: root
+      group: "{{ httpuser }}"
+      mode: 0640
+    with_items:
+      - name: photo
+        user: "{{ photo_user }}"
+        password: "{{ photo_password }}"
+      - name: gallery
+        user: "{{ gallery_user }}"
+        password: "{{ gallery_password }}"
+
+  become: yes
+  become_user: root
+  tags:
+    - sigal

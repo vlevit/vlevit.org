@@ -1,0 +1,25 @@
+- block:
+
+  - name: nginx gallery configuration
+    copy:
+      src: "etc/nginx/sites-available/{{ item }}"
+      dest: "/etc/nginx/sites-available/{{ item }}"
+    with_items:
+      - photo.vlevit.org
+      - gallery.vlevit.org
+    notify: reload nginx
+
+  - name: nginx gallery configuration
+    file:
+      src: "/etc/nginx/sites-available/{{ item }}"
+      dest: "/etc/nginx/sites-enabled/{{ item }}"
+      state: link
+    with_items:
+      - photo.vlevit.org
+      - gallery.vlevit.org
+    notify: reload nginx
+
+  become: yes
+  become_user: root
+  tags:
+    - nginx

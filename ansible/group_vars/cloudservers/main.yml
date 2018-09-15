@@ -1,0 +1,3 @@
+httpuser: www-data
+adminuser: admin
+admingroup: admin

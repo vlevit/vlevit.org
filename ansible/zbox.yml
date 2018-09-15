@@ -1,0 +1,5 @@
+- hosts: zbox
+  roles:
+    - common
+    - zbox
+  become: yes

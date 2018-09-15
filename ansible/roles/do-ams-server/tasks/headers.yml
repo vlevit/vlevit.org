@@ -1,0 +1,54 @@
+- block:
+
+  - name: install packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - golang
+      - supervisor
+
+  - name: add ipheaders group
+    group: name=ipheaders gid=1003 state=present
+
+  - name: add ipheaders user
+    user: name=ipheaders uid=1003 group=ipheaders append=yes home=/srv/http/ip.vlevit.org
+
+  - name: install headers
+    shell: go get github.com/vlevit/headers
+    args:
+      chdir: /srv/http/ip.vlevit.org
+    environment:
+      GOPATH: /srv/http/ip.vlevit.org
+
+  - name: headers supervisor config
+    copy:
+      content: |
+        [program:headers]
+        command=/srv/http/ip.vlevit.org/bin/headers --use-x-real-ip 127.0.0.1:8181
+        directory=/srv/http/ip.vlevit.org/
+        user=ipheaders
+        group=ipheaders
+      dest: /etc/supervisor/conf.d/headers.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify: reload supervisor
+
+  - name: ip.vlevit.org nginx configuration
+    copy:
+      src: etc/nginx/sites-available/ip.vlevit.org
+      dest: /etc/nginx/sites-available/ip.vlevit.org
+      owner: root
+      group: root
+      mode: 0644
+    notify: reload nginx
+
+  - name: ip.vlevit.org enable nginx
+    file:
+      src: /etc/nginx/sites-available/ip.vlevit.org
+      dest: /etc/nginx/sites-enabled/ip.vlevit.org
+      state: link
+    notify: reload nginx
+
+  become: yes

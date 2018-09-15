@@ -7,6 +7,7 @@ REMOTE_ADDRESS_DEV="http://vlevit.org:3205"
 LOCAL_SECRET_KEY="$LOCAL_SECRET_KEY"
 REMOTE_SECRET_KEY_PROD="$VLEVITORG_SECRET_KEY_PROD"
 REMOTE_SECRET_KEY_DEV="$VLEVITORG_SECRET_KEY_DEV"
+ANSIBLE_VAULT_PASSWORD_FILE="$VLEVITORG_ANSIBLE_VAULT_PASSWORD_FILE"
 PROJECT_DIR=~/projects/vlevit.org
 STATIC_DIR="$PROJECT_DIR"/staticfiles
 REMOTE_STATIC_DIR=/srv/http/vlevit.org/static
@@ -131,7 +132,8 @@ function stop
 function virtualenv
 {
     echo "cd \"$PROJECT_DIR\";"
-    echo "source \"$VIRTUAL_ENV_DIR/bin/activate\""
+    echo "source \"$VIRTUAL_ENV_DIR/bin/activate\";"
+    echo "export ANSIBLE_VAULT_PASSWORD_FILE=\"$ANSIBLE_VAULT_PASSWORD_FILE\";"
 }
 
 function push

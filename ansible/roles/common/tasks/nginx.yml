@@ -1,0 +1,52 @@
+- block:
+
+  - name: /srv/http
+    file:
+      state: directory
+      path:
+        - /srv
+        - /srv/http
+      owner: root
+      group: root
+      mode: 0755
+
+
+  - name: nginx directories
+    file:
+      state: directory
+      path: "/etc/nginx/{{ item }}"
+      owner: root
+      group: root
+      mode: 0755
+    with_items:
+      - sites-available
+      - sites-enabled
+      - conf.d
+      - includes
+    notify: reload nginx
+
+  - name: nginx.conf
+    template:
+      src: nginx.j2
+      dest: /etc/nginx/nginx.conf
+    notify: reload nginx
+
+  - name: nginx includes
+    copy:
+      src: etc/nginx/includes/
+      dest: /etc/nginx/includes
+    notify: reload nginx
+
+  - name: check nginx configuration
+    shell: nginx -t
+    changed_when: False
+
+  - name: nginx started
+    service:
+      name: nginx
+      state: started
+
+  become: yes
+  become_user: root
+  tags:
+    - nginx
