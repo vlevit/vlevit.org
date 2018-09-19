@@ -2,12 +2,11 @@
 
   - name: install iptables packages
     apt:
-      name: "{{ item }}"
-      state: present
-    with_items:
+      name:
       - iptables
       - iptables-persistent
       - netfilter-persistent
+      state: present
 
   - name: iptables rules
     copy:

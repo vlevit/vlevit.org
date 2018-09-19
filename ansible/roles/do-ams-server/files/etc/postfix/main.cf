@@ -1,0 +1,53 @@
+myhostname = vlevit.org
+myorigin = vlevit.org
+mydestination = vlevit.org, read.now.im, localhost, localhost.localdomain
+relayhost =
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+mailbox_size_limit = 0
+# 100MB email size limit
+message_size_limit = 100000000
+recipient_delimiter = +
+inet_interfaces = all
+
+alias_maps = hash:/etc/aliases
+local_recipient_maps = hash:/etc/aliases, hash:/etc/postfix/virtual
+#local_recipient_maps = hash:/etc/postfix/local-recipients
+sender_bcc_maps = hash:/etc/postfix/sender_bcc
+#alias_maps = hash:/etc/aliases hash:/etc/postfix/local-recipients
+#local_recipient_maps = hash:/etc/postfix/local-recipients
+# alias_maps = hash:/etc/aliases proxy:pgsql:/etc/postfix/pgsql-aliases.cf
+# local_recipient_maps = proxy:pgsql:/etc/postfix/pgsql-boxes.cf $alias_maps
+virtual_alias_maps = hash:/etc/postfix/virtual
+
+mailbox_transport = lmtp:unix:private/dovecot-lmtp
+
+smtpd_tls_cert_file=/etc/ssl/letsetncrypt/vlevit.org/fullchain.pem
+smtpd_tls_key_file=/etc/ssl/letsetncrypt/vlevit.org/privkey.pem
+
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_tls_security_level=may
+smtpd_tls_protocols = !SSLv2, !SSLv3
+
+mailbox_transport = lmtp:unix:private/dovecot-lmtp
+
+milter_default_action = accept
+milter_protocol = 2
+non_smtpd_milters=unix:/var/run/opendkim/opendkim.sock
+smtpd_milters=unix:/var/run/opendkim/opendkim.sock
+smtp_header_checks=pcre:/etc/postfix/smtp_header_checks
+
+# 2018-07-04
+# https://wiki2.dovecot.org/HowTo/PostfixAndDovecotSASL
+
+smtpd_sasl_type = dovecot
+# Can be an absolute path, or relative to $queue_directory
+# Debian/Ubuntu users: Postfix is setup by default to run chrooted, so it is best to leave it as-is below
+smtpd_sasl_path = private/auth
+# On Debian Wheezy path must be relative and queue_directory defined
+#queue_directory = /var/spool/postfix
+# and the common settings to enable SASL:
+smtpd_sasl_auth_enable = yes
+# With Postfix version before 2.10, use smtpd_recipient_restrictions
+smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination

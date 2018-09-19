@@ -1,0 +1,9 @@
+- name: postfix maps
+  copy:
+    dest: /etc/postfix/{{item}}
+    src: etc/postfix/{{item}}
+  register: mapfile
+
+- name: postmap
+  shell: postmap /etc/postfix/{{ item }}
+  when: mapfile.changed

@@ -1,0 +1,6 @@
+# See man 5 aliases for format
+root: me
+abc:me
+# ...
+me: realaddress@vlevit.org
+outbox: /var/tmp/outbox

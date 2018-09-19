@@ -16,3 +16,10 @@
     name: nsd
     state: reloaded
 
+- name: reload postfix
+  service:
+    name: postfix
+    state: reloaded
+
+- name: update aliases
+  shell: postalias /etc/aliases

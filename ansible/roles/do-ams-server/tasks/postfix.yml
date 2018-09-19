@@ -1,0 +1,38 @@
+- block:
+
+  - name: install postfix
+    apt:
+      name:
+      - postfix
+      - postfix-pcre
+      state: present
+
+  - name: /etc/aliases
+    copy:
+      dest: /etc/aliases
+      src: etc/aliases
+    notify: update aliases
+
+  - name: postmap
+    include_tasks: postmap.yml
+    with_items:
+      - virtual
+      - sender_bcc
+      - smtp_header_checks
+
+  - name: /etc/postfix/{main.cf,master.cf}
+    copy:
+      dest: /etc/postfix/{{ item }}
+      src: etc/postfix/{{ item }}
+    with_items:
+      - main.cf
+      - master.cf
+    notify: reload postfix
+
+  - name: postfix started
+    service:
+      name: postfix
+      state: started
+
+  tags: [postfix, mail]
+  become: yes
