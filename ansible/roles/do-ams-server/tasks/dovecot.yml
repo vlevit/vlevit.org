@@ -1,0 +1,43 @@
+- block:
+
+  - name: install dovecot
+    apt:
+      name:
+      - dovecot-core
+      - dovecot-imapd
+      - dovecot-lmtpd
+      - dovecot-sieve
+      - dovecot-managesieved
+      state: present
+
+  - name: dovecot.conf
+    copy:
+      src: etc/dovecot/dovecot.conf
+      dest: /etc/dovecot/dovecot.conf
+    notify: reload dovecot
+
+  - name: sieve directories
+    file:
+      state: directory
+      dest: /home/maildirs/sieve/global
+      owner: vmail
+      group: vmail
+    with_items:
+      - /home/maildirs/sieve
+      - /home/maildirs/sieve/global
+
+  - name: sieve files
+    copy:
+      src: "home/maildirs/sieve/global/{{ item }}"
+      dest: "/home/maildirs/sieve/global/{{ item }}"
+      mode: 0740
+      owner: vmail
+      group: vmail
+    with_items:
+      - spam-global.sieve
+      - learn-ham.sieve
+      - learn-spam.sieve
+    notify: reload dovecot
+
+  tags: [dovecot, mail]
+  become: yes

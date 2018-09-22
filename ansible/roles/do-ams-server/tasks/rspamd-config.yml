@@ -1,0 +1,54 @@
+# This playbook follows this rspamd configuration:
+#
+#     https://thomas-leister.de/en/mailserver-debian-stretch/#rspamd-1
+#
+
+- block:
+
+  - name: /usr/local/etc/rspamd/local.d/
+    file:
+      state: directory
+      path: /usr/local/etc/rspamd/local.d
+
+  - name: rspamd configuration
+    copy:
+      src: "usr/local/etc/rspamd/local.d/{{ item }}"
+      dest: "/usr/local/etc/rspamd/local.d/{{ item }}"
+    with_items:
+      - classifier-bayes.conf
+      - logging.inc
+      - milter_headers.conf
+      - options.inc
+      - worker-controller.inc
+      - worker-normal.inc
+      - worker-proxy.inc
+      - redis.conf
+    notify: reload rspamd
+
+  - name: start redis
+    systemd:
+      name: redis
+      enabled: yes
+      state: started
+
+  - name: start rspamd
+    systemd:
+      name: rspamd
+      enabled: yes
+      state: started
+
+  - name: mail.vlevit.org
+    copy:
+      src: etc/nginx/sites-available/mail.vlevit.org
+      dest: /etc/nginx/sites-available/mail.vlevit.org
+    notify: reload nginx
+
+  - name: enable mail.vlevit.org
+    file:
+      state: link
+      src: /etc/nginx/sites-available/mail.vlevit.org
+      dest: /etc/nginx/sites-enabled/mail.vlevit.org
+    notify: reload nginx
+
+  become: yes
+  tags: [rspamd, rspamd-config, mail]

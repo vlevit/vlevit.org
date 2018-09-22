@@ -27,7 +27,7 @@
 
   - name: nginx.conf
     template:
-      src: nginx.j2
+      src: etc/nginx/nginx.conf.jinja2
       dest: /etc/nginx/nginx.conf
     notify: reload nginx
 
@@ -36,6 +36,16 @@
       src: etc/nginx/includes/
       dest: /etc/nginx/includes
     notify: reload nginx
+
+  - name: add nginx site
+    include_tasks: nginx-add-site.yml
+    vars:
+      site: default80
+
+  - name: add nginx site
+    include_tasks: nginx-add-site-template.yml
+    vars:
+      site: default443
 
   - name: check nginx configuration
     shell: nginx -t

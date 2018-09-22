@@ -16,6 +16,11 @@
     name: nsd
     state: reloaded
 
+- name: reload dovecot
+  service:
+    name: dovecot
+    state: reloaded
+
 - name: reload postfix
   service:
     name: postfix
@@ -23,3 +28,8 @@
 
 - name: update aliases
   shell: postalias /etc/aliases
+
+- name: reload rspamd
+  service:
+    name: rspamd
+    state: reloaded

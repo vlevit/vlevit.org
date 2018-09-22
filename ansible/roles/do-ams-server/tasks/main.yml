@@ -2,4 +2,7 @@
 - import_tasks: headers.yml
 - import_tasks: maildir-feed.yml
 - import_tasks: nsd.yml
+- import_tasks: dovecot.yml
 - import_tasks: postfix.yml
+- import_tasks: rspamd-build.yml
+- import_tasks: rspamd-config.yml

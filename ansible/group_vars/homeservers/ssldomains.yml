@@ -1,3 +1,5 @@
-  ssl_domains: |
-    gallery.vlevit.org
-    photo.vlevit.org
+ssl_domains: |
+  gallery.vlevit.org
+  photo.vlevit.org
+
+ssl_default_domain: photo.vlevit.org

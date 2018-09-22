@@ -1,0 +1,110 @@
+- block:
+
+  - name: rspamd version
+    shell: /usr/local/bin/rspamd --version
+    changed_when: False
+    failed_when: False
+    register: rspamd_version
+
+  - name: build rspamd
+    block:
+
+    - name: rspamd build dependencies
+      apt:
+        name:
+        - libevent-dev
+        - bison
+        - flex
+        - libmagic-dev
+        - libjemalloc-dev
+        - ragel
+        - libluajit-5.1-dev
+        - cmake
+        - sqlite3
+        - redis
+
+    - name: rspamd git repo
+      git:
+        repo: https://github.com/vstakhov/rspamd.git
+        dest: "{{ rspamd_dir }}"
+        clone: yes
+        recursive: yes
+        version: 1.7.9
+        depth: 1
+      become_user: "{{ adminuser }}"
+
+    - name: rspamd.build
+      file:
+        state: directory
+        dest: "{{ rspamd_builddir }}"
+      become_user: "{{ adminuser }}"
+
+    - name: build rspamd
+      shell: cmake ../rspamd && make
+      args:
+        chdir: "{{ rspamd_builddir }}"
+      become_user: "{{ adminuser }}"
+
+    - name: install rspamd
+      shell: make install
+      args:  
+        chdir: "{{ rspamd_builddir }}"
+
+    when: "'1.7.9' not in rspamd_version.stdout"
+
+  - name: rspamd group
+    group:
+      name: rspamd
+      gid: 400
+      system: yes
+      state: present
+
+  - name: rspamd user
+    user:
+      name: rspamd
+      uid: 400
+      group: rspamd
+      append: yes
+      create_home: no
+      system: yes
+      shell: /usr/sbin/nologin
+      state: present
+
+  - name: /var/log/rspamd/
+    file:
+      state: directory
+      path: /var/log/rspamd
+      owner: rspamd
+      group: rspamd
+      mode: 0754
+
+  - name: /var/lib/rspamd/
+    file:
+      state: directory
+      path: /var/lib/rspamd/
+      owner: rspamd
+      group: rspamd
+      mode: 0750
+
+  - name: rspamd.service
+    file:
+      dest: /lib/systemd/system/rspamd.service
+      state: absent
+
+  - name: rspamd.service
+    copy:
+      src: etc/systemd/system/rspamd.service
+      dest: /etc/systemd/system/rspamd.service
+
+  - name: load rspamd.service
+    systemd:
+      name: rspamd
+      enabled: no
+      daemon_reload: yes
+      state: stopped
+
+  become: yes
+  tags: [rspamd, rspamd-build, mail]
+  vars:
+    rspamd_dir: "/home/{{ adminuser}}/rspamd"
+    rspamd_builddir: "/home/{{ adminuser}}/rspamd.build"

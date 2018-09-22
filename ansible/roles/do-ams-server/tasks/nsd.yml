@@ -41,3 +41,5 @@
       state: started
 
   become: yes
+  tags: [nsd, dns]
+

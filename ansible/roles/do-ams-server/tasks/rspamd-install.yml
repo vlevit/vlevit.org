@@ -1,0 +1,26 @@
+- block:
+
+  - name: rspamd repository key
+    apt_key:
+      url: https://rspamd.com/apt-stable/gpg.key
+      state: present
+
+  - name: rspamd src repository
+    apt_repository:
+      repo: deb-src [arch=amd64] http://rspamd.com/apt-stable/ bionic main
+      state: present
+
+  - name: rspamd binary repository
+    apt_repository:
+      repo: deb [arch=amd64] http://rspamd.com/apt-stable/ bionic main
+      state: present
+
+  - name: install rspamd
+    apt:
+      name: rspamd
+      state: present
+      install_recommends: no
+      update_cache: yes
+
+  become: yes
+  tags: [rspamd, rspamd-install, mail]

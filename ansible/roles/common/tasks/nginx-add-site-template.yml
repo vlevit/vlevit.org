@@ -1,0 +1,19 @@
+- block:
+
+  - name: "{{ site}} nginx configuration"
+    template:
+      src: etc/nginx/sites-available/{{ site }}
+      dest: /etc/nginx/sites-available/{{ site }}
+      owner: root
+      group: root
+      mode: 0644
+    notify: reload nginx
+
+  - name: "{{ site }} enable nginx"
+    file:
+      src: /etc/nginx/sites-available/{{ site }}
+      dest: /etc/nginx/sites-enabled/{{ site }}
+      state: link
+    notify: reload nginx
+
+  become: yes
