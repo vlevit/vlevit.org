@@ -16,6 +16,11 @@
       dest: /etc/dovecot/dovecot.conf
     notify: reload dovecot
 
+  - name: dovecot passwd file
+    copy:
+      src: etc/dovecot/passwd
+      dest: /etc/dovecot/passwd
+
   - name: sieve directories
     file:
       state: directory
