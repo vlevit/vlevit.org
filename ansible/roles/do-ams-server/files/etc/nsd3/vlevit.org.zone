@@ -2,7 +2,7 @@ $ORIGIN vlevit.org.    ; default zone domain
 $TTL 10800             ; default time to live (3 hours)
 
 @ IN SOA ns1.vlevit.org. admin.vlevit.org. (
-           2018091905  ; serial number
+           2018092900  ; serial number
            28800       ; Refresh
            7200        ; Retry
            864000      ; Expire
@@ -10,8 +10,10 @@ $TTL 10800             ; default time to live (3 hours)
            )
 
                  NS    ns1.vlevit.org.
+                 NS    ns2.vlevit.org.
                  MX    10 vlevit.org.
 ns1        IN    A     5.101.104.72
+ns2        IN    A     5.101.104.72
 @                A     5.101.104.72
 www        IN    A     5.101.104.72
 mail       IN    A     5.101.104.72
