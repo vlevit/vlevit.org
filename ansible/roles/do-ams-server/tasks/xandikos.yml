@@ -1,0 +1,66 @@
+- block:
+
+  - name: add xandikos group
+    group: name=xandikos gid=1002 state=present
+
+  - name: add xandikos user
+    user: name=xandikos uid=1002 group=xandikos append=yes home=/srv/http/xandikos
+
+  - name: xandikos home dir permissions
+    file:
+      path: /srv/http/xandikos
+      state: directory
+      mode: 0775
+
+  - name: xandikos virtualenv
+    pip:
+      name: xandikos
+      virtualenv: /srv/http/xandikos/venv
+      virtualenv_command: /usr/bin/virtualenv
+      virtualenv_python: python3
+    become_user: xandikos
+
+  - name: xandikos uwsgi
+    copy:
+      src: etc/uwsgi/apps-available/xandikos.ini
+      dest: /etc/uwsgi/apps-available/xandikos.ini
+      owner: root
+      group: root
+      mode: 0644
+    notify: reload uwsgi
+
+  - name: xandikos enable uwsgi
+    file:
+      src: /etc/uwsgi/apps-available/xandikos.ini
+      dest: /etc/uwsgi/apps-enabled/xandikos.ini
+      state: link
+    notify: reload uwsgi
+
+  - name: setup nginx authentication for xandikos
+    htpasswd:
+      path: /etc/nginx/davpasswd
+      name: "{{ dav_user }}"
+      password: "{{ dav_password }}"
+      owner: root
+      group: www-data
+      mode: 0640
+    notify: reload nginx
+
+  - name: xandikos nginx configuration
+    copy:
+      src: etc/nginx/sites-available/xandikos
+      dest: /etc/nginx/sites-available/xandikos
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: xandikos enable nginx
+    file:
+      src: /etc/nginx/sites-available/xandikos
+      dest: /etc/nginx/sites-enabled/xandikos
+      state: link
+    notify: reload nginx
+
+  become: yes
+  become_user: root
+  tags: [xandikos, dav]

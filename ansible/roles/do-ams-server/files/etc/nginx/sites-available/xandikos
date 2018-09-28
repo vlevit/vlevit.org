@@ -1,0 +1,16 @@
+# -*- mode: nginx; -*-
+server {
+    listen 443 ssl http2;
+    server_name dav.vlevit.org;
+    include includes/ssl-certs/dav[.]vlevit.org;
+    include includes/nginx-ssl-options;
+
+    location / {
+        uwsgi_pass 127.0.0.1:8678;
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/davpasswd;
+        include uwsgi_params;
+    }
+
+    include includes/acme-challenge;
+}

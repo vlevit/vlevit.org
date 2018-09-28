@@ -6,3 +6,4 @@
 - import_tasks: postfix.yml
 - import_tasks: rspamd-build.yml
 - import_tasks: rspamd-config.yml
+- import_tasks: xandikos.yml
