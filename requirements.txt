@@ -11,7 +11,7 @@ bcrypt==3.1.4             # via paramiko
 certifi==14.05.14
 cffi==1.11.5              # via bcrypt, cryptography, pynacl
 contextlib2==0.5.5
-cryptography==2.2.2       # via ansible, paramiko
+cryptography==2.3.1       # via ansible, paramiko
 django-contrib-comments==1.6.1
 django-debug-toolbar==0.9.4
 django==1.8.4
