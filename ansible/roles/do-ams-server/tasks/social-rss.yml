@@ -1,0 +1,51 @@
+- block:
+
+  - name: add social-rss group
+    group: name=social-rss
+
+  - name: add social-rss user
+    user:
+      name: social-rss
+      group: social-rss
+      home: /srv/http/social-rss
+      shell: /usr/sbin/nologin
+
+  - name: social-rss home dir permissions
+    file:
+      path: /srv/http/social-rss
+      state: directory
+      mode: 0755
+
+  - name: social-rss repository
+    git:
+      repo: 'https://github.com/KonishchevDmitry/social-rss.git'
+      dest: /srv/http/social-rss/social-rss
+      version: 65df494          # HEAD as of 2018-10-06
+      depth: 1
+    become_user: social-rss
+
+  - name: social-rss virtualenv
+    pip:
+      requirements: /srv/http/social-rss/social-rss/requirements.txt
+      virtualenv: /srv/http/social-rss/virtualenv
+      virtualenv_command: /usr/bin/virtualenv
+      virtualenv_python: python3
+    become_user: social-rss
+
+  - name: social-rss supervisor config
+    copy:
+      content: |
+        [program:social-rss]
+        command=/srv/http/social-rss/virtualenv/bin/python social-rss -a 127.0.0.1 8888
+        directory=/srv/http/social-rss/social-rss/
+        user=social-rss
+        group=social-rss
+        environment=TWITTER_CONSUMER_KEY={{twitter_consumer_key}},TWITTER_CONSUMER_SECRET={{twitter_consumer_secret}},TWITTER_ACCESS_TOKEN_KEY={{twitter_access_token_key}},TWITTER_ACCESS_TOKEN_SECRET={{twitter_access_token_secret}}
+      dest: /etc/supervisor/conf.d/social-rss.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify: reload social-rss
+
+  become: yes
+  tags: social-rss

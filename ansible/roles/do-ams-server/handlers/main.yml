@@ -11,6 +11,11 @@
     name: maildir-feed
     state: restarted
 
+- name: reload social-rss
+  supervisorctl:
+    name: social-rss
+    state: restarted
+
 - name: reload nginx
   service:
     name: nginx
