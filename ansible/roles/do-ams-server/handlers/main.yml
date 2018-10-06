@@ -1,7 +1,7 @@
 - name: reload iptables
   shell: netfilter-persistent reload
 
-- name: reload supervisor
+- name: reload headers
   supervisorctl:
     name: headers
     state: restarted

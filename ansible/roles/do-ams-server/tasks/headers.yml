@@ -12,7 +12,13 @@
     group: name=ipheaders gid=1003 state=present
 
   - name: add ipheaders user
-    user: name=ipheaders uid=1003 group=ipheaders append=yes home=/srv/http/ip.vlevit.org
+    user:
+      name: ipheaders
+      uid: 1003
+      group: ipheaders
+      append: yes
+      home: /srv/http/ip.vlevit.org
+      shell: /usr/sbin/nologin
 
   - name: install headers
     shell: go get github.com/vlevit/headers
@@ -33,7 +39,7 @@
       owner: root
       group: root
       mode: 0644
-    notify: reload supervisor
+    notify: reload headers
 
   - name: ip.vlevit.org nginx configuration
     copy:
@@ -52,3 +58,4 @@
     notify: reload nginx
 
   become: yes
+  tags: headers
