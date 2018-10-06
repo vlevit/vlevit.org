@@ -13,29 +13,16 @@
       - github.com/sloonz/maildir-feed/maildir-feed-rss
       - github.com/sloonz/maildir-feed/maildir-feed
 
-  - name: /home/maildirs/ directory permissions
-    file:
-      state: directory
-      path: /home/maildirs/
-      owner: vmail
-      group: vmail
-      mode: 0770
-
-  - name: /home/maildirs/ directory
-    file:
-      state: directory
-      path: /home/maildirs/
-      owner: vmail
-      group: vmail
-      mode: 0770
-
   - name: /home/maildirs/feeds directory
     file:
       state: directory
-      path: /home/maildirs/feeds
-      owner: maildir-feed
+      path: "{{ item }}"
+      owner: vmail
       group: vmail
       mode: 0770
+    with_items:
+      - /home/maildirs
+      - /home/maildirs/feeds
 
   - name: maildir-feed supervisor config
     copy:
@@ -43,7 +30,7 @@
         [program:maildir-feed]
         command=/home/maildir-feed/bin/maildir-feed /home/maildirs/feeds/maildir | logger -t maildir-feed
         directory=/home/maildir-feed
-        user=maildir-feed
+        user=vmail
         group=vmail
         umask=007
         environment=HOME=/home/maildir-feed
@@ -51,6 +38,7 @@
       owner: root
       group: root
       mode: 0644
-    notify: reload supervisor
+    notify: reload maildir-feed
 
   become: yes
+  tags: [maildir-feed, feed]

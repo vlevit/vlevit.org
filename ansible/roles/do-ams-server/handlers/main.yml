@@ -6,6 +6,11 @@
     name: headers
     state: restarted
 
+- name: reload maildir-feed
+  supervisorctl:
+    name: maildir-feed
+    state: restarted
+
 - name: reload nginx
   service:
     name: nginx
