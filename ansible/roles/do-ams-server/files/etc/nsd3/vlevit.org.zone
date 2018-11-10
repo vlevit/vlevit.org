@@ -2,7 +2,7 @@ $ORIGIN vlevit.org.    ; default zone domain
 $TTL 10800             ; default time to live (3 hours)
 
 @ IN SOA ns1.vlevit.org. admin.vlevit.org. (
-           2018092900  ; serial number
+           2018111101  ; serial number
            28800       ; Refresh
            7200        ; Retry
            864000      ; Expire
@@ -12,26 +12,26 @@ $TTL 10800             ; default time to live (3 hours)
                  NS    ns1.vlevit.org.
                  NS    ns2.vlevit.org.
                  MX    10 vlevit.org.
-ns1        IN    A     5.101.104.72
-ns2        IN    A     5.101.104.72
-@                A     5.101.104.72
-www        IN    A     5.101.104.72
-mail       IN    A     5.101.104.72
+ns1        IN    A     142.93.129.59
+ns2        IN    A     142.93.129.59
+@                A     142.93.129.59
+www        IN    A     142.93.129.59
+mail       IN    A     142.93.129.59
 announce   IN    A     178.136.56.111
-blog       IN    A     5.101.104.72
-conference IN    A     5.101.104.72
-dav        IN    A     5.101.104.72
+blog       IN    A     142.93.129.59
+conference IN    A     142.93.129.59
+dav        IN    A     142.93.129.59
 gallery    IN    A     178.136.56.111
-goodtables IN    A     5.101.104.72
-gtalk      IN    A     5.101.104.72
-ip         IN    A     5.101.104.72
-j2j        IN    A     5.101.104.72
-media      IN    A     5.101.104.72
+goodtables IN    A     142.93.129.59
+gtalk      IN    A     142.93.129.59
+ip         IN    A     142.93.129.59
+j2j        IN    A     142.93.129.59
+media      IN    A     142.93.129.59
 photo      IN    A     178.136.56.111
-proxy      IN    A     5.101.104.72
-static     IN    A     5.101.104.72
+proxy      IN    A     142.93.129.59
+static     IN    A     142.93.129.59
 vitaminc   IN    A     178.136.56.111
-xmpp       IN    A     5.101.104.72
+xmpp       IN    A     142.93.129.59
 imap       IN    CNAME vlevit.org.
 smtp       IN    CNAME vlevit.org.
 noise      IN    CNAME domains.tumblr.com.
@@ -41,4 +41,4 @@ noise      IN    CNAME domains.tumblr.com.
 _dmarc           IN  TXT  "v=DMARC1; p=none; rua=mailto:postmaster@vlevit.org; ruf=mailto:posmaster@vlevit.org"
 alpha._domainkey IN  TXT  "v=DKIM1; k=rsa; s=email; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCDpctmROMiQXfnTV33swmLlsvArRoy3T1KIl/aVuUCQF75KzhZt+BLGs99EBsmAusb8W3HLa/v4b23REFwNrq+f0VuAFte8UWLxBHFTZXRMU/iZFTeCgIr2Bf+/VXl/d883WwdIfwEZt3LbI0//5STkAPmCjz3OO63Xf50+SnoQIDAQAB"
 
-; *          IN    A    5.101.104.72
+; *          IN    A    142.93.129.59
