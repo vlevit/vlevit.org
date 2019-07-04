@@ -1,0 +1,291 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>bucket.ftp.sh</title>
+    <meta name="description" content="Easy and fast file sharing from the command-line.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="/styles/main.css">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:100,200,300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+    <script src="/scripts/vendor/modernizr.js"></script>
+</head>
+
+
+
+<body>
+
+        <div id="navigation">
+            <div class="wrapper">
+                <a href="/">
+                    <h1>bucket.ftp.sh</h1>
+                </a>
+            </div>
+        </div>
+
+
+    <section id="home">
+        <div class="wrapper">
+            <div class="row animated fadeInDown">
+                <div id="from-terminal" class="box col-md-8 col-md-offset-2 col-xs-12">
+                    <div class="terminal-top">
+
+                    </div>
+                    <div id="terminal" class="terminal">
+                        <code>
+                            <span class="code-title"># Upload using cURL</span>
+                            <br>$ curl --upload-file ./hello.txt https://bucket.ftp.sh/hello.txt https://bucket.ftp.sh/66nb8/hello.txt
+                            <br>
+                            <br>
+                            <span class="code-title"># Using the alias</span>
+                            <br>$ transfer hello.txt
+                            <br>##################################################### 100.0% https://bucket.ftp.sh/eibhM/hello.txt
+                        </code>
+                    </div>
+                    <div id="web">
+                        <code>
+                            <br>
+                            <span class="code-title"># Upload from web</span>
+                            <br>Drag your files here, or <a class="browse" href="#"> click to browse. <br/></a>
+
+                        </code>
+                        <input type="file" multiple="multiple" style='display: none;' />
+                        <ul class='queue'>
+                            <li>
+                            </li>
+                        </ul>
+                        <div class='all-files'>
+                            <br>
+                            <div>
+                                <span class="code-title"># Download all your files</span>
+                                <br/>
+                                <br/>
+                                <a class="download-zip btn-cta" href="#">zip</a> <a class="download-tar btn-cta" href="#">tar.gz</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section id="samples">
+        <div class="wrapper">
+            <h2 class="page-title">
+                Sample use cases
+            </h2>
+            <div class="row">
+                <div class="col-md-6 ">
+                    <h3>How to upload</h3>
+                    <div class="terminal-top">
+
+                    </div>
+                    <div class="terminal">
+                        <code>
+                            <span class="code-title"># Uploading is easy using curl</span>
+                            <br>$ curl --upload-file ./hello.txt https://bucket.ftp.sh/hello.txt
+                            <br>https://bucket.ftp.sh/66nb8/hello.txt
+                            <br/>
+                            <br>$ curl -H "Max-Downloads: 1" -H "Max-Days: 5" --upload-file ./hello.txt https://bucket.ftp.sh/hello.txt
+                            <br>https://bucket.ftp.sh/66nb8/hello.txt
+                            <br>
+                            <span class="code-title"># Download the file</span>
+                            <br>$ curl https://bucket.ftp.sh/66nb8/hello.txt -o hello.txt
+                        </code>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <h3>Add an alias to .bashrc or .zshrc <a href='https://gist.github.com/nl5887/a511f172d3fb3cd0e42d'>[gist]</a></h3>
+                    <div class="terminal-top">
+                    </div>
+                    <div class="terminal">
+                        <code>
+                            <span class="code-title"># Add this to .bashrc or its equivalent</span>
+                            <br/>transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi <br/>tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://bucket.ftp.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://bucket.ftp.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }
+                            <br/>
+                            <br/>
+                            <span class="code-title"># Now you can use transfer command</span>
+                            <br>$ transfer hello.txt
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+
+            <a class="btn-cta" data-target="#coll" data-toggle="collapse">More examples</a>
+
+            <div class="collapse " id="coll">
+                <div class="row">
+                    <div class="col-md-6 ">
+                        <h3>Upload multiple files at once</h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <br>$ curl -i -F filedata=@/tmp/hello.txt -F filedata=@/tmp/hello2.txt https://bucket.ftp.sh/
+                                <br>
+                                <br>
+                                <span class="code-title"># Combining downloads as zip or tar archive</span>
+                                <br>$ curl https://bucket.ftp.sh/(15HKz/hello.txt,15HKz/hello.txt).tar.gz
+                                <br/>$ curl https://bucket.ftp.sh/(15HKz/hello.txt,15HKz/hello.txt).zip
+                            </code>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-6 ">
+                        <h3>Encrypt your files before the transfer</h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <span class="code-title"># Encrypt files with password using gpg</span>
+                                <br>$ cat /tmp/hello.txt|gpg -ac -o-|curl -X PUT --upload-file "-" https://bucket.ftp.sh/test.txt
+                                <br>
+                                <br>
+                                <span class="code-title"># Download and decrypt</span>
+                                <br>$ curl https://bucket.ftp.sh/1lDau/test.txt|gpg -o- > /tmp/hello.txt
+                            </code>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Scan for malware</h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <span class="code-title"># Scan for malware or viruses using Clamav</span>
+                                <br>$ wget http://www.eicar.org/download/eicar.com
+                                <br>$ curl -X PUT --upload-file ./eicar.com https://bucket.ftp.sh/eicar.com/scan
+                                <br>
+                                <br>
+                                <span class="code-title"># Upload malware to VirusTotal, get a permalink in return</span>
+                                <br>$ curl -X PUT --upload-file nhgbhhj https://bucket.ftp.sh/test.txt/virustotal
+                                <br>
+                            </code>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Backup mysql database, encrypt and transfer</h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <span class="code-title"># Backup, encrypt and transfer</span>
+                                <br/>$ mysqldump --all-databases|gzip|gpg -ac -o-|curl -X PUT --upload-file "-" https://bucket.ftp.sh/test.txt</code>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Send email with transfer link (uses alias)</h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <span class="code-title"># Transfer and send email with link (uses alias)</span>
+                                <br/>$ transfer /tmp/hello.txt | mail -s "Hello World" user@yourmaildomain.com
+                            </code>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Using <a href="https://keybase.io/">Keybase.io</a></h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <span class="code-title"># Import keys from keybase</span>
+                                <br/>$ keybase track [them]
+                                <span class="code-title"># Encrypt for recipient(s)</span>
+                                <br/>$ cat somebackupfile.tar.gz | keybase encrypt [them] | curl --upload-file '-' https://bucket.ftp.sh/test.txt
+                                <span class="code-title"># Decrypt</span>
+                                <br/>$ curl https://bucket.ftp.sh/sqUFi/test.md |keybase decrypt
+                            </code>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>wget uploads also supported</h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <span class="code-title"># wget</span>
+                                <br/>$ wget --method PUT --body-file=/tmp/file.tar https://bucket.ftp.sh/file.tar -O - -nv
+                            </code>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Transfer pound logs</h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <span class="code-title"># grep syslog for pound and transfer</span>
+                                <br/>$ cat /var/log/syslog|grep pound|curl --upload-file - https://bucket.ftp.sh/pound.log
+                            </code>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-md-6">
+                        <h3>Upload a file using Powershell</h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <span class="code-title"># Upload using Powershell
+                                <br/>
+                                PS H:\&gt; invoke-webrequest -method put -infile .\file.txt https://bucket.ftp.sh/file.txt
+                            </code>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Upload a file using HTTPie</h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <span class="code-title"># HTTPie
+                                <br/>
+                                $ http https://bucket.ftp.sh/ -vv &lt; /tmp/test.log
+                            </code>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Send us your awesome example</h3>
+                        <div class="terminal-top">
+                        </div>
+                        <div class="terminal">
+                            <code>
+                                <span class="code-title"># Your awesome sample will be put here</span>
+                            </code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <script src="/scripts/main.js"></script>
+          
+
+
+
+</body>
+
+</html>

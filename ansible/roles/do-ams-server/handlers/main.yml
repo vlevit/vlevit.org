@@ -6,6 +6,11 @@
     name: headers
     state: restarted
 
+- name: reload headers
+  supervisorctl:
+    name: headers
+    state: restarted
+
 - name: reload maildir-feed
   supervisorctl:
     name: maildir-feed
@@ -14,6 +19,11 @@
 - name: reload social-rss
   supervisorctl:
     name: social-rss
+    state: restarted
+
+- name: reload transfer.sh
+  supervisorctl:
+    name: transfer.sh
     state: restarted
 
 - name: reload nginx

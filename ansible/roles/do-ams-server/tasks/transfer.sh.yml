@@ -1,0 +1,79 @@
+- block:
+
+  - name: transfer.sh nginx
+    copy:
+      src: etc/nginx/sites-available/transfer.sh
+      dest: /etc/nginx/sites-available/transfer.sh
+    notify: reload nginx
+
+  - name: enable transfer.sh nginx
+    file:
+      state: link
+      src: /etc/nginx/sites-available/transfer.sh
+      dest: /etc/nginx/sites-enabled/transfer.sh
+    notify: reload nginx
+
+  - name: add transfersh group
+    group: name=transfersh gid=1006 state=present
+
+  - name: add transfersh user
+    user:
+      name: transfersh
+      uid: 1006
+      group: transfersh
+      append: yes
+      home: "{{ home_path }}"
+      shell: /usr/sbin/nologin
+
+  - name: install transfer.sh
+    shell: go get github.com/dutchcoders/transfer.sh github.com/jteeuwen/go-bindata
+    args:
+      chdir: "{{ home_path }}"
+    environment:
+      GOPATH: "{{ home_path }}"
+    become_user: transfersh
+
+  - name: transfer.sh-web directory
+    file:
+      dest: "{{ web_path }}"
+      state: directory
+      owner: transfersh
+      group: transfersh
+
+  - name: transfer.sh content directory
+    file:
+      dest: "{{ content_path }}"
+      state: directory
+      owner: transfersh
+      group: transfersh
+
+  - name: install libpng-dev
+    apt:
+      name:
+        - libpng-dev
+      state: present
+
+  - name: copy transfer.sh-web files
+    copy:
+      src: srv/http/transfer.sh-web/
+      dest: /srv/http/transfer.sh-web
+    notify: reload transfer.sh
+
+  - name: transfer.sh supervisor config
+    copy:
+      content: |
+        [program:transfer.sh]
+        command=/srv/http/transfer.sh/bin/transfer.sh --listener :5450 --provider local --basedir {{ content_path }}/ --web-path "{{ web_path }}"/ --proxy-path / --log {{ home_path }}/transfer.sh.log
+        user=transfersh
+      dest: /etc/supervisor/conf.d/transfer.sh.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify: reload transfer.sh
+
+  become: yes
+  tags: [transfer.sh]
+  vars:
+    web_path: /srv/http/transfer.sh-web
+    content_path: /mnt/extvol/pirates.suka.se
+    home_path: /srv/http/transfer.sh

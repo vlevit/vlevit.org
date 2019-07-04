@@ -1,0 +1,55 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>bucket.ftp.sh</title>
+    <meta name="description" content="Easy and fast file sharing from the command-line.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="/styles/main.css">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:100,200,300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+    <script src="/scripts/vendor/modernizr.js"></script>
+</head>
+
+
+<body  id="download">
+
+        <div id="navigation">
+            <div class="wrapper">
+                <a href="/">
+                    <h1>bucket.ftp.sh</h1>
+                </a>
+            </div>
+        </div>
+
+
+<section id="home">
+    <div class="wrapper">
+
+                <br/>
+                <h2 class="page-title">{{.Filename}}</h2>
+                <h4>type: <b>{{.ContentType}}</b></h4>
+                <h4>size: <b>{{.ContentLength | format "#,###."}}</b> bytes</h4>
+
+                <a href="{{.Url}}" class="btn-cta btn"> download</i> </a> <br/><br/>
+
+
+    <br/>
+
+</section>
+
+
+        <script src="/scripts/main.js"></script>
+          
+
+</body>
+
+</html>

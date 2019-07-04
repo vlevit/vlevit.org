@@ -8,3 +8,4 @@
 - import_tasks: rspamd-config.yml
 - import_tasks: xandikos.yml
 - import_tasks: social-rss.yml
+- import_tasks: transfer.sh.yml
