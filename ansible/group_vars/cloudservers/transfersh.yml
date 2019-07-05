@@ -1,0 +1,5 @@
+transfersh_web_path: /srv/http/transfer.sh-web
+transfersh_content_path: /mnt/extvol/pirates.suka.se
+transfersh_home_path: /srv/http/transfer.sh
+transfersh_key: /srv/http/transfer.sh/transfersh-self-signed-localhost.key
+transfersh_cert: /srv/http/transfer.sh/transfersh-self-signed-localhost.pem

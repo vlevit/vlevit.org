@@ -22,27 +22,43 @@
       uid: 1006
       group: transfersh
       append: yes
-      home: "{{ home_path }}"
+      home: "{{ transfersh_home_path }}"
       shell: /usr/sbin/nologin
+
+  - name: transfersh.sh tls private key
+    copy:
+      src: "{{ transfersh_key[1:] }}"
+      dest: "{{ transfersh_key }}"
+      owner: transfersh
+      group: transfersh
+      mode: 0600
+
+  - name: transfersh.sh tls self signed certificate
+    copy:
+      src: "{{ transfersh_cert[1:] }}"
+      dest: "{{ transfersh_cert }}"
+      owner: transfersh
+      group: transfersh
+      mode: 0600
 
   - name: install transfer.sh
     shell: go get github.com/dutchcoders/transfer.sh github.com/jteeuwen/go-bindata
     args:
-      chdir: "{{ home_path }}"
+      chdir: "{{ transfersh_home_path }}"
     environment:
-      GOPATH: "{{ home_path }}"
+      GOPATH: "{{ transfersh_home_path }}"
     become_user: transfersh
 
   - name: transfer.sh-web directory
     file:
-      dest: "{{ web_path }}"
+      dest: "{{ transfersh_web_path }}"
       state: directory
       owner: transfersh
       group: transfersh
 
   - name: transfer.sh content directory
     file:
-      dest: "{{ content_path }}"
+      dest: "{{ transfersh_content_path }}"
       state: directory
       owner: transfersh
       group: transfersh
@@ -61,9 +77,19 @@
 
   - name: transfer.sh supervisor config
     copy:
-      content: |
+      content: >
         [program:transfer.sh]
-        command=/srv/http/transfer.sh/bin/transfer.sh --listener :5450 --provider local --basedir {{ content_path }}/ --web-path "{{ web_path }}"/ --proxy-path / --log {{ home_path }}/transfer.sh.log
+
+        command=/srv/http/transfer.sh/bin/transfer.sh
+        --tls-listener :5450
+        --tls-listener-only
+        --tls-cert-file {{ transfersh_cert }}
+        --tls-private-key {{ transfersh_key }}
+        --provider local --basedir {{ transfersh_content_path }}/
+        --web-path "{{ transfersh_web_path }}"/
+        --proxy-path /
+        --log {{ transfersh_home_path }}/transfer.sh.log
+
         user=transfersh
       dest: /etc/supervisor/conf.d/transfer.sh.conf
       owner: root
@@ -73,7 +99,3 @@
 
   become: yes
   tags: [transfer.sh]
-  vars:
-    web_path: /srv/http/transfer.sh-web
-    content_path: /mnt/extvol/pirates.suka.se
-    home_path: /srv/http/transfer.sh
