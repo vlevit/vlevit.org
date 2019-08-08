@@ -1,0 +1,21 @@
+- block:
+
+  - name: vlevit.org nginx configuration
+    copy:
+      src: etc/nginx/sites-available/vlevit.org
+      dest: /etc/nginx/sites-available/vlevit.org
+      owner: root
+      group: root
+      mode: 0644
+    notify: reload nginx
+
+  - name: vlevit.org enable nginx
+    file:
+      src: /etc/nginx/sites-available/vlevit.org
+      dest: /etc/nginx/sites-enabled/vlevit.org
+      state: link
+    notify: reload nginx
+
+  become: yes
+  become_user: root
+  tags: vlevitorg

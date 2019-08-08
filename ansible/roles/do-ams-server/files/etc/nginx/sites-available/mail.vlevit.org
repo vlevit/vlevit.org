@@ -5,7 +5,7 @@ server {
     include includes/ssl-certs/mail[.]vlevit.org;
     include includes/nginx-ssl-options;
 
-    server_name mail.vlevit.org;
+    server_name mail.vlevit.org read.now.im;
 
     location /rspamd/ {
         proxy_pass http://localhost:11334/;

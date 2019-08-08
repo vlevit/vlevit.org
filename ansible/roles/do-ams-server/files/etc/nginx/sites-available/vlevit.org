@@ -1,0 +1,91 @@
+# -*- mode: nginx; -*-
+server {
+    listen 443 ssl;
+    server_name vlevit.org;
+
+    include includes/ssl-certs/vlevit[.]org;
+    include includes/nginx-ssl-options;
+
+    root /srv/http/vlevit.org/static;
+
+    location ~ \.php$ {
+        return 404;
+    }
+
+    location / {
+        uwsgi_pass 127.0.0.1:3031;
+        include uwsgi_params;
+    }
+
+    location /u/ {
+        alias /srv/http/vlevit.org/upload/;
+    }
+
+    location /backup/ {
+        alias /srv/http/vlevit.org/backup/;
+    }
+
+    # location /q/ {
+    #     uwsgi_pass 127.0.0.1:3033;
+    #     include uwsgi_params;
+    #     uwsgi_param SCRIPT_NAME /q;
+    #     uwsgi_modifier1 30;
+    # }
+
+    # location /q/static/ {
+    #     alias /srv/http/questionnaire/questionnaire/static/;
+    # }
+
+    location /q10r/ {
+        uwsgi_pass 127.0.0.1:3034;
+        include uwsgi_params;
+        uwsgi_param SCRIPT_NAME /q10r;
+        uwsgi_modifier1 30;
+    }
+
+    location /q10r/static/ {
+        alias /srv/http/q10r/static/;
+    }
+
+
+    location /static/ {
+        root /srv/http/vlevit.org;
+    }
+
+    location /media/ {
+        root /srv/http/vlevit.org;
+    }
+
+    location /.well-known/acme-challenge {
+      alias /srv/http/letsencrypt;
+    }
+}
+
+server {
+    listen 80;
+    server_name vlevit.org;
+    return 301 https://vlevit.org$request_uri;
+}
+
+server {
+    #listen 80;
+    listen 443 ssl;
+
+    server_name www.vlevit.org blog.vlevit.org;
+    include includes/ssl-keys;
+
+    root /srv/http/vlevit.org/media;
+    return 301 $scheme://vlevit.org$request_uri;
+}
+
+server {
+    listen 80;
+    server_name static.vlevit.org;
+    root /srv/http/vlevit.org/static;
+}
+
+server {
+    listen 80;
+    server_name media.vlevit.org;
+    root /srv/http/vlevit.org/media;
+}
