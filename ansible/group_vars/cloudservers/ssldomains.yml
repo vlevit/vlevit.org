@@ -4,6 +4,7 @@ ssl_domains: |
   vlevit.org www.vlevit.org blog.vlevit.org
   # test.vlevit.org
   mail.vlevit.org read.now.im
+  read.now.im vlevit.org
   # pirates.suka.se
   dav.vlevit.org
   ip.vlevit.org

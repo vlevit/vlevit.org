@@ -10,3 +10,4 @@
 - import_tasks: xandikos.yml
 - import_tasks: social-rss.yml
 - import_tasks: transfer.sh.yml
+- import_tasks: prosody.yml

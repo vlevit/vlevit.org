@@ -36,8 +36,8 @@ copy_certs() {
 
 maybe_copy_prosody_certs() {
     if systemctl is-active --quiet prosody ; then
-        install -b -o prosody -g prosody -m 0600 "$LETSENCRYPT_DIR/vlevit.org/fullchain.pem" /etc/prosody/certs/fullchain.pem &&
-        install -b -o prosody -g prosody -m 0600 "$LETSENCRYPT_DIR/vlevit.org/privkey.pem" /etc/prosody/certs/privkey.pem
+        install -b -o prosody -g prosody -m 0600 "$LETSENCRYPT_DIR/read.now.im/fullchain.pem" /etc/prosody/certs/fullchain.pem &&
+        install -b -o prosody -g prosody -m 0600 "$LETSENCRYPT_DIR/read.now.im/privkey.pem" /etc/prosody/certs/privkey.pem
     else
         return 0
     fi

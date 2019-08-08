@@ -1,0 +1,26 @@
+- block:
+
+  - name: install mercurial
+    apt:
+      name:
+      - mercurial
+      - prosody
+      state: present
+
+  - name: prosody modules
+    hg:
+      repo: https://hg.prosody.im/prosody-modules/
+      dest: /usr/lib/prosody/modules-community/
+      clone: yes
+      update: yes
+
+  - name: prosody.cfg.lua
+    template:
+      src: etc/prosody/prosody.cfg.lua
+      dest: /etc/prosody/prosody.cfg.lua
+      owner: root
+      mode: 0640
+    notify: reload prosody
+
+  tags: prosody
+  become: yes

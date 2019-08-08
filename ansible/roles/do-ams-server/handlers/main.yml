@@ -58,3 +58,8 @@
   service:
     name: uwsgi
     state: reloaded
+
+- name: reload prosody
+  service:
+    name: prosody
+    state: reloaded
