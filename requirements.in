@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file requirements.txt requirements.txt
 #
-ansible==2.6.1
+ansible==2.8.3
 argparse==1.2.1
 certifi==14.05.14
 contextlib2==0.5.5        # via raven

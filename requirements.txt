@@ -4,14 +4,13 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-ansible==2.6.1
+ansible==2.8.3
 argparse==1.2.1
 asn1crypto==0.24.0        # via cryptography
-bcrypt==3.1.4             # via paramiko
 certifi==14.05.14
-cffi==1.11.5              # via bcrypt, cryptography, pynacl
+cffi==1.12.3              # via cryptography
 contextlib2==0.5.5
-cryptography==2.3.1       # via ansible, paramiko
+cryptography==2.7         # via ansible
 django-contrib-comments==1.6.1
 django-debug-toolbar==0.9.4
 django==1.8.4
@@ -19,29 +18,26 @@ enum34==1.1.6             # via cryptography
 geoip2==0.6.0
 google-api-python-client==1.3.1
 httplib2==0.9
-idna==2.7                 # via cryptography
 ipaddr==2.1.11
 ipaddress==1.0.22         # via cryptography
 ipython==0.13.1
-jinja2==2.10              # via ansible
+jinja2==2.10.1            # via ansible
 markdown==2.2.1
-markupsafe==1.0           # via jinja2
+markupsafe==1.1.1         # via jinja2
 maxminddb==0.3.3
 oauth2client==1.3
-paramiko==2.4.2           # via ansible
 passlib==1.7.1
 psycopg2==2.5.3
 pyasn1-modules==0.0.5
 pyasn1==0.1.7
-pycparser==2.18           # via cffi
+pycparser==2.19           # via cffi
 pygments==2.1a0dev-20151003
-pynacl==1.2.1             # via paramiko
 python-memcached==1.53
 pyyaml==3.10
 raven==6.1.0
 requests==2.4.0
 rsa==3.1.4
 simplejson==3.6.5
-six==1.11.0               # via bcrypt, cryptography, pynacl
+six==1.12.0               # via cryptography
 uritemplate==0.6
 wsgiref==0.1.2
