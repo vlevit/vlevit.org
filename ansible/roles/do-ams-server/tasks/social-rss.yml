@@ -18,10 +18,10 @@
 
   - name: social-rss repository
     git:
-      repo: 'https://github.com/KonishchevDmitry/social-rss.git'
+      repo: 'https://github.com/vlevit/social-rss.git'
       dest: /srv/http/social-rss/social-rss
-      version: 65df494          # HEAD as of 2018-10-06
-      depth: 1
+      version: fix-tweets-with-hashtags
+    notify: reload social-rss
     become_user: social-rss
 
   - name: social-rss virtualenv
