@@ -1,0 +1,83 @@
+- block:
+
+
+  - name: add dsvpn group
+    group: name=dspn gid=1008 state=absent
+    become_user: root
+
+  - name: add dsvpn group
+    group: name=dsvpn gid=1008 state=present
+    become_user: root
+
+  - name: add dsvpn user
+    user:
+      name: dsvpn
+      uid: 1008
+      group: dsvpn
+      append: no
+      create_home: no
+      shell: /usr/sbin/nologin
+    become_user: root
+
+  - name: dsvpn build dir
+    file:
+      dest: "{{ dsvpn_build_dir }}"
+      state: directory
+
+  - name: download dsvpn
+    unarchive:
+      src: https://github.com/jedisct1/dsvpn/archive/{{ version }}.tar.gz
+      remote_src: yes
+      dest: "{{ dsvpn_build_dir }}"
+      creates: "{{ dsvpn_src_dir }}"
+
+  - name: build dsvpn
+    shell: make
+    args:
+      chdir: "{{ dsvpn_src_dir }}"
+
+  - name: install dsvpn
+    shell: make install && setcap cap_net_admin=eip /usr/local/sbin/dsvpn
+    args:
+      chdir: "{{ dsvpn_src_dir }}"
+    become_user: root
+
+  - name: copy dsvpn key
+    copy:
+      content: |
+          $ANSIBLE_VAULT;1.1;AES256
+          65326366623862333735393833633638656430666466396232343737323061333163396131333162
+          6162616162346130306233313638646563326537656433650a643266616161653137626232393031
+          36393636316261663365623538323164643333363264663133623630613831333865363035653932
+          3235643437383165630a343936373137613735393231383931656530386631343938333730653934
+          34623565393438383536663030626563336631323334343837366637376133346163373764646466
+          6339323662656232386338616535616439323230326634323234
+      dest: "{{ dsvpn_key }}"
+      owner: dsvpn
+      group: dsvpn
+      mode: 0400
+    become_user: root
+
+  - name: dsvpn supervisor config
+    copy:
+      content: |
+        [program:dsvpn]
+        command=/usr/local/sbin/dsvpn server /etc/dsvpn.key auto 8080
+        # doesn't work as dsvpn user
+        user=root
+        group=root
+      dest: /etc/supervisor/conf.d/dsvpn.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify: reload dsvpn
+    become_user: root
+
+  tags: [dsvpn, vpn]
+  become: yes
+  become_user: "{{ adminuser }}"
+  vars:
+    version: "0.1.3"
+    dsvpn_build_dir: "/home/{{ adminuser }}/dsvpn"
+    dsvpn_src_dir: "{{ dsvpn_build_dir }}/dsvpn-{{ version }}"
+    dsvpn_key: /etc/dsvpn.key

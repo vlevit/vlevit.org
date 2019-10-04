@@ -11,3 +11,4 @@
 - import_tasks: social-rss.yml
 - import_tasks: transfer.sh.yml
 - import_tasks: prosody.yml
+- import_tasks: dsvpn.yml

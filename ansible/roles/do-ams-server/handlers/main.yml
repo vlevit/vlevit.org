@@ -63,3 +63,8 @@
   service:
     name: prosody
     state: reloaded
+
+- name: reload dsvpn
+  supervisorctl:
+    name: dsvpn
+    state: restarted
