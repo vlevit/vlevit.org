@@ -4,7 +4,7 @@
     git:
       repo: 'https://github.com/lukas2511/dehydrated.git'
       dest: /home/{{ adminuser }}/dehydrated/
-      version: v0.6.2
+      version: v0.6.5
 
   - name: domains.txt
     copy:
