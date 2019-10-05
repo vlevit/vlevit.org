@@ -44,5 +44,13 @@
       - learn-spam.sieve
     notify: reload dovecot
 
+  - name: me/.dovecot.sieve
+    copy:
+      src: home/maildirs/me/.dovecot.sieve
+      dest: /home/maildirs/me/.dovecot.sieve
+      mode: 0640
+      owner: vmail
+      group: vmail
+
   tags: [dovecot, mail]
   become: yes
