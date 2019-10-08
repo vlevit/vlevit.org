@@ -57,3 +57,8 @@ smtpd_sasl_path = private/auth
 smtpd_sasl_auth_enable = yes
 # With Postfix version before 2.10, use smtpd_recipient_restrictions
 smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+
+# postfix.1071664.n5.nabble.com/virtual-alias-maps-and-X-Original-To-td9124.html
+# Put "RCPT TO" value to X-Original-To header
+smtpd_recipient_restrictions = check_recipient_access pcre:/etc/postfix/recipient_access.pcre
+

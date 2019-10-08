@@ -19,6 +19,7 @@
       - virtual
       - sender_bcc
       - smtp_header_checks
+      - recipient_access.pcre
 
   - name: /etc/postfix/{main.cf,master.cf}
     copy:
