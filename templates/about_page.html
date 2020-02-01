@@ -24,14 +24,18 @@
     <h1>{{ page.title|safe }}</h1>
     {{ page.body|safe }}
 
-    <div class="comment-header-wrapper">
-        <h2 id="comment-header">{% trans "Comments" %}</h2>
-        <a href="{% url "page_comments_feed" page.name %}" title="{% trans "Subscribe to comments on" %} {{page.title}}">
-            <img class="img-middle" src="{% static "images/rss16.png" %}" alt="RSS">
-        </a>
-    </div>
-    {% render_comment_list for page %}
-    {% render_comment_form for page %}
+    {% comment %}
+
+        <div class="comment-header-wrapper">
+            <h2 id="comment-header">{% trans "Comments" %}</h2>
+            <a href="{% url "page_comments_feed" page.name %}" title="{% trans "Subscribe to comments on" %} {{page.title}}">
+                <img class="img-middle" src="{% static "images/rss16.png" %}" alt="RSS">
+            </a>
+        </div>
+
+        {% render_comment_list for page %}
+        {% render_comment_form for page %}
+    {% endcomment %}
 
 {% endblock %}
 
