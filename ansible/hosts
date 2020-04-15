@@ -6,4 +6,4 @@ all:
         do-ams-server
     homeservers:
       hosts:
-        zbox
+        zbox.ext

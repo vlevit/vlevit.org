@@ -1,4 +1,4 @@
-- hosts: zbox
+- hosts: zbox.ext
   roles:
     - common
     - zbox

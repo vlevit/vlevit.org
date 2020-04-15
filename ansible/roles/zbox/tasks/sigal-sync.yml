@@ -10,7 +10,7 @@
     notify: rebuild gallery
 
   - name: sync photo
-    shell: rsync -rt --exclude='#*' --exclude='*~' --delete "/home/vlevit/{{ item }}/" zbox:"/srv/http/sigal/{{ item }}/source"
+    shell: rsync -rt --exclude='#*' --exclude='*~' --delete "/home/vlevit/{{ item }}/" zbox.ext:"/srv/http/sigal/{{ item }}/source"
     delegate_to: localhost
 
     # synchronize:
