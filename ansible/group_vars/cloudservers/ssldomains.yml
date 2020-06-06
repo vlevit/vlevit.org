@@ -3,7 +3,7 @@ ssl_domains: |
   # conference.vlevit.org
   vlevit.org www.vlevit.org blog.vlevit.org
   # test.vlevit.org
-  mail.vlevit.org read.now.im vlevit.org
+  mail.vlevit.org read.now.im toest.net vlevit.org
   read.now.im vlevit.org
   # pirates.suka.se
   dav.vlevit.org

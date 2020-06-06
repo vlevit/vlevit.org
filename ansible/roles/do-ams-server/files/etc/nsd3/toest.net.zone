@@ -1,0 +1,22 @@
+$ORIGIN toest.net.    ; default zone domain
+$TTL 10800             ; default time to live (3 hours)
+
+@ IN SOA ns1.toest.net. admin.toest.net. (
+           2020060503  ; serial number
+           28800       ; Refresh
+           7200        ; Retry
+           864000      ; Expire
+           10800       ; Min TTL
+           )
+
+                 NS    ns1.toest.net.
+                 NS    ns2.toest.net.
+                 MX    10 toest.net.
+ns1        IN    A     142.93.129.59
+ns2        IN    A     142.93.129.59
+@                A     142.93.129.59
+
+; mail authorization and authentication
+@                IN  TXT  "v=spf1 mx -all"
+_dmarc           IN  TXT  "v=DMARC1; p=none; rua=mailto:postmaster@toest.net; ruf=mailto:posmaster@toest.net"
+alpha._domainkey IN  TXT  "v=DKIM1; k=rsa; s=email; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCDpctmROMiQXfnTV33swmLlsvArRoy3T1KIl/aVuUCQF75KzhZt+BLGs99EBsmAusb8W3HLa/v4b23REFwNrq+f0VuAFte8UWLxBHFTZXRMU/iZFTeCgIr2Bf+/VXl/d883WwdIfwEZt3LbI0//5STkAPmCjz3OO63Xf50+SnoQIDAQAB"
