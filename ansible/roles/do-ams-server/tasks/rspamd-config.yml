@@ -5,6 +5,23 @@
 
 - block:
 
+  - name: create /var/lib/rspamd/dkim
+    file:
+      path: /var/lib/rspamd/dkim
+      state: directory
+      owner: rspamd
+      group: rspamd
+      recurse: yes
+      mode: 0744
+
+  - name: copy dkim key
+    copy:
+      src: var/lib/rspamd/dkim/vlevit.org.alpha.key
+      dest: /var/lib/rspamd/dkim/vlevit.org.alpha.key
+      owner: rspamd
+      group: rspamd
+      mode: 0440
+
   - name: /usr/local/etc/rspamd/local.d/
     file:
       state: directory
@@ -23,6 +40,7 @@
       - worker-normal.inc
       - worker-proxy.inc
       - redis.conf
+      - dkim_signing.conf
     notify: reload rspamd
 
   - name: start redis

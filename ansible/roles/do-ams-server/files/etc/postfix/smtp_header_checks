@@ -1,2 +1,5 @@
 /^Received: from localhost.*(by.*with ESMTPSA.*)/ IGNORE
+/^X-Mailer:/            IGNORE
+/^User-agent:/          IGNORE
+
 # /^Received: from localhost.*(by.*with ESMTPSA.*)/ REPLACE Received: $1
