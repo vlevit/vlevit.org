@@ -17,6 +17,7 @@
     include_tasks: postmap.yml
     with_items:
       - virtual
+      - virtual-regexp
       - sender_bcc
       - smtp_header_checks
       - recipient_access.pcre

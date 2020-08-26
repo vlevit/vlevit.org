@@ -10,14 +10,14 @@ recipient_delimiter = +
 inet_interfaces = all
 
 alias_maps = hash:/etc/aliases
-local_recipient_maps = hash:/etc/aliases, hash:/etc/postfix/virtual
+local_recipient_maps = hash:/etc/aliases, hash:/etc/postfix/virtual, regexp:/etc/postfix/virtual-regexp
 #local_recipient_maps = hash:/etc/postfix/local-recipients
 sender_bcc_maps = hash:/etc/postfix/sender_bcc
 #alias_maps = hash:/etc/aliases hash:/etc/postfix/local-recipients
 #local_recipient_maps = hash:/etc/postfix/local-recipients
 # alias_maps = hash:/etc/aliases proxy:pgsql:/etc/postfix/pgsql-aliases.cf
 # local_recipient_maps = proxy:pgsql:/etc/postfix/pgsql-boxes.cf $alias_maps
-virtual_alias_maps = hash:/etc/postfix/virtual
+virtual_alias_maps = hash:/etc/postfix/virtual, regexp:/etc/postfix/virtual-regexp
 
 smtpd_tls_cert_file=/etc/ssl/letsetncrypt/mail.vlevit.org/fullchain.pem
 smtpd_tls_key_file=/etc/ssl/letsetncrypt/mail.vlevit.org/privkey.pem
